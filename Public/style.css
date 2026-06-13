@@ -1,0 +1,120 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  }
+
+body {
+background-color: #f4f6f9;
+}
+
+/* Navbar */
+.navbar {
+background-color: #007bff;
+color: white;
+padding: 15px 40px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.nav-links {
+list-style: none;
+display: flex;
+gap: 25px;
+}
+
+.nav-links a {
+text-decoration: none;
+color: white;
+font-weight: bold;
+}
+
+.nav-links a:hover {
+color: #ffd700;
+}
+
+.logout-btn {
+background: red;
+color: white;
+border: none;
+padding: 10px 15px;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.logout-btn:hover {
+background: darkred;
+}
+
+/* Welcome */
+.welcome-section {
+text-align: center;
+padding: 40px;
+}
+
+.welcome-section h1 {
+color: #333;
+margin-bottom: 10px;
+}
+
+.welcome-section p {
+color: #666;
+}
+
+/* Cards */
+.cards-container {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 20px;
+padding: 20px 40px;
+}
+
+.card {
+background: white;
+padding: 25px;
+border-radius: 10px;
+text-align: center;
+box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+}
+
+.card h3 {
+color: #007bff;
+margin-bottom: 10px;
+}
+
+.card p {
+font-size: 28px;
+font-weight: bold;
+}
+
+/* Jobs Section */
+.jobs-section {
+padding: 20px 40px;
+}
+
+.jobs-section h2 {
+margin-bottom: 15px;
+}
+
+table {
+width: 100%;
+border-collapse: collapse;
+background: white;
+}
+
+th {
+background: #007bff;
+color: white;
+}
+
+th, td {
+border: 1px solid #ddd;
+padding: 12px;
+text-align: center;
+}
+
+tr:hover {
+background-color: #f1f1f1;
+}

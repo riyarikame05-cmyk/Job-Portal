@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Portal Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="navbar">
+    <h2>Job Portal</h2>
+
+    <ul class="nav-links">
+        <li><a href="#">Dashboard</a></li>
+        <li><a href="#">Jobs</a></li>
+        <li><a href="#">Applications</a></li>
+        <li><a href="#">Profile</a></li>
+    </ul>
+
+    <button class="logout-btn" onclick="logout()">Logout</button>
+</nav>
+<section class="welcome-section">
+    <h1>Welcome to Job Portal Dashboard 👋</h1>
+    <p>Find jobs, track applications, and manage your profile.</p>
+</section>
+<section class="cards-container">
+
+    <div class="card">
+        <h3>Total Jobs</h3>
+        <p>120</p>
+    </div>
+
+    <div class="card">
+        <h3>Applications</h3>
+        <p>25</p>
+    </div>
+
+    <div class="card">
+        <h3>Interviews</h3>
+        <p>8</p>
+    </div>
+
+    <div class="card">
+        <h3>Profile Views</h3>
+        <p>56</p>
+    </div>
+
+</section>
+<section class="jobs-section">
+    <h2>Latest Jobs</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Position</th>
+                <th>Location</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>Infosys</td>
+                <td>Software Engineer</td>
+                <td>Mumbai</td>
+                <td>Open</td>
+            </tr>
+
+            <tr>
+                <td>TCS</td>
+                <td>Frontend Developer</td>
+                <td>Pune</td>
+                <td>Open</td>
+            </tr>
+
+            <tr>
+                <td>Wipro</td>
+                <td>Java Developer</td>
+                <td>Bangalore</td>
+                <td>Open</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<script>
+    function logout() {
+        localStorage.clear();
+        window.location.href = "login.html";
+    }
+</script>
+</body>
+</html>
