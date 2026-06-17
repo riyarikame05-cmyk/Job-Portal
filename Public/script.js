@@ -1,5 +1,5 @@
-// Register
-
+alert("Script loaded");
+console.log("script loaded");
 const registerForm = document.getElementById("registerForm");
 
 if (registerForm) {
@@ -14,16 +14,20 @@ if (registerForm) {
         const role = document.getElementById("role").value;
 
         const res = await fetch("/register", {
+
             method: "POST",
+
             headers: {
                 "Content-Type": "application/json"
             },
+
             body: JSON.stringify({
                 name,
                 email,
                 password,
                 role
             })
+
         });
 
         const data = await res.json();
@@ -33,10 +37,9 @@ if (registerForm) {
         if (data.success) {
             window.location.href = "login.html";
         }
+
     });
 }
-
-// Login
 
 const loginForm = document.getElementById("loginForm");
 
@@ -49,24 +52,38 @@ if (loginForm) {
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
 
+
         const res = await fetch("/login", {
+
             method: "POST",
+
             headers: {
                 "Content-Type": "application/json"
             },
+
             body: JSON.stringify({
                 email,
                 password
             })
+
         });
+
 
         const data = await res.json();
 
-        if (data.success) {
-            alert("Login Successful");
-            window.location.href = "dashboard.html";
-        } else {
-            alert(data.message);
-        }
+        alert(data.message);
+
+
+       if(data.success){
+
+    localStorage.setItem(
+        "user",
+        JSON.stringify(data.user)
+    );
+
+    window.location.href = "dashboard.html";
+}
+
     });
+
 }
