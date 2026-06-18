@@ -1,18 +1,7 @@
-const path = require("path");
-
-app.use(express.static(path.join(__dirname, "Public")));
 const bcrypt = require("bcrypt");
 const User = require("./models/User");
 const Job = require("./models/Job");
-const dns = require("dns");
 
-dns.setServers([
-    "8.8.8.8",
-    "1.1.1.1"
-]);
-
-dns.setDefaultResultOrder("ipv4first");
-require("dns").setDefaultResultOrder("ipv4first");
 require("dotenv").config();
 
 const express = require("express");
@@ -21,6 +10,11 @@ const path = require("path");
 
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(express.static(path.join(__dirname, "Public")));
+
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -28,10 +22,6 @@ app.use(express.urlencoded({ extended: true }));
 // Public folder serve karne ke liye
 app.use(express.static(path.join(__dirname, "Public")));
 
-// Home page
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "Public", "register.html"));
-});
 
 //Register Route//
 app.post("/register", async (req, res) => {
