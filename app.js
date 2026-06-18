@@ -1,4 +1,6 @@
+const path = require("path");
 
+app.use(express.static(path.join(__dirname, "Public")));
 const bcrypt = require("bcrypt");
 const User = require("./models/User");
 const Job = require("./models/Job");
@@ -132,14 +134,6 @@ app.post("/login", async (req, res) => {
     }
 
 });
-//Post Job//
-
-// HOME ROUTE
-app.get("/",(req,res)=>{
-    res.send("Job Portal Backend Running 🚀");
-});
-
-
 
 // GET ALL JOBS
 app.get("/jobs", async(req,res)=>{
@@ -312,22 +306,22 @@ app.delete("/jobs/:id", async(req,res)=>{
 });
 
 
-
-
-
-app.listen(3000,()=>{
-
-    console.log("Server running on port 3000");
-
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "Public", "login.html"));
 });
-//MongoDB Connection//
+
+
+// MongoDB Connection//
+
+const PORT = process.env.PORT || 3000;
+
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
 
     console.log("MongoDB Connected Successfully 🚀");
 
-    app.listen(3000, () => {
-        console.log("Server running on port 3000");
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
     });
 
 })
