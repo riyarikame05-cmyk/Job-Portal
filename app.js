@@ -1,31 +1,19 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
+const express = require('express');
+const bcrypt = require('bcrypt');
+const path = require('path');
 
-console.log("MONGO_URI =", process.env.MONGO_URI);
+const User = require('./models/User');
+const Job = require('./models/Job');
 
-const PORT = process.env.PORT || 3000;
+const app = express();
 
-if (!process.env.MONGO_URI) {
-  console.log("❌ MONGO_URI missing in .env");
-  process.exit(1);
-}
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-mongoose.connect(process.env.MONGO_URI)
-.then(() => {
-    console.log("MongoDB Connected Successfully 🚀");
+app.use(express.static(path.join(__dirname, 'Public')));
 
-    app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
-    });
-
-})
-.catch((err) => {
-    console.log("MongoDB Connection Error ❌");
-    console.log(err.message);
-});
-
-// Public folder serve karne ke liye
-app.use(express.static(path.join(__dirname, "Public")));
 
 
 //Register Route//
@@ -57,7 +45,6 @@ const newUser = new User({
 });
 
         await newUser.save();
-
         res.json({
             success: true,
             message: "Registration Successful"
@@ -309,20 +296,20 @@ app.get("/", (req, res) => {
 // MongoDB Connection//
 
 const PORT = process.env.PORT || 3000;
-console.log("MONGO_URI =", process.env.MONGO_URI);
+
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
 
-    console.log("MongoDB Connected Successfully 🚀");
+  console.log("MongoDB Connected Successfully 🚀");
 
-    app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
-    });
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
 
 })
 .catch((err) => {
 
-    console.log("MongoDB Connection Error ❌");
-    console.log(err);
+  console.log("MongoDB Connection Error ❌");
+  console.log(err.message);
 
 });
