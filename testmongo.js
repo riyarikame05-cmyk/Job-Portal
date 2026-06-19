@@ -1,33 +1,8 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const path = require('path');
+const dotenv = require('dotenv');
 
- const uri = "mongodb+srv://riyarikame05_db_user:riya12345@cluster0.vjfno88.mongodb.net/?appName=Cluster0";
+// FORCE LOAD .env
+const result = dotenv.config({ path: path.join(__dirname, '.env') });
 
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
-
-async function run() {
-  try {
-
-    await client.connect();
-
-    await client.db("admin").command({ ping: 1 });
-
-    console.log("MongoDB Connected Successfully 🚀");
-
-  } catch(error){
-
-    console.log(error);
-
-  } finally {
-
-    await client.close();
-
-  }
-}
-
-run();
+console.log("ENV LOAD ERROR (if any):", result.error);
+console.log("ENV CHECK:", process.env.MONGO_URI);
