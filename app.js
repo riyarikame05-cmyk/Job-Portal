@@ -223,6 +223,36 @@ app.post("/jobs", verifyToken, async (req, res) => {
   }
 });
 
+
+// GET ALL JOBS //
+
+app.get("/jobs", async (req, res) => {
+
+  try {
+
+    const jobs = await Job.find().sort({
+      _id: -1
+    });
+
+    res.json(jobs);
+
+  }
+
+  catch (err) {
+
+    res.status(500).json({
+
+      success: false,
+
+      message: err.message
+
+    });
+
+  }
+
+});
+
+
 // DELETE JOB (RECRUITER ONLY)//
 app.delete("/jobs/:id", verifyToken, async (req, res) => {
   try {

@@ -1,54 +1,77 @@
-const user = JSON.parse(
-  localStorage.getItem("user")
-);
+// ================= USER & TOKEN =================
+
+const user = JSON.parse(localStorage.getItem("user"));
 
 const token = localStorage.getItem("token");
 
+// If user is not logged in
 if (!user) {
-
   window.location.href = "/login.html";
-
 }
 
-document.addEventListener(
-  "DOMContentLoaded",
+// Store all jobs
+let allJobs = [];
 
-  () => {
+// ================= PAGE LOAD =================
 
-document.getElementById(
-"welcomeUser"
-).innerText =
-`Welcome, ${user.name} 👋`;
+document.addEventListener("DOMContentLoaded", () => {
 
-    if (user.role !== "Recruiter") {
+  // Welcome message
+  document.getElementById(
+    "welcomeUser"
+  ).innerText = `Welcome, ${user.name} 👋`;
 
-      document.getElementById(
-        "jobFormBox"
-      ).style.display = "none";
+  // Show user role (if element exists)
+  const roleElement = document.getElementById("userRole");
 
-    }
-
-    loadJobs();
-
+  if (roleElement) {
+    roleElement.innerText = `Role : ${user.role}`;
   }
 
-);
+  // Hide Post Job form for JobSeekers
+  if (user.role !== "Recruiter") {
 
-let allJobs = [];
+    const form = document.getElementById("jobFormBox");
+
+    if (form) {
+      form.style.display = "none";
+    }
+  }
+
+  loadJobs();
+
+});
+
+// ================= LOAD JOBS =================
 
 async function loadJobs() {
 
-  const res = await fetch("/jobs");
+  try {
 
-  allJobs = await res.json();
+    const res = await fetch("/jobs");
 
-  document.getElementById(
-    "totalJobs"
-  ).innerText = allJobs.length;
+    allJobs = await res.json();
 
-  renderJobs(allJobs);
+    // Total Jobs Card
+    document.getElementById(
+      "totalJobs"
+    ).innerText = allJobs.length;
+
+    renderJobs(allJobs);
+
+  }
+
+  catch (error) {
+
+    console.log(error);
+
+    alert("Unable to load jobs");
+
+  }
 
 }
+
+// ================= RENDER JOBS =================
 
 function renderJobs(jobs) {
 
@@ -59,6 +82,21 @@ function renderJobs(jobs) {
 
   container.innerHTML = "";
 
+  if (jobs.length === 0) {
+
+    container.innerHTML = `
+
+      <h3>
+
+      No Jobs Available
+
+      </h3>
+
+    `;
+
+    return;
+  }
+
   jobs.forEach(job => {
 
     container.innerHTML += `
@@ -67,23 +105,32 @@ function renderJobs(jobs) {
 
       <h3>${job.title}</h3>
 
-      <p><b>🏢</b> ${job.company}</p>
+      <p>🏢 ${job.company}</p>
 
-      <p><b>📍</b> ${job.location}</p>
+      <p>📍 ${job.location}</p>
 
-      <p><b>💰</b> ${job.salary}</p>
+      <p>💰 ${job.salary}</p>
 
       <p>${job.description}</p>
 
-      ${user.role === "Recruiter"
+      ${
+        user.role === "Recruiter"
 
-      ? `<button onclick="deleteJob('${job._id}')">
+        ?
 
-      Delete
+        `<button onclick="deleteJob('${job._id}')">
 
-      </button>`
+        🗑 Delete
 
-      : ""
+        </button>`
+
+        :
+
+        `<button>
+
+        📝 Apply
+
+        </button>`
 
       }
 
@@ -95,9 +142,12 @@ function renderJobs(jobs) {
 
 }
 
+// ================= SEARCH JOBS =================
+
 function searchJobs() {
 
   const text = document
+
   .getElementById(
     "searchInput"
   )
@@ -122,108 +172,184 @@ function searchJobs() {
 
 }
 
+// ================= POST JOB =================
+
 async function postJob() {
 
   const title =
   document.getElementById(
     "title"
-  ).value;
+  ).value.trim();
 
   const company =
   document.getElementById(
     "company"
-  ).value;
+  ).value.trim();
 
   const location =
   document.getElementById(
     "location"
-  ).value;
+  ).value.trim();
 
   const salary =
   document.getElementById(
     "salary"
-  ).value;
+  ).value.trim();
 
   const description =
   document.getElementById(
     "description"
-  ).value;
+  ).value.trim();
 
-  const res = await fetch(
+  if (
 
-    "/jobs",
+    !title ||
 
-    {
+    !company ||
 
-      method: "POST",
+    !location ||
 
-      headers: {
+    !salary ||
 
-        "Content-Type":
+    !description
 
-        "application/json",
+  ) {
 
-        Authorization:
+    alert("Please fill all fields");
 
-        `Bearer ${token}`
+    return;
 
-      },
+  }
 
-      body: JSON.stringify({
+  try {
 
-        title,
+    const res = await fetch(
 
-        company,
+      "/jobs",
 
-        location,
+      {
 
-        salary,
+        method: "POST",
 
-        description
+        headers: {
 
-      })
+          "Content-Type":
 
-    }
+          "application/json",
 
-  );
+          Authorization:
 
-  const data = await res.json();
+          `Bearer ${token}`
 
-  alert(data.message);
+        },
 
-  loadJobs();
+        body: JSON.stringify({
 
-}
+          title,
 
-async function deleteJob(id) {
+          company,
 
-  const res = await fetch(
+          location,
 
-    `/jobs/${id}`,
+          salary,
 
-    {
+          description
 
-      method: "DELETE",
-
-      headers: {
-
-        Authorization:
-
-        `Bearer ${token}`
+        })
 
       }
 
+    );
+
+    const data = await res.json();
+
+    alert(data.message);
+
+    if (data.success) {
+
+      // Clear fields
+
+      document.getElementById(
+        "title"
+      ).value = "";
+
+      document.getElementById(
+        "company"
+      ).value = "";
+
+      document.getElementById(
+        "location"
+      ).value = "";
+
+      document.getElementById(
+        "salary"
+      ).value = "";
+
+      document.getElementById(
+        "description"
+      ).value = "";
+
+      loadJobs();
+
     }
 
-  );
+  }
 
-  const data = await res.json();
+  catch (error) {
 
-  alert(data.message);
+    console.log(error);
 
-  loadJobs();
+    alert("Unable to post job");
+
+  }
 
 }
+
+// ================= DELETE JOB =================
+
+async function deleteJob(id) {
+
+  try {
+
+    const res = await fetch(
+
+      `/jobs/${id}`,
+
+      {
+
+        method: "DELETE",
+
+        headers: {
+
+          Authorization:
+
+          `Bearer ${token}`
+
+        }
+
+      }
+
+    );
+
+    const data = await res.json();
+
+    alert(data.message);
+
+    loadJobs();
+
+  }
+
+  catch (error) {
+
+    console.log(error);
+
+    alert("Unable to delete job");
+
+  }
+
+}
+
+// ================= LOGOUT =================
 
 function logout() {
 
