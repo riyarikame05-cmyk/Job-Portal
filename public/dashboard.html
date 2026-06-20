@@ -9,7 +9,13 @@
 
 <title>Job Portal Dashboard</title>
 
-<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 </head>
 
@@ -27,6 +33,8 @@
 
 </div>
 
+<div class="menu">
+
 <a href="#">🏠 Dashboard</a>
 
 <a href="#">💼 Jobs</a>
@@ -37,7 +45,9 @@
 
 <a href="#">👤 Profile</a>
 
-<button onclick="logout()">
+</div>
+
+<button class="logout-btn" onclick="logout()">
 
 🚪 Logout
 
@@ -45,104 +55,85 @@
 
 </div>
 
-
 <!-- Main -->
 
 <div class="main">
-
 
 <div class="header">
 
 <div>
 
-<h1 id="welcomeUser">
+<h1 id="welcomeUser"></h1>
 
-Welcome 👋
+<p>
 
-</h1>
-
-<p id="userRole">
-
-Manage your jobs professionally
+Find, save and manage jobs professionally 🚀
 
 </p>
 
 </div>
 
+<div class="profile">
+
+👤
+
 </div>
 
+</div>
 
 <div class="cards">
 
 <div class="card">
 
-<h3>Total Jobs</h3>
+<h3>💼 Total Jobs</h3>
 
-<h2 id="totalJobs">
-
-0
-
-</h2>
+<h2 id="totalJobs">0</h2>
 
 </div>
 
 <div class="card">
 
-<h3>Applied Jobs</h3>
+<h3>❤️ Saved Jobs</h3>
 
-<h2 id="appliedJobs">
-
-0
-
-</h2>
+<h2 id="savedJobs">0</h2>
 
 </div>
 
 <div class="card">
 
-<h3>Saved Jobs</h3>
+<h3>📝 Applied Jobs</h3>
 
-<h2 id="savedJobs">
-
-0
-
-</h2>
+<h2 id="appliedJobs">0</h2>
 
 </div>
 
 <div class="card">
 
-<h3>Profile</h3>
+<h3>📈 Profile</h3>
 
-<h2>
-
-80%
-
-</h2>
+<h2>80%</h2>
 
 </div>
 
 </div>
 
+<div class="search-box">
 
 <input
 
 id="searchInput"
 
-placeholder="🔍 Search jobs"
+placeholder="🔍 Search by title or company"
 
 onkeyup="searchJobs()"
 
 >
 
+</div>
 
 <div id="jobFormBox" class="form-box">
 
-<h2>
-
-➕ Post New Job
-
-</h2>
+<h2>➕ Post New Job</h2>
 
 <input id="title" placeholder="Job Title">
 
@@ -156,7 +147,7 @@ onkeyup="searchJobs()"
 
 id="description"
 
-placeholder="Job Description"
+placeholder="Description"
 
 ></textarea>
 
@@ -168,50 +159,35 @@ Post Job
 
 </div>
 
+<h2 class="section-title">
 
-<h2>
-
-💼 Latest Jobs
+Latest Jobs
 
 </h2>
 
-<div id="jobsContainer">
-
-</div>
-
+<div id="jobsContainer"></div>
 
 <div class="activity">
 
 <h2>
 
-📌 Recent Activity
+📌 Quick Tips
 
 </h2>
 
 <ul>
 
-<li>
+<li>🚀 Keep your profile updated</li>
 
-🚀 Welcome to Job Portal
+<li>💼 Explore new opportunities</li>
 
-</li>
+<li>❤️ Save interesting jobs</li>
 
-<li>
-
-💼 Browse latest jobs
-
-</li>
-
-<li>
-
-❤️ Save jobs you like
-
-</li>
+<li>📈 Build your career portfolio</li>
 
 </ul>
 
 </div>
-
 
 <footer>
 
@@ -223,7 +199,7 @@ Developed by Riya Rikame ❤️
 
 </div>
 
-<script src="dashboard.js"></script>
+<script src="/dashboard.js"></script>
 
 </body>
 

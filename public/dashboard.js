@@ -15,9 +15,10 @@ document.addEventListener(
 
   () => {
 
-    document.getElementById(
-      "welcomeUser"
-    ).innerText = `Welcome, ${user.name}`;
+document.getElementById(
+"welcomeUser"
+).innerText =
+`Welcome, ${user.name} 👋`;
 
     if (user.role !== "Recruiter") {
 
