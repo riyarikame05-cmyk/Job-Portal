@@ -1,8 +1,5 @@
-const path = require('path');
-const dotenv = require('dotenv');
+import mongoose from "mongoose";
 
-// FORCE LOAD .env
-const result = dotenv.config({ path: path.join(__dirname, '.env') });
-
-console.log("ENV LOAD ERROR (if any):", result.error);
-console.log("ENV CHECK:", process.env.MONGO_URI);
+mongoose.connect("mongodb+srv://riyarender:riyahr@cluster0.vjfno88.mongodb.net/jobportal")
+  .then(() => console.log("CONNECTED"))
+  .catch(err => console.log(err));

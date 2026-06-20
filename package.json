@@ -1,21 +1,16 @@
 {
   "name": "job-portal",
   "version": "1.0.0",
-  "description": "",
+  "type": "module",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "mongoose": "^8.24.0",
-    "mssql": "^12.5.5"
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^8.24.0"
   }
 }

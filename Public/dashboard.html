@@ -1,112 +1,84 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Job Portal Dashboard</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Job Portal Dashboard</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
+
 <body>
-<nav class="navbar">
-    <h2>Job Portal</h2>
 
-    <ul class="nav-links">
+<div class="layout">
 
-    <li><a href="dashboard.html">Dashboard</a></li>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2>JobPortal</h2>
 
-    <li><a href="jobs.html">Jobs</a></li>
+    <a href="#">🏠 Dashboard</a>
+    <a href="#">💼 Jobs</a>
+    <a href="#">➕ Post Job</a>
+    <a href="#">👤 Profile</a>
 
-    <li>
-        <a id="postJob" href="postjob.html">
-            Post Job
-        </a>
-    </li>
+    <button onclick="logout()">Logout</button>
+  </aside>
 
-    <li><a href="#">Applications</a></li>
+  <!-- MAIN -->
+  <main class="main">
 
-    <li><a href="#">Profile</a></li>
+    <h1>Welcome 👋</h1>
+    <p>Manage jobs, applications and postings</p>
 
-</ul>
-
-    <button class="logout-btn" onclick="logout()">Logout</button>
-</nav>
-<section class="welcome-section">
-    <h1>Welcome to Job Portal Dashboard 👋</h1>
-    <p>Find jobs, track applications, and manage your profile.</p>
-</section>
-
-<section class="cards-container">
-
-    <div class="card">
-        <h3>Total Jobs</h3>
-        <p>120</p>
+    <!-- STATS -->
+    <div class="cards">
+      <div class="card">Total Jobs <span id="totalJobs">0</span></div>
+      <div class="card">Applications <span>25</span></div>
+      <div class="card">Interviews <span>8</span></div>
+      <div class="card">Profile Views <span>56</span></div>
     </div>
 
-    <div class="card">
-        <h3>Applications</h3>
-        <p>25</p>
+    <!-- JOB FORM -->
+    <div class="form-box">
+      <h2>Post New Job</h2>
+
+      <input id="title" placeholder="Job Title"/>
+      <input id="company" placeholder="Company"/>
+      <input id="location" placeholder="Location"/>
+      <input id="salary" placeholder="Salary"/>
+      <textarea id="description" placeholder="Description"></textarea>
+
+      <button onclick="postJob()">Post Job</button>
     </div>
 
-    <div class="card">
-        <h3>Interviews</h3>
-        <p>8</p>
-    </div>
+    <!-- JOB TABLE -->
+    <div class="table-box">
+      <h2>Latest Jobs</h2>
 
-    <div class="card">
-        <h3>Profile Views</h3>
-        <p>56</p>
-    </div>
-
-</section>
-<section class="jobs-section">
-    <h2>Latest Jobs</h2>
-
-    <table>
+      <table>
         <thead>
-            <tr>
-                <th>Company</th>
-                <th>Position</th>
-                <th>Location</th>
-                <th>Status</th>
-            </tr>
+          <tr>
+            <th>Company</th>
+            <th>Title</th>
+            <th>Location</th>
+            <th>Action</th>
+          </tr>
         </thead>
 
-        <tbody>
-            <tr>
-                <td>Infosys</td>
-                <td>Software Engineer</td>
-                <td>Mumbai</td>
-                <td>Open</td>
-            </tr>
+        <tbody id="jobTableBody"></tbody>
+      </table>
+    </div>
 
-            <tr>
-                <td>TCS</td>
-                <td>Frontend Developer</td>
-                <td>Pune</td>
-                <td>Open</td>
-            </tr>
+  </main>
+</div>
 
-            <tr>
-                <td>Wipro</td>
-                <td>Java Developer</td>
-                <td>Bangalore</td>
-                <td>Open</td>
-            </tr>
-        </tbody>
-    </table>
-</section>
+<script src="dashboard.js"></script>
 
 <script>
-
 function logout(){
-
-    localStorage.removeItem("user");
-
-    window.location.href = "login.html";
-
+  localStorage.removeItem("user");
+  window.location.href="/login.html";
 }
-
 </script>
+
 </body>
 </html>
