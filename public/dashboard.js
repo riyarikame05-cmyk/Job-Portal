@@ -75,10 +75,9 @@ async function loadJobs() {
 
 function renderJobs(jobs) {
 
-  const container =
-    document.getElementById(
-      "jobsContainer"
-    );
+  const container = document.getElementById(
+    "jobsContainer"
+  );
 
   container.innerHTML = "";
 
@@ -103,72 +102,65 @@ function renderJobs(jobs) {
 
       <div class="job-card">
 
-      <h3>${job.title}</h3>
+        <h3>${job.title}</h3>
 
-      <p>🏢 ${job.company}</p>
+        <p>🏢 ${job.company}</p>
 
-      <p>📍 ${job.location}</p>
+        <p>📍 ${job.location}</p>
 
-      <p>💰 ${job.salary}</p>
+        <p>💰 ${job.salary}</p>
 
-      <p>${job.description}</p>
+        <p>${job.description}</p>
 
-      ${
-        user.role === "Recruiter"
+        <p>
 
-        ?
+          📅 ${job.createdAt
+            ? new Date(job.createdAt).toLocaleDateString()
+            : "N/A"}
 
-        `<button onclick="deleteJob('${job._id}')">
+        </p>
 
-        🗑 Delete
+        ${
 
-        </button>`
+          user.role === "Recruiter"
 
-        :
+          ?
 
-        `<button>
+          `
 
-        📝 Apply
+          <button onclick="editJob('${job._id}')">
 
-        </button>`
+            ✏️ Edit
 
-      }
+          </button>
+
+          <button onclick="deleteJob('${job._id}')">
+
+            🗑 Delete
+
+          </button>
+
+          `
+
+          :
+
+          `
+
+          <button onclick="applyJob('${job._id}')">
+
+            📝 Apply
+
+          </button>
+
+          `
+
+        }
 
       </div>
 
     `;
 
   });
-
-}
-
-// ================= SEARCH JOBS =================
-
-function searchJobs() {
-
-  const text = document
-
-  .getElementById(
-    "searchInput"
-  )
-
-  .value
-
-  .toLowerCase();
-
-  const filtered = allJobs.filter(
-
-    job =>
-
-      job.title.toLowerCase().includes(text)
-
-      ||
-
-      job.company.toLowerCase().includes(text)
-
-  );
-
-  renderJobs(filtered);
 
 }
 

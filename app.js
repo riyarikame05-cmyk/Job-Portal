@@ -204,7 +204,13 @@ app.post("/jobs", verifyToken, async (req, res) => {
       });
     }
 
-    const job = new Job(req.body);
+    const job = new Job({
+
+  ...req.body,
+
+  createdAt: new Date()
+
+});
     await job.save();
 
     console.log("JOB SAVED:", job);
@@ -273,31 +279,73 @@ app.delete("/jobs/:id", verifyToken, async (req, res) => {
 });
 
 
-// ➤ UPDATE JOB//
-app.put("/jobs/:id", async (req, res) => {
+// ➤ UPDATE JOB (RECRUITER ONLY) //
+
+// ➤ UPDATE JOB (RECRUITER ONLY) //
+
+app.put("/jobs/:id", verifyToken, async (req, res) => {
+
   try {
+
+    if (req.user.role !== "Recruiter") {
+
+      return res.status(403).json({
+
+        success: false,
+
+        message: "Only recruiters can update jobs"
+
+      });
+
+    }
+
     const updatedJob = await Job.findByIdAndUpdate(
+
       req.params.id,
+
       req.body,
+
       { new: true }
+
     );
 
     if (!updatedJob) {
-      return res.status(404).json({ message: "Job not found" });
+
+      return res.status(404).json({
+
+        success: false,
+
+        message: "Job not found"
+
+      });
+
     }
 
     res.json({
+
       success: true,
+
       message: "Job updated successfully",
+
       job: updatedJob
+
     });
 
-  } catch (err) {
-    res.status(500).json({ message: err.message });
   }
+
+  catch (err) {
+
+    res.status(500).json({
+
+      success: false,
+
+      message: err.message
+
+    });
+
+  }
+
 });
-
-
 // 🔥 DASHBOARD ROUTE (optional backend page serve) //
 app.get("/dashboard", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "dashboard.html"));
