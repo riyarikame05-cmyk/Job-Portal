@@ -45,45 +45,47 @@ const loginForm = document.getElementById("loginForm");
 
 if (loginForm) {
 
-    loginForm.addEventListener("submit", async (e) => {
+  loginForm.addEventListener("submit", async (e) => {
 
-        e.preventDefault();
+    e.preventDefault();
 
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
+    const res = await fetch("/login", {
 
-        const res = await fetch("/login", {
+      method: "POST",
 
-            method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
 
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-                email,
-                password
-            })
-
-        });
-
-
-        const data = await res.json();
-
-        alert(data.message);
-
-
-       if(data.success){
-
-    localStorage.setItem(
-        "user",
-        JSON.stringify(data.user)
-    );
-
-    window.location.href = "dashboard.html";
-}
+      body: JSON.stringify({
+        email,
+        password
+      })
 
     });
+
+    const data = await res.json();
+
+    alert(data.message);
+
+    if (data.success) {
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify(data.user)
+      );
+
+      localStorage.setItem(
+        "token",
+        data.token
+      );
+
+      window.location.href = "dashboard.html";
+    }
+
+  });
 
 }

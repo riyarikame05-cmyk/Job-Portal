@@ -1,38 +1,29 @@
 const user = JSON.parse(localStorage.getItem("user"));
+const token = localStorage.getItem("token");
 
-if (!user) {
-  window.location.href = "/login.html";
-}
 // ================= LOGIN PROTECTION =================
-const user = localStorage.getItem("user");
-
-if (!user) {
+if (!user || !token) {
   window.location.href = "/login.html";
 }
 
 // ================= INIT =================
 document.addEventListener("DOMContentLoaded", () => {
-
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  // if not logged in → redirect
-  if (!user) {
-    window.location.href = "/login.html";
-  }
-
-  // ONLY recruiter sees post job form
-  if (user.role !== "Recruiter") {
-    const form = document.getElementById("jobFormBox");
-    if (form) {
-      form.style.display = "none";
-    }
-  }
-
+  setupRoleUI();
   loadJobs();
 });
 
 //
-// 🔥 LOAD JOBS FROM BACKEND
+// 🔥 ROLE BASED UI
+//
+function setupRoleUI() {
+  if (user.role !== "Recruiter") {
+    const form = document.getElementById("jobFormBox");
+    if (form) form.style.display = "none";
+  }
+}
+
+//
+// 🔥 LOAD JOBS
 //
 async function loadJobs() {
   try {
@@ -50,7 +41,11 @@ async function loadJobs() {
         <td>${job.title}</td>
         <td>${job.location}</td>
         <td>
-          <button onclick="deleteJob('${job._id}')">Delete</button>
+          ${
+            user.role === "Recruiter"
+              ? `<button onclick="deleteJob('${job._id}')">Delete</button>`
+              : "-"
+          }
         </td>
       `;
 
@@ -63,7 +58,7 @@ async function loadJobs() {
 }
 
 //
-// 🔥 POST NEW JOB
+// 🔥 POST JOB (ONLY RECRUITER)
 //
 async function postJob() {
   const title = document.getElementById("title").value.trim();
@@ -81,7 +76,8 @@ async function postJob() {
     const res = await fetch("/jobs", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token   // 🔥 IMPORTANT FIX
       },
       body: JSON.stringify({
         title,
@@ -97,16 +93,15 @@ async function postJob() {
     if (data.success) {
       alert("Job Posted Successfully 🚀");
 
-      // clear form
       document.getElementById("title").value = "";
       document.getElementById("company").value = "";
       document.getElementById("location").value = "";
       document.getElementById("salary").value = "";
       document.getElementById("description").value = "";
 
-      loadJobs(); // refresh list
+      loadJobs();
     } else {
-      alert("Failed to post job");
+      alert(data.message || "Failed to post job");
     }
 
   } catch (error) {
@@ -115,19 +110,24 @@ async function postJob() {
 }
 
 //
-// 🔥 DELETE JOB
+// 🔥 DELETE JOB (RECRUITER ONLY)
 //
 async function deleteJob(id) {
   try {
     const res = await fetch(`/jobs/${id}`, {
-      method: "DELETE"
+      method: "DELETE",
+      headers: {
+        "Authorization": "Bearer " + token   // 🔥 IMPORTANT FIX
+      }
     });
 
     const data = await res.json();
 
     if (data.success) {
       alert("Job deleted");
-      loadJobs(); // refresh list
+      loadJobs();
+    } else {
+      alert(data.message || "Not allowed");
     }
 
   } catch (error) {
@@ -139,6 +139,6 @@ async function deleteJob(id) {
 // 🔥 LOGOUT
 //
 function logout() {
-  localStorage.removeItem("user");
+  localStorage.clear();
   window.location.href = "/login.html";
 }

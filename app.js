@@ -51,10 +51,16 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // 🔥 REGISTER API//
 app.post("/register", async (req, res) => {
+  
   try {
+    console.log("Register request received");
+console.log(req.body);
+
     const { name, email, password, role } = req.body;
 
-    const existingUser = await User.findOne({ email });
+    const cleanEmail = email.toLowerCase().trim();
+
+    const existingUser = await User.findOne({ email: cleanEmail });
 
     if (existingUser) {
       return res.json({
@@ -66,13 +72,15 @@ app.post("/register", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
-      name,
-      email,
+      name: name.trim(),
+      email: cleanEmail,
       password: hashedPassword,
       role
     });
 
     await newUser.save();
+
+    console.log("USER SAVED:", newUser);
 
     res.json({
       success: true,
@@ -87,34 +95,35 @@ app.post("/register", async (req, res) => {
     });
   }
 });
-
-// 🔥 LOGIN API//
+// 🔥 LOGIN API //
 app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
+    const cleanEmail = email.toLowerCase().trim();
+
+    const user = await User.findOne({ email: cleanEmail });
 
     if (!user) {
-      return res.json({
-        success: false,
-        message: "User not found"
-      });
+      return res.json({ success: false, message: "User not found" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      return res.json({
-        success: false,
-        message: "Invalid password"
-      });
+      return res.json({ success: false, message: "Invalid password" });
     }
 
-    // ✅ SUCCESS LOGIN RESPONSE (YOU MISSED THIS)
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
     res.json({
       success: true,
       message: "Login successful",
+      token,
       user: {
         id: user._id,
         name: user.name,
@@ -133,10 +142,35 @@ app.post("/login", async (req, res) => {
 });
 
 
-    // 🔥 CREATE JWT TOKEN
-    app.post("/jobs", verifyToken, async (req, res) => {
+app.get("/all-users", async (req, res) => {
   try {
 
+    const users = await User.find();
+
+    res.json(users);
+
+  } catch (err) {
+
+    res.status(500).json({
+      message: err.message
+    });
+
+  }
+});
+
+// Get All Jobs//
+app.get("/jobs", async (req, res) => {
+  try {
+    const jobs = await Job.find().sort({ _id: -1 });
+    res.json(jobs);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+//job post//
+app.post("/jobs", verifyToken, async (req, res) => {
+  try {
     if (req.user.role !== "Recruiter") {
       return res.status(403).json({
         success: false,
@@ -144,17 +178,10 @@ app.post("/login", async (req, res) => {
       });
     }
 
-    const { title, company, location, salary, description } = req.body;
-
-    const job = new Job({
-      title,
-      company,
-      location,
-      salary,
-      description
-    });
-
+    const job = new Job(req.body);
     await job.save();
+
+    console.log("JOB SAVED:", job);
 
     res.json({
       success: true,
@@ -163,23 +190,14 @@ app.post("/login", async (req, res) => {
     });
 
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
   }
 });
 
-// Get All Jobs//
-app.get("/jobs", async (req, res) => {
-  try {
-    const jobs = await Job.find().sort({ _id: -1 });
-
-    res.json(jobs);
-
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-// ➤ DELETE JOB//
+// DELETE JOB (RECRUITER ONLY)//
 app.delete("/jobs/:id", verifyToken, async (req, res) => {
   try {
     if (req.user.role !== "Recruiter") {
@@ -191,15 +209,13 @@ app.delete("/jobs/:id", verifyToken, async (req, res) => {
 
     await Job.findByIdAndDelete(req.params.id);
 
-    res.json({
-      success: true,
-      message: "Job deleted"
-    });
+    res.json({ success: true, message: "Job deleted" });
 
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
+
 
 // ➤ UPDATE JOB//
 app.put("/jobs/:id", async (req, res) => {
@@ -236,11 +252,10 @@ app.get("/dashboard", (req, res) => {
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB Connected 🚀");
-
     app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
+      console.log("Server running on port", PORT);
     });
   })
   .catch((err) => {
-    console.log("MongoDB Error ❌", err.message);
+    console.log("MongoDB Error ❌", err);
   });

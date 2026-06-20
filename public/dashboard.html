@@ -17,7 +17,6 @@
 
     <a href="#">🏠 Dashboard</a>
     <a href="#">💼 Jobs</a>
-    <a href="#">➕ Post Job</a>
     <a href="#">👤 Profile</a>
 
     <button onclick="logout()">Logout</button>
@@ -27,7 +26,6 @@
   <main class="main">
 
     <h1>Welcome 👋</h1>
-    <p>Manage jobs, applications and postings</p>
 
     <!-- STATS -->
     <div class="cards">
@@ -37,8 +35,8 @@
       <div class="card">Profile Views <span>56</span></div>
     </div>
 
-    <!-- JOB FORM -->
-    <div class="form-box">
+    <!-- POST JOB (Recruiter only) -->
+    <div class="form-box" id="postJobBox" style="display:none;">
       <h2>Post New Job</h2>
 
       <input id="title" placeholder="Job Title"/>
@@ -50,35 +48,13 @@
       <button onclick="postJob()">Post Job</button>
     </div>
 
-    <!-- JOB TABLE -->
-    <div class="table-box">
-      <h2>Latest Jobs</h2>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Company</th>
-            <th>Title</th>
-            <th>Location</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-
-        <tbody id="jobTableBody"></tbody>
-      </table>
-    </div>
+    <!-- JOBS LIST (CARDS) -->
+    <div class="job-list" id="jobsContainer"></div>
 
   </main>
 </div>
 
 <script src="dashboard.js"></script>
-
-<script>
-function logout(){
-  localStorage.removeItem("user");
-  window.location.href="/login.html";
-}
-</script>
 
 </body>
 </html>
