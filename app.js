@@ -40,6 +40,12 @@ function verifyToken(req, res, next) {
   });
 }
 
+// ⭐ ROOT ROUTE (OPEN REGISTER FIRST)
+app.get("/", (req, res) => {
+  res.redirect("/register.html");
+});
+
+
 // serve frontend//
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -173,11 +179,9 @@ app.get("/jobs", async (req, res) => {
   }
 });
 
-//Delete Job//
+// ➤ DELETE JOB//
 app.delete("/jobs/:id", verifyToken, async (req, res) => {
-
   try {
-
     if (req.user.role !== "Recruiter") {
       return res.status(403).json({
         success: false,
@@ -221,20 +225,10 @@ app.put("/jobs/:id", async (req, res) => {
   }
 });
 
-// ➤ DELETE JOB//
-app.delete("/jobs/:id", async (req, res) => {
-  await Job.findByIdAndDelete(req.params.id);
-  res.json({ success: true });
-});
 
 // 🔥 DASHBOARD ROUTE (optional backend page serve) //
 app.get("/dashboard", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "dashboard.html"));
-});
-
-// 🔥 DEFAULT ROUTE //
-app.get("/", (req, res) => {
-  res.redirect("/register.html");
 });
 
 
