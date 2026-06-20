@@ -1,60 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Job Portal Dashboard</title>
-  <link rel="stylesheet" href="style.css"/>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Job Portal Dashboard</title>
+
+<link rel="stylesheet" href="/css/style.css">
+
 </head>
 
 <body>
 
-<div class="layout">
+<div class="dashboard">
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <h2>JobPortal</h2>
+<!-- Sidebar -->
 
-    <a href="#">🏠 Dashboard</a>
-    <a href="#">💼 Jobs</a>
-    <a href="#">👤 Profile</a>
+<div class="sidebar">
 
-    <button onclick="logout()">Logout</button>
-  </aside>
+<div class="logo">
 
-  <!-- MAIN -->
-  <main class="main">
+💼 JobPortal
 
-    <h1>Welcome 👋</h1>
+</div>
 
-    <!-- STATS -->
-    <div class="cards">
-      <div class="card">Total Jobs <span id="totalJobs">0</span></div>
-      <div class="card">Applications <span>25</span></div>
-      <div class="card">Interviews <span>8</span></div>
-      <div class="card">Profile Views <span>56</span></div>
-    </div>
+<a href="#">🏠 Dashboard</a>
 
-    <!-- POST JOB (Recruiter only) -->
-    <div class="form-box" id="postJobBox" style="display:none;">
-      <h2>Post New Job</h2>
+<a href="#">💼 Jobs</a>
 
-      <input id="title" placeholder="Job Title"/>
-      <input id="company" placeholder="Company"/>
-      <input id="location" placeholder="Location"/>
-      <input id="salary" placeholder="Salary"/>
-      <textarea id="description" placeholder="Description"></textarea>
+<a href="#">❤️ Saved Jobs</a>
 
-      <button onclick="postJob()">Post Job</button>
-    </div>
+<a href="#">📝 Applied Jobs</a>
 
-    <!-- JOBS LIST (CARDS) -->
-    <div class="job-list" id="jobsContainer"></div>
+<a href="#">👤 Profile</a>
 
-  </main>
+<button onclick="logout()">
+
+🚪 Logout
+
+</button>
+
+</div>
+
+
+<!-- Main -->
+
+<div class="main">
+
+
+<div class="header">
+
+<div>
+
+<h1 id="welcomeUser">
+
+Welcome 👋
+
+</h1>
+
+<p id="userRole">
+
+Manage your jobs professionally
+
+</p>
+
+</div>
+
+</div>
+
+
+<div class="cards">
+
+<div class="card">
+
+<h3>Total Jobs</h3>
+
+<h2 id="totalJobs">
+
+0
+
+</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Applied Jobs</h3>
+
+<h2 id="appliedJobs">
+
+0
+
+</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Saved Jobs</h3>
+
+<h2 id="savedJobs">
+
+0
+
+</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Profile</h3>
+
+<h2>
+
+80%
+
+</h2>
+
+</div>
+
+</div>
+
+
+<input
+
+id="searchInput"
+
+placeholder="🔍 Search jobs"
+
+onkeyup="searchJobs()"
+
+>
+
+
+<div id="jobFormBox" class="form-box">
+
+<h2>
+
+➕ Post New Job
+
+</h2>
+
+<input id="title" placeholder="Job Title">
+
+<input id="company" placeholder="Company">
+
+<input id="location" placeholder="Location">
+
+<input id="salary" placeholder="Salary">
+
+<textarea
+
+id="description"
+
+placeholder="Job Description"
+
+></textarea>
+
+<button onclick="postJob()">
+
+Post Job
+
+</button>
+
+</div>
+
+
+<h2>
+
+💼 Latest Jobs
+
+</h2>
+
+<div id="jobsContainer">
+
+</div>
+
+
+<div class="activity">
+
+<h2>
+
+📌 Recent Activity
+
+</h2>
+
+<ul>
+
+<li>
+
+🚀 Welcome to Job Portal
+
+</li>
+
+<li>
+
+💼 Browse latest jobs
+
+</li>
+
+<li>
+
+❤️ Save jobs you like
+
+</li>
+
+</ul>
+
+</div>
+
+
+<footer>
+
+Developed by Riya Rikame ❤️
+
+</footer>
+
+</div>
+
 </div>
 
 <script src="dashboard.js"></script>
 
 </body>
+
 </html>

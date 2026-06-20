@@ -97,75 +97,101 @@ console.log(req.body);
 });
 // 🔥 LOGIN API //
 app.post("/login", async (req, res) => {
+
   try {
+
     const { email, password } = req.body;
+    console.log("Email entered:", email);
+console.log("Password entered:", password);
 
-    const cleanEmail = email.toLowerCase().trim();
+    const cleanEmail = email.trim().toLowerCase();
 
-    const user = await User.findOne({ email: cleanEmail });
+    console.log("LOGIN BODY:", req.body);
+
+    const user = await User.findOne({
+      email: cleanEmail
+    });
+
+    console.log("USER FOUND:", user);
 
     if (!user) {
-      return res.json({ success: false, message: "User not found" });
+
+      return res.json({
+        success: false,
+        message: "User not found"
+      });
+
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(
+      password.trim(),
+      user.password
+    );
+
+    console.log("PASSWORD MATCH:", isMatch);
 
     if (!isMatch) {
-      return res.json({ success: false, message: "Invalid password" });
+
+      return res.json({
+        success: false,
+        message: "Invalid password"
+      });
+
     }
 
     const token = jwt.sign(
-      { id: user._id, role: user.role },
+
+      {
+        id: user._id,
+        role: user.role
+      },
+
       process.env.JWT_SECRET,
-      { expiresIn: "1d" }
+
+      {
+        expiresIn: "1d"
+      }
+
     );
 
     res.json({
+
       success: true,
+
       message: "Login successful",
+
       token,
+
       user: {
+
         id: user._id,
+
         name: user.name,
+
         email: user.email,
+
         role: user.role
+
       }
+
     });
 
-  } catch (error) {
-    console.log(error);
+  }
+
+  catch (error) {
+
+    console.log("LOGIN ERROR:", error);
+
     res.status(500).json({
+
       success: false,
+
       message: "Server error"
-    });
-  }
-});
 
-
-app.get("/all-users", async (req, res) => {
-  try {
-
-    const users = await User.find();
-
-    res.json(users);
-
-  } catch (err) {
-
-    res.status(500).json({
-      message: err.message
     });
 
   }
-});
 
-// Get All Jobs//
-app.get("/jobs", async (req, res) => {
-  try {
-    const jobs = await Job.find().sort({ _id: -1 });
-    res.json(jobs);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
 });
 
 //job post//
@@ -252,12 +278,14 @@ app.get("/dashboard", (req, res) => {
 mongoose.connect(process.env.MONGO_URI, {
   dbName: "jobportal"
 })
-  .then(() => {
-    console.log("MongoDB Connected 🚀");
-    app.listen(PORT, () => {
-      console.log("Server running on port", PORT);
-    });
-  })
-  .catch((err) => {
-    console.log("MongoDB Error ❌", err);
+.then(() => {
+  console.log("MongoDB Connected 🚀");
+
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
   });
+
+})
+.catch((err) => {
+  console.log("MongoDB Error ❌", err);
+});
