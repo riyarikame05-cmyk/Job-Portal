@@ -249,7 +249,9 @@ app.get("/dashboard", (req, res) => {
 
 
 // 🔥 MONGODB CONNECTION //
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI, {
+  dbName: "jobportal"
+})
   .then(() => {
     console.log("MongoDB Connected 🚀");
     app.listen(PORT, () => {
