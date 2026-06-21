@@ -1,11 +1,28 @@
 import mongoose from "mongoose";
 
 const jobSchema = new mongoose.Schema({
+
   title: String,
   company: String,
   location: String,
   salary: String,
-  description: String
+  description: String,
+
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+
+  applicants: [
+    {
+      userId: String,
+      status: {
+        type: String,
+        default: "Applied"
+      }
+    }
+  ]
+
 });
 
 export default mongoose.model("Job", jobSchema);

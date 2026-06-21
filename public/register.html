@@ -1,34 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Register</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register | Job Portal</title>
+
+<link rel="stylesheet" href="/auth.css">
+
 </head>
-<body>
 
-<h2>Register</h2>
+<body class="auth-body">
 
-<form id="registerForm">
-    <input type="text" id="name" placeholder="Name" required><br><br>
+<div class="auth-container">
 
-    <input type="email" id="email" placeholder="Email" required><br><br>
+  <div class="auth-box">
 
-    <input type="password" id="password" placeholder="Password" required><br><br>
+    <h2>🚀 Create Account</h2>
+
+    <p>Join Job Portal today</p>
+
+    <input id="name" type="text" placeholder="👤 Full Name">
+
+    <input id="email" type="email" placeholder="📧 Email">
+
+    <input id="password" type="password" placeholder="🔒 Password">
 
     <select id="role">
-        <option value="JobSeeker">Job Seeker</option>
-        <option value="Recruiter">Recruiter</option>
+
+      <option value="Job Seeker">👨‍💼 Job Seeker</option>
+
+      <option value="Recruiter">🏢 Recruiter</option>
+
     </select>
 
-    <br><br>
+    <button onclick="register()">
 
-    <button type="submit">Register</button>
-</form>
+      Register
 
-<br>
+    </button>
 
-<a href="login.html">Login</a>
+    <p class="switch">
 
-<script src="script.js"></script>
+      Already have an account?
+
+      <a href="/login.html">
+
+        Login
+
+      </a>
+
+    </p>
+
+  </div>
+
+</div>
+
+<script src="/auth.js"></script>
 
 </body>
 </html>

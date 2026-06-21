@@ -278,8 +278,41 @@ app.delete("/jobs/:id", verifyToken, async (req, res) => {
   }
 });
 
+app.post("/apply/:id", verifyToken, async (req, res) => {
+  try {
 
-// ➤ UPDATE JOB (RECRUITER ONLY) //
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+      return res.json({
+        success: false,
+        message: "User not found"
+      });
+    }
+
+    if (user.appliedJobs.includes(req.params.id)) {
+      return res.json({
+        success: false,
+        message: "Already applied"
+      });
+    }
+
+    user.appliedJobs.push(req.params.id);
+    await user.save();
+
+    res.json({
+      success: true,
+      message: "Job applied successfully"
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
+  }
+});
+
 
 // ➤ UPDATE JOB (RECRUITER ONLY) //
 
@@ -346,9 +379,131 @@ app.put("/jobs/:id", verifyToken, async (req, res) => {
   }
 
 });
+
+app.delete("/save/:jobId", verifyToken, async (req, res) => {
+  try {
+
+    await Job.findByIdAndUpdate(req.params.jobId, {
+      $pull: {
+        savedBy: { userId: req.user.id }
+      }
+    });
+
+    res.json({
+      success: true,
+      message: "Removed from saved jobs"
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
+  }
+});
+
+
+app.post("/apply/:id", verifyToken, async (req, res) => {
+
+  try {
+
+    const job = await Job.findById(req.params.id);
+
+    if (!job) {
+      return res.json({
+        success: false,
+        message: "Job not found"
+      });
+    }
+
+    // check already applied
+    const already = job.applicants.find(
+      a => a.userId === req.user.id
+    );
+
+    if (already) {
+      return res.json({
+        success: false,
+        message: "Already applied"
+      });
+    }
+
+    job.applicants.push({
+      userId: req.user.id,
+      status: "Applied"
+    });
+
+    await job.save();
+
+    res.json({
+      success: true,
+      message: "Applied successfully"
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
+  }
+
+});
+
+// ================= MY APPLIED JOBS =================
+
+app.get("/my-applications", verifyToken, async (req, res) => {
+
+  try {
+
+    const jobs = await Job.find();
+
+    const appliedJobs = jobs.filter(job =>
+      job.applicants.some(app => app.userId === req.user.id)
+    );
+
+    res.json({
+      success: true,
+      jobs: appliedJobs
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
+  }
+
+});
+
 // 🔥 DASHBOARD ROUTE (optional backend page serve) //
 app.get("/dashboard", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "dashboard.html"));
+});
+app.get("/analytics", async (req, res) => {
+
+  try {
+
+    const jobs = await Job.find();
+
+    const totalJobs = jobs.length;
+
+    let totalApplicants = 0;
+
+    jobs.forEach(job => {
+      totalApplicants += job.applicants.length;
+    });
+
+    res.json({
+      totalJobs,
+      totalApplicants
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      message: err.message
+    });
+  }
+
 });
 
 
