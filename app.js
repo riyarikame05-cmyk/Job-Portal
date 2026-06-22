@@ -3,43 +3,80 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+
 import path from "path";
 import { fileURLToPath } from "url";
 
 import User from "./models/User.js";
 import Job from "./models/Job.js";
+
+// ================= CONFIG =================
+
 dotenv.config();
-console.log("MONGO_URI =", process.env.MONGO_URI);
+
 const app = express();
+
 const PORT = process.env.PORT || 3000;
 
-// __dirname fix (ES module)//
+// ================= ES MODULE (__dirname FIX) =================
+
 const __filename = fileURLToPath(import.meta.url);
+
 const __dirname = path.dirname(__filename);
 
-// middleware//
+// ================= MIDDLEWARE =================
+
 app.use(express.json());
+
 app.use(express.urlencoded({ extended: true }));
 
+app.use(express.static(path.join(__dirname, "public")));
+
+// ================= CHECK ENV =================
+
+console.log("MONGO_URI =", process.env.MONGO_URI);
+
+// ================= JWT VERIFY =================
+
 function verifyToken(req, res, next) {
+
   const authHeader = req.headers["authorization"];
 
   const token = authHeader && authHeader.split(" ")[1];
 
   if (!token) {
-    return res.status(401).json({ message: "No token provided" });
+
+    return res.status(401).json({
+      message: "No token provided"
+    });
+
   }
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) {
-      return res.status(403).json({ message: "Invalid token" });
+  jwt.verify(
+
+    token,
+
+    process.env.JWT_SECRET,
+
+    (err, user) => {
+
+      if (err) {
+
+        return res.status(403).json({
+          message: "Invalid token"
+        });
+
+      }
+
+      req.user = user;
+
+      next();
+
     }
 
-    req.user = user;
-    next();
-  });
-}
+  );
 
+}
 // ⭐ ROOT ROUTE (OPEN REGISTER FIRST)
 app.get("/", (req, res) => {
   res.redirect("/register.html");
@@ -508,17 +545,27 @@ app.get("/analytics", async (req, res) => {
 
 
 // 🔥 MONGODB CONNECTION //
+
 mongoose.connect(process.env.MONGO_URI, {
   dbName: "jobportal"
 })
+
 .then(() => {
+
   console.log("MongoDB Connected 🚀");
 
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-
 })
+
 .catch((err) => {
+
   console.log("MongoDB Error ❌", err);
+
+});
+
+// SERVER START
+
+app.listen(PORT, () => {
+
+  console.log(`Server running on port ${PORT}`);
+
 });
