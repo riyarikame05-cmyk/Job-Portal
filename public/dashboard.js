@@ -1,14 +1,20 @@
+console.log("dashboard.js loaded");
+
 // ================= USER & TOKEN =================
 
 const user = JSON.parse(localStorage.getItem("user") || "null");
 const token = localStorage.getItem("token");
+
+console.log("USER =", user);
+console.log("TOKEN =", token);
 
 if (!user || !token) {
   window.location.href = "/login.html";
 }
 
 let allJobs = [];
-console.log("Jobs function called");
+
+// ================= PAGE LOAD =================
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -17,45 +23,37 @@ document.addEventListener("DOMContentLoaded", () => {
   let greeting = "Hello";
 
   if (hour < 12) {
-
     greeting = "Good Morning";
-
-  }
-
-  else if (hour < 18) {
-
+  } else if (hour < 18) {
     greeting = "Good Afternoon";
-
-  }
-
-  else {
-
+  } else {
     greeting = "Good Evening";
-
   }
 
-document.getElementById("welcomeUser").innerText = 
+  const welcome = document.getElementById("welcomeUser");
+  const role = document.getElementById("userRole");
 
-  // Employee ke liye Post Job hide
+  if (welcome) {
+    welcome.innerText = `${greeting}, ${user.name} 👋`;
+  }
 
+  if (role) {
+    role.innerText = `Role: ${user.role}`;
+  }
+
+  // Employee ke liye form hide
   if (user.role !== "Recruiter") {
 
     const form = document.getElementById("jobFormBox");
 
     if (form) {
-
       form.style.display = "none";
-
     }
-
   }
 
   loadJobs();
-
   loadAnalytics();
-
 });
-
 
 // ================= ANALYTICS =================
 
@@ -67,22 +65,20 @@ async function loadAnalytics() {
 
     const data = await res.json();
 
-    document.getElementById("totalJobs").innerText =
-      data.totalJobs || 0;
+    const jobs = document.getElementById("totalJobs");
 
-    document.getElementById("totalApplications").innerText =
-      data.totalApplicants || 0;
+    const apps = document.getElementById("totalApplications");
 
-  }
+    if (jobs) jobs.innerText = data.totalJobs || 0;
 
-  catch (err) {
+    if (apps) apps.innerText = data.totalApplicants || 0;
+
+  } catch (err) {
 
     console.log(err);
 
   }
-
 }
-
 
 // ================= LOAD JOBS =================
 
@@ -96,16 +92,12 @@ async function loadJobs() {
 
     renderJobs(allJobs);
 
-  }
-
-  catch (err) {
+  } catch (err) {
 
     console.log(err);
 
   }
-
 }
-
 
 // ================= RENDER JOBS =================
 
@@ -113,22 +105,21 @@ function renderJobs(jobs) {
 
   const container = document.getElementById("jobsContainer");
 
+  if (!container) return;
+
   container.innerHTML = "";
 
-  if (jobs.length === 0) {
+  if (!jobs.length) {
 
     container.innerHTML = "<h3>No Jobs Available</h3>";
 
     return;
-
   }
 
   jobs.forEach(job => {
 
     const alreadyApplied = job.applicants?.some(
-
       a => a.userId === user.id
-
     );
 
     container.innerHTML += `
@@ -148,7 +139,6 @@ function renderJobs(jobs) {
         <p>📅 ${new Date(job.createdAt).toLocaleDateString()}</p>
 
         ${
-
           user.role === "Recruiter"
 
           ?
@@ -196,19 +186,15 @@ function renderJobs(jobs) {
           </button>
 
           `
-
         }
 
       </div>
 
     `;
-
   });
-
 }
 
-
-// ================= APPLY JOB =================
+// ================= APPLY =================
 
 async function applyJob(id) {
 
@@ -234,20 +220,18 @@ async function applyJob(id) {
 
     loadAnalytics();
 
-  }
-
-  catch (err) {
+  } catch (err) {
 
     console.log(err);
 
   }
-
 }
-
 
 // ================= POST JOB =================
 
 async function postJob() {
+
+  console.log("Publish clicked");
 
   const title = document.getElementById("title").value.trim();
 
@@ -264,7 +248,6 @@ async function postJob() {
     alert("Please fill all fields");
 
     return;
-
   }
 
   try {
@@ -299,6 +282,8 @@ async function postJob() {
 
     const data = await res.json();
 
+    console.log(data);
+
     alert(data.message);
 
     if (data.success) {
@@ -316,21 +301,17 @@ async function postJob() {
       loadJobs();
 
       loadAnalytics();
-
     }
 
-  }
-
-  catch (err) {
+  } catch (err) {
 
     console.log(err);
 
+    alert("Unable to publish job");
   }
-
 }
 
-
-// ================= DELETE JOB =================
+// ================= DELETE =================
 
 async function deleteJob(id) {
 
@@ -356,32 +337,20 @@ async function deleteJob(id) {
 
     loadAnalytics();
 
-  }
-
-  catch (err) {
+  } catch (err) {
 
     console.log(err);
 
   }
-
 }
 
-
-// ================= EDIT JOB =================
+// ================= EDIT =================
 
 async function editJob(id) {
 
-  const job = allJobs.find(
+  const job = allJobs.find(j => j._id === id);
 
-    j => j._id === id
-
-  );
-
-  if (!job) {
-
-    return;
-
-  }
+  if (!job) return;
 
   const title = prompt("Title", job.title);
 
@@ -393,11 +362,7 @@ async function editJob(id) {
 
   const description = prompt("Description", job.description);
 
-  if (!title) {
-
-    return;
-
-  }
+  if (!title) return;
 
   try {
 
@@ -435,27 +400,20 @@ async function editJob(id) {
 
     loadJobs();
 
-  }
-
-  catch (err) {
+  } catch (err) {
 
     console.log(err);
 
   }
-
 }
-
 
 // ================= SEARCH =================
 
 function searchJobs() {
 
   const text = document
-
     .getElementById("searchInput")
-
     .value
-
     .toLowerCase();
 
   const filtered = allJobs.filter(
@@ -471,9 +429,7 @@ function searchJobs() {
   );
 
   renderJobs(filtered);
-
 }
-
 
 // ================= LOGOUT =================
 
@@ -482,5 +438,18 @@ function logout() {
   localStorage.clear();
 
   window.location.href = "/login.html";
-
 }
+
+// ================= GLOBAL FUNCTIONS =================
+
+window.postJob = postJob;
+
+window.deleteJob = deleteJob;
+
+window.editJob = editJob;
+
+window.applyJob = applyJob;
+
+window.searchJobs = searchJobs;
+
+window.logout = logout;

@@ -315,41 +315,6 @@ app.delete("/jobs/:id", verifyToken, async (req, res) => {
   }
 });
 
-app.post("/apply/:id", verifyToken, async (req, res) => {
-  try {
-
-    const user = await User.findById(req.user.id);
-
-    if (!user) {
-      return res.json({
-        success: false,
-        message: "User not found"
-      });
-    }
-
-    if (user.appliedJobs.includes(req.params.id)) {
-      return res.json({
-        success: false,
-        message: "Already applied"
-      });
-    }
-
-    user.appliedJobs.push(req.params.id);
-    await user.save();
-
-    res.json({
-      success: true,
-      message: "Job applied successfully"
-    });
-
-  } catch (err) {
-    res.status(500).json({
-      success: false,
-      message: err.message
-    });
-  }
-});
-
 
 // ➤ UPDATE JOB (RECRUITER ONLY) //
 
@@ -546,22 +511,25 @@ app.get("/analytics", async (req, res) => {
 
 // 🔥 MONGODB CONNECTION //
 
-mongoose.connect(process.env.MONGO_URI, {
-  dbName: "jobportal"
-})
+async function connectDB() {
+  try {
 
-.then(() => {
+    await mongoose.connect(process.env.MONGO_URI);
 
-  console.log("MongoDB Connected 🚀");
+    console.log("MongoDB Connected 🚀");
 
-})
+  } catch (error) {
 
-.catch((err) => {
+    console.log("MongoDB Error ❌");
 
-  console.log("MongoDB Error ❌", err);
+    console.log(error);
 
-});
+    process.exit(1);
 
+  }
+}
+
+connectDB();
 // SERVER START
 
 app.listen(PORT, () => {
