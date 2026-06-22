@@ -30,18 +30,24 @@ document.addEventListener("DOMContentLoaded", () => {
     greeting = "Good Evening";
   }
 
+  // Welcome text
+
   const welcome = document.getElementById("welcomeUser");
-  const role = document.getElementById("userRole");
 
   if (welcome) {
     welcome.innerText = `${greeting}, ${user.name} 👋`;
   }
 
+  // User role
+
+  const role = document.getElementById("userRole");
+
   if (role) {
     role.innerText = `Role: ${user.role}`;
   }
 
-  // Employee ke liye form hide
+  // Employee ke liye Post Job hide
+
   if (user.role !== "Recruiter") {
 
     const form = document.getElementById("jobFormBox");
@@ -52,7 +58,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   loadJobs();
+
   loadAnalytics();
+
 });
 
 // ================= ANALYTICS =================
@@ -65,19 +73,20 @@ async function loadAnalytics() {
 
     const data = await res.json();
 
-    const jobs = document.getElementById("totalJobs");
+    document.getElementById("totalJobs").innerText =
+      data.totalJobs || 0;
 
-    const apps = document.getElementById("totalApplications");
+    document.getElementById("totalApplications").innerText =
+      data.totalApplicants || 0;
 
-    if (jobs) jobs.innerText = data.totalJobs || 0;
+  }
 
-    if (apps) apps.innerText = data.totalApplicants || 0;
-
-  } catch (err) {
+  catch (err) {
 
     console.log(err);
 
   }
+
 }
 
 // ================= LOAD JOBS =================
@@ -92,11 +101,14 @@ async function loadJobs() {
 
     renderJobs(allJobs);
 
-  } catch (err) {
+  }
+
+  catch (err) {
 
     console.log(err);
 
   }
+
 }
 
 // ================= RENDER JOBS =================
@@ -114,12 +126,15 @@ function renderJobs(jobs) {
     container.innerHTML = "<h3>No Jobs Available</h3>";
 
     return;
+
   }
 
   jobs.forEach(job => {
 
     const alreadyApplied = job.applicants?.some(
+
       a => a.userId === user.id
+
     );
 
     container.innerHTML += `
@@ -139,6 +154,7 @@ function renderJobs(jobs) {
         <p>📅 ${new Date(job.createdAt).toLocaleDateString()}</p>
 
         ${
+
           user.role === "Recruiter"
 
           ?
@@ -186,15 +202,18 @@ function renderJobs(jobs) {
           </button>
 
           `
+
         }
 
       </div>
 
     `;
+
   });
+
 }
 
-// ================= APPLY =================
+// ================= APPLY JOB =================
 
 async function applyJob(id) {
 
@@ -220,18 +239,21 @@ async function applyJob(id) {
 
     loadAnalytics();
 
-  } catch (err) {
+  }
+
+  catch (err) {
 
     console.log(err);
 
   }
+
 }
 
 // ================= POST JOB =================
 
 async function postJob() {
 
-  console.log("Publish clicked");
+  console.log("Publish button clicked");
 
   const title = document.getElementById("title").value.trim();
 
@@ -248,6 +270,7 @@ async function postJob() {
     alert("Please fill all fields");
 
     return;
+
   }
 
   try {
@@ -286,32 +309,37 @@ async function postJob() {
 
     alert(data.message);
 
-    if (data.success) {
+    // Important
 
-      document.getElementById("title").value = "";
+    await loadJobs();
 
-      document.getElementById("company").value = "";
+    await loadAnalytics();
 
-      document.getElementById("location").value = "";
+    // Clear fields
 
-      document.getElementById("salary").value = "";
+    document.getElementById("title").value = "";
 
-      document.getElementById("description").value = "";
+    document.getElementById("company").value = "";
 
-      loadJobs();
+    document.getElementById("location").value = "";
 
-      loadAnalytics();
-    }
+    document.getElementById("salary").value = "";
 
-  } catch (err) {
+    document.getElementById("description").value = "";
+
+  }
+
+  catch (err) {
 
     console.log(err);
 
     alert("Unable to publish job");
+
   }
+
 }
 
-// ================= DELETE =================
+// ================= DELETE JOB =================
 
 async function deleteJob(id) {
 
@@ -337,18 +365,25 @@ async function deleteJob(id) {
 
     loadAnalytics();
 
-  } catch (err) {
+  }
+
+  catch (err) {
 
     console.log(err);
 
   }
+
 }
 
-// ================= EDIT =================
+// ================= EDIT JOB =================
 
 async function editJob(id) {
 
-  const job = allJobs.find(j => j._id === id);
+  const job = allJobs.find(
+
+    j => j._id === id
+
+  );
 
   if (!job) return;
 
@@ -400,11 +435,14 @@ async function editJob(id) {
 
     loadJobs();
 
-  } catch (err) {
+  }
+
+  catch (err) {
 
     console.log(err);
 
   }
+
 }
 
 // ================= SEARCH =================
@@ -412,8 +450,11 @@ async function editJob(id) {
 function searchJobs() {
 
   const text = document
+
     .getElementById("searchInput")
+
     .value
+
     .toLowerCase();
 
   const filtered = allJobs.filter(
@@ -429,6 +470,7 @@ function searchJobs() {
   );
 
   renderJobs(filtered);
+
 }
 
 // ================= LOGOUT =================
@@ -438,6 +480,7 @@ function logout() {
   localStorage.clear();
 
   window.location.href = "/login.html";
+
 }
 
 // ================= GLOBAL FUNCTIONS =================
