@@ -505,33 +505,38 @@ app.get("/analytics", async (req, res) => {
 
 });
 
-
-// 🔥 MONGODB CONNECTION //
+// ================= MONGODB CONNECTION =================
 
 async function connectDB() {
   try {
+    console.log("Connecting to MongoDB...");
 
-    await mongoose.connect(process.env.MONGO_URI);
+    await mongoose.connect(process.env.MONGO_URI, {
+      serverSelectionTimeoutMS: 10000,
+      family: 4
+    });
 
-    console.log("MongoDB Connected 🚀");
+    console.log("✅ MongoDB Connected");
 
   } catch (error) {
-
-    console.log("MongoDB Error ❌");
-
-    console.log(error);
-
+    console.error("❌ MongoDB Connection Error:");
+    console.error(error);
     process.exit(1);
-
   }
 }
 
-connectDB();
+// ================= START SERVER =================
 
-if (process.env.NODE_ENV !== "production") {
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
+async function startServer() {
+  await connectDB();
+
+  if (process.env.NODE_ENV !== "production") {
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+    });
+  }
 }
+
+startServer();
 
 export default app;
