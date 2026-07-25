@@ -3,19 +3,34 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-<title>Job Portal Dashboard</title>
+    <title>Job Portal Dashboard</title>
 
-<link rel="stylesheet" href="/dashboard.css?v=5">
+    <!-- Google Font -->
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
 
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet"
+          href="/dashboard.css?v=20">
 
 </head>
 
@@ -23,265 +38,809 @@
 
 <div class="dashboard">
 
-  <!-- Sidebar -->
+    <!-- ================================= -->
+    <!-- Sidebar -->
+    <!-- ================================= -->
 
-  <aside class="sidebar">
+    <aside class="sidebar">
 
-    <div class="logo">
+        <div class="logo">
 
-      💼 Job Portal
+            <i class="fa-solid fa-briefcase"></i>
 
-    </div>
+            <span>JobPortal</span>
 
-    <div class="menu">
+        </div>
 
-      <a href="#" class="active">🏠 Dashboard</a>
+        <ul class="sidebar-menu">
 
-      <a href="#">💼 Jobs</a>
+            <li class="active">
 
-      <a href="#">📑 Applications</a>
+                <a href="#">
 
-      <a href="#">⭐ Saved Jobs</a>
+                    <i class="fa-solid fa-house"></i>
 
-      <a href="#">📊 Analytics</a>
+                    Dashboard
 
-      <a href="#">⚙️ Settings</a>
+                </a>
 
-    </div>
+            </li>
 
-    <button class="logout-btn" onclick="logout()">
+            <li>
 
-      🚪 Logout
+                <a href="#">
 
-    </button>
+                    <i class="fa-solid fa-briefcase"></i>
 
-  </aside>
+                    Browse Jobs
 
+                </a>
 
-  <!-- Main Content -->
+            </li>
 
-  <main class="main">
+            <li>
 
-    <!-- Header -->
+                <a href="#">
 
-    <div class="header">
+                    <i class="fa-solid fa-file-lines"></i>
 
-      <div>
+                    Applications
 
-        <h1 id="welcomeUser">
+                </a>
 
-          Welcome 👋
+            </li>
 
-        </h1>
+            <li>
 
-        <p class="subtitle">
+                <a href="#">
 
-          Find, save and manage jobs professionally 🚀
+                    <i class="fa-solid fa-bookmark"></i>
 
-        </p>
+                    Saved Jobs
 
-        <p id="userRole"></p>
+                </a>
 
-      </div>
+            </li>
 
-      <div class="profile">
+            <li>
 
-        👩
+                <a href="#">
 
-      </div>
+                    <i class="fa-solid fa-chart-simple"></i>
 
-    </div>
+                    Analytics
 
+                </a>
 
-    <!-- Analytics Cards -->
+            </li>
 
-    <div class="cards">
+            <li>
 
-      <div class="card">
+                <a href="#">
 
-        <h3>💼 Total Jobs</h3>
+                    <i class="fa-solid fa-user"></i>
 
-        <h1 id="totalJobs">
+                    My Profile
 
-          0
+                </a>
 
-        </h1>
+            </li>
 
-      </div>
+            <li>
 
-      <div class="card">
+                <a href="#">
 
-        <h3>📑 Applications</h3>
+                    <i class="fa-solid fa-gear"></i>
 
-        <h1 id="totalApplications">
+                    Settings
 
-          0
+                </a>
 
-        </h1>
+            </li>
 
-      </div>
+        </ul>
 
-      <div class="card">
+        <button class="logout-btn"
+                onclick="logout()">
 
-        <h3>⭐ Saved Jobs</h3>
+            <i class="fa-solid fa-right-from-bracket"></i>
 
-        <h1 id="savedCount">
+            Logout
 
-          0
+        </button>
 
-        </h1>
+    </aside>
 
-      </div>
+    <!-- ================================= -->
+    <!-- Main Content -->
+    <!-- ================================= -->
 
-      <div class="card">
+    <main class="main-content">
 
-        <h3>🟢 Status</h3>
+        <!-- ================================ -->
+        <!-- Top Navbar -->
+        <!-- ================================ -->
 
-        <h1>
+        <header class="topbar">
 
-          Active
+            <div class="top-left">
 
-        </h1>
+                <h1 id="welcomeUser">
 
-      </div>
+                    Welcome Back 👋
 
-    </div>
+                </h1>
 
+                <p class="subtitle">
 
-    <!-- Search -->
+                    Find your dream career and manage your applications effortlessly.
 
-    <div class="search-box">
+                </p>
 
-      <input
+                <p id="userRole"></p>
 
-      type="text"
+            </div>
 
-      id="searchInput"
+            <div class="top-right">
 
-      placeholder="🔍 Search jobs..."
+                <button class="icon-btn">
 
-      onkeyup="searchJobs()"
+                    <i class="fa-regular fa-bell"></i>
 
-      >
+                </button>
 
-    </div>
+                <button class="icon-btn">
 
+                    <i class="fa-solid fa-gear"></i>
 
-    <!-- Post Job -->
+                </button>
 
-    <div id="jobFormBox" class="form-box">
+                <div class="profile-box">
 
-      <h2>
+                    <img src="https://ui-avatars.com/api/?name=Riya&background=2563eb&color=fff"
+                         alt="Profile">
 
-        🚀 Post New Job
+                </div>
 
-      </h2>
+            </div>
 
-      <input
+        </header>
 
-      id="title"
+        <!-- ================================ -->
+        <!-- Dashboard Cards -->
+        <!-- ================================ -->
 
-      placeholder="Job Title"
+        <section class="dashboard-cards">
 
-      >
+            <div class="dashboard-card blue">
 
-      <input
+                <div class="card-icon">
 
-      id="company"
+                    <i class="fa-solid fa-briefcase"></i>
 
-      placeholder="Company Name"
+                </div>
 
-      >
+                <div>
 
-      <input
+                    <h4>Total Jobs</h4>
 
-      id="location"
+                    <h2 id="totalJobs">
 
-      placeholder="Location"
+                        0
 
-      >
+                    </h2>
 
-      <input
+                    <small>Available Opportunities</small>
 
-      id="salary"
+                </div>
 
-      placeholder="Salary"
+            </div>
 
-      >
+            <div class="dashboard-card green">
 
-      <textarea
+                <div class="card-icon">
 
-      id="description"
+                    <i class="fa-solid fa-file-circle-check"></i>
 
-      placeholder="Job Description"
+                </div>
 
-      ></textarea>
+                <div>
 
-      <button onclick="postJob()">
+                    <h4>Applications</h4>
 
-        Publish Job
+                    <h2 id="totalApplications">
 
-      </button>
+                        0
 
-    </div>
+                    </h2>
 
+                    <small>Jobs Applied</small>
 
-    <!-- Jobs -->
+                </div>
 
-    <h2 class="section-title">
+            </div>
 
-      💼 Latest Jobs
+            <div class="dashboard-card orange">
 
-    </h2>
+                <div class="card-icon">
 
-    <div id="jobsContainer"></div>
+                    <i class="fa-solid fa-bookmark"></i>
 
+                </div>
 
-    <!-- Activity -->
+                <div>
 
-    <div class="activity">
+                    <h4>Saved Jobs</h4>
 
-      <h2>
+                    <h2 id="savedCount">
 
-        📌 Recent Activity
+                        0
 
-      </h2>
+                    </h2>
 
-      <ul>
+                    <small>Bookmarked Jobs</small>
 
-        <li>
+                </div>
 
-          🚀 New jobs posted
+            </div>
 
-        </li>
+            <div class="dashboard-card purple">
 
-        <li>
+                <div class="card-icon">
 
-          ⭐ Saved jobs updated
+                    <i class="fa-solid fa-user-check"></i>
 
-        </li>
+                </div>
 
-        <li>
+                <div>
 
-          📑 Applications updated
+                    <h4>Status</h4>
 
-        </li>
+                    <h2>
 
-      </ul>
+                        Active
 
-    </div>
+                    </h2>
 
+                    <small>Profile Ready</small>
 
-    <footer>
+                </div>
 
-      © 2026 Job Portal | Created by Riya Rikame
+            </div>
 
-    </footer>
+        </section>
 
-  </main>
+                <!-- ================================= -->
+        <!-- Search & Filters -->
+        <!-- ================================= -->
+
+        <section class="search-section">
+
+            <div class="search-box">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search jobs, companies, skills..."
+                    onkeyup="searchJobs()">
+
+            </div>
+
+            <div class="filter-buttons">
+
+                <button>Remote</button>
+
+                <button>Full Time</button>
+
+                <button>Internship</button>
+
+                <button>Hybrid</button>
+
+                <button>Freshers</button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================================= -->
+        <!-- Quick Stats -->
+        <!-- ================================= -->
+
+        <section class="quick-stats">
+
+            <div class="stat-card">
+
+                <i class="fa-solid fa-building"></i>
+
+                <h3>120+</h3>
+
+                <p>Companies Hiring</p>
+
+            </div>
+
+            <div class="stat-card">
+
+                <i class="fa-solid fa-users"></i>
+
+                <h3>350+</h3>
+
+                <p>Active Candidates</p>
+
+            </div>
+
+            <div class="stat-card">
+
+                <i class="fa-solid fa-award"></i>
+
+                <h3>95%</h3>
+
+                <p>Hiring Success</p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================================= -->
+        <!-- Recruiter Job Form -->
+        <!-- ================================= -->
+
+        <section
+            id="jobFormBox"
+            class="job-form">
+
+            <div class="section-heading">
+
+                <h2>
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    Post a New Job
+
+                </h2>
+
+                <p>
+                    Create a new job posting and reach talented candidates.
+                </p>
+
+            </div>
+
+            <div class="form-grid">
+
+                <input
+                    id="title"
+                    type="text"
+                    placeholder="Job Title">
+
+                <input
+                    id="company"
+                    type="text"
+                    placeholder="Company Name">
+
+                <input
+                    id="location"
+                    type="text"
+                    placeholder="Location">
+
+                <input
+                    id="salary"
+                    type="text"
+                    placeholder="Salary">
+
+            </div>
+
+            <textarea
+                id="description"
+                placeholder="Write detailed job description..."></textarea>
+
+            <button
+                class="publish-btn"
+                onclick="postJob()">
+
+                <i class="fa-solid fa-paper-plane"></i>
+
+                Publish Job
+
+            </button>
+
+        </section>
+
+
+
+        <!-- ================================= -->
+        <!-- Recommended Jobs -->
+        <!-- ================================= -->
+
+        <section class="jobs-section">
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>
+
+                        Recommended Jobs
+
+                    </h2>
+
+                    <p>
+
+                        Latest opportunities matching your profile.
+
+                    </p>
+
+                </div>
+
+                <button class="view-all">
+
+                    View All
+
+                </button>
+
+            </div>
+
+
+
+            <!-- JS Will Render Jobs Here -->
+
+            <div id="jobsContainer">
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================================= -->
+        <!-- Tips -->
+        <!-- ================================= -->
+
+        <section class="tips-section">
+
+            <div class="tip-card">
+
+                <i class="fa-solid fa-lightbulb"></i>
+
+                <div>
+
+                    <h3>Profile Tip</h3>
+
+                    <p>
+
+                        Complete your profile to improve visibility for recruiters.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="tip-card">
+
+                <i class="fa-solid fa-file-arrow-up"></i>
+
+                <div>
+
+                    <h3>Resume</h3>
+
+                    <p>
+
+                        Upload your latest resume for faster applications.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="tip-card">
+
+                <i class="fa-solid fa-star"></i>
+
+                <div>
+
+                    <h3>Premium Tip</h3>
+
+                    <p>
+
+                        Save interesting jobs and apply later with one click.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+                <!-- ================================= -->
+        <!-- Dashboard Bottom Section -->
+        <!-- ================================= -->
+
+        <section class="bottom-section">
+
+            <!-- Recent Activity -->
+
+            <div class="activity-card">
+
+                <div class="section-header">
+
+                    <h2>
+
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+
+                        Recent Activity
+
+                    </h2>
+
+                </div>
+
+                <div class="activity-list">
+
+                    <div class="activity-item">
+
+                        <div class="activity-icon blue">
+
+                            <i class="fa-solid fa-paper-plane"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h4>
+
+                                Applied to Frontend Developer
+
+                            </h4>
+
+                            <span>
+
+                                Today • 10:20 AM
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="activity-item">
+
+                        <div class="activity-icon green">
+
+                            <i class="fa-solid fa-bookmark"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h4>
+
+                                Saved MERN Stack Developer
+
+                            </h4>
+
+                            <span>
+
+                                Yesterday
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="activity-item">
+
+                        <div class="activity-icon orange">
+
+                            <i class="fa-solid fa-briefcase"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h4>
+
+                                Recruiter viewed your profile
+
+                            </h4>
+
+                            <span>
+
+                                2 days ago
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Upcoming Interviews -->
+
+            <div class="interview-card">
+
+                <div class="section-header">
+
+                    <h2>
+
+                        <i class="fa-solid fa-calendar-days"></i>
+
+                        Upcoming Interviews
+
+                    </h2>
+
+                </div>
+
+                <div class="interview-item">
+
+                    <h4>
+
+                        Software Engineer
+
+                    </h4>
+
+                    <p>
+
+                        Google India
+
+                    </p>
+
+                    <span>
+
+                        📅 Monday • 11:00 AM
+
+                    </span>
+
+                </div>
+
+                <div class="interview-item">
+
+                    <h4>
+
+                        Full Stack Developer
+
+                    </h4>
+
+                    <p>
+
+                        Infosys
+
+                    </p>
+
+                    <span>
+
+                        📅 Wednesday • 2:30 PM
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================================= -->
+        <!-- Notifications -->
+        <!-- ================================= -->
+
+        <section class="notification-panel">
+
+            <div class="section-header">
+
+                <h2>
+
+                    <i class="fa-solid fa-bell"></i>
+
+                    Notifications
+
+                </h2>
+
+            </div>
+
+            <div class="notification-item">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                <p>
+
+                    Your profile is 95% complete.
+
+                </p>
+
+            </div>
+
+            <div class="notification-item">
+
+                <i class="fa-solid fa-circle-info"></i>
+
+                <p>
+
+                    New jobs matching your skills are available.
+
+                </p>
+
+            </div>
+
+            <div class="notification-item">
+
+                <i class="fa-solid fa-envelope"></i>
+
+                <p>
+
+                    Recruiters can now view your updated profile.
+
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================================= -->
+        <!-- Footer -->
+        <!-- ================================= -->
+
+        <footer class="footer">
+
+            <div class="footer-left">
+
+                <h3>
+
+                    JobPortal
+
+                </h3>
+
+                <p>
+
+                    Connecting talent with opportunities.
+
+                </p>
+
+            </div>
+
+            <div class="footer-right">
+
+                <a href="#">
+
+                    <i class="fab fa-linkedin"></i>
+
+                </a>
+
+                <a href="#">
+
+                    <i class="fab fa-github"></i>
+
+                </a>
+
+                <a href="#">
+
+                    <i class="fas fa-envelope"></i>
+
+                </a>
+
+            </div>
+
+        </footer>
+
+    </main>
 
 </div>
-<script src="/dashboard.js?v=10"></script>
+
+<script src="/dashboard.js?v=20"></script>
 
 </body>
 
