@@ -83,9 +83,6 @@ app.get("/", (req, res) => {
 });
 
 
-// serve frontend//
-app.use(express.static(path.join(__dirname, "public")));
-
 // 🔥 REGISTER API//
 app.post("/register", async (req, res) => {
   
@@ -530,10 +527,11 @@ async function connectDB() {
 }
 
 connectDB();
-// SERVER START
 
-app.listen(PORT, () => {
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
 
-  console.log(`Server running on port ${PORT}`);
-
-});
+export default app;
