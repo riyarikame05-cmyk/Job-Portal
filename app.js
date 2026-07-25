@@ -1,0 +1,539 @@
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
+import path from "path";
+import { fileURLToPath } from "url";
+
+import User from "./models/User.js";
+import Job from "./models/Job.js";
+
+// ================= CONFIG =================
+
+dotenv.config();
+
+const app = express();
+
+const PORT = process.env.PORT || 3000;
+
+// ================= ES MODULE (__dirname FIX) =================
+
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
+
+// ================= MIDDLEWARE =================
+
+app.use(express.json());
+
+app.use(express.urlencoded({ extended: true }));
+
+app.use(express.static(path.join(__dirname, "public")));
+
+// ================= CHECK ENV =================
+
+console.log("MONGO_URI =", process.env.MONGO_URI);
+
+// ================= JWT VERIFY =================
+
+function verifyToken(req, res, next) {
+
+  const authHeader = req.headers["authorization"];
+
+  const token = authHeader && authHeader.split(" ")[1];
+
+  if (!token) {
+
+    return res.status(401).json({
+      message: "No token provided"
+    });
+
+  }
+
+  jwt.verify(
+
+    token,
+
+    process.env.JWT_SECRET,
+
+    (err, user) => {
+
+      if (err) {
+
+        return res.status(403).json({
+          message: "Invalid token"
+        });
+
+      }
+
+      req.user = user;
+
+      next();
+
+    }
+
+  );
+
+}
+// ⭐ ROOT ROUTE (OPEN REGISTER FIRST)
+app.get("/", (req, res) => {
+  res.redirect("/register.html");
+});
+
+
+// serve frontend//
+app.use(express.static(path.join(__dirname, "public")));
+
+// 🔥 REGISTER API//
+app.post("/register", async (req, res) => {
+  
+  try {
+    console.log("Register request received");
+console.log(req.body);
+
+    const { name, email, password, role } = req.body;
+
+    const cleanEmail = email.toLowerCase().trim();
+
+    const existingUser = await User.findOne({ email: cleanEmail });
+
+    if (existingUser) {
+      return res.json({
+        success: false,
+        message: "Email already exists"
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = new User({
+      name: name.trim(),
+      email: cleanEmail,
+      password: hashedPassword,
+      role
+    });
+
+    await newUser.save();
+
+    console.log("USER SAVED:", newUser);
+
+    res.json({
+      success: true,
+      message: "Registration successful"
+    });
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Server error"
+    });
+  }
+});
+// 🔥 LOGIN API //
+app.post("/login", async (req, res) => {
+
+  try {
+
+    const { email, password } = req.body;
+    console.log("Email entered:", email);
+console.log("Password entered:", password);
+
+    const cleanEmail = email.trim().toLowerCase();
+
+    console.log("LOGIN BODY:", req.body);
+
+    const user = await User.findOne({
+      email: cleanEmail
+    });
+
+    console.log("USER FOUND:", user);
+
+    if (!user) {
+
+      return res.json({
+        success: false,
+        message: "User not found"
+      });
+
+    }
+
+    const isMatch = await bcrypt.compare(
+      password.trim(),
+      user.password
+    );
+
+    console.log("PASSWORD MATCH:", isMatch);
+
+    if (!isMatch) {
+
+      return res.json({
+        success: false,
+        message: "Invalid password"
+      });
+
+    }
+
+    const token = jwt.sign(
+
+      {
+        id: user._id,
+        role: user.role
+      },
+
+      process.env.JWT_SECRET,
+
+      {
+        expiresIn: "1d"
+      }
+
+    );
+
+    res.json({
+
+      success: true,
+
+      message: "Login successful",
+
+      token,
+
+      user: {
+
+        id: user._id,
+
+        name: user.name,
+
+        email: user.email,
+
+        role: user.role
+
+      }
+
+    });
+
+  }
+
+  catch (error) {
+
+    console.log("LOGIN ERROR:", error);
+
+    res.status(500).json({
+
+      success: false,
+
+      message: "Server error"
+
+    });
+
+  }
+
+});
+
+//job post//
+app.post("/jobs", verifyToken, async (req, res) => {
+  try {
+    if (req.user.role !== "Recruiter") {
+      return res.status(403).json({
+        success: false,
+        message: "Only recruiters can post jobs"
+      });
+    }
+
+    const job = new Job({
+
+  ...req.body,
+
+  createdAt: new Date()
+
+});
+    await job.save();
+
+    console.log("JOB SAVED:", job);
+
+    res.json({
+      success: true,
+      message: "Job created successfully",
+      job
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
+  }
+});
+
+
+// GET ALL JOBS //
+
+app.get("/jobs", async (req, res) => {
+
+  try {
+
+    const jobs = await Job.find().sort({
+      _id: -1
+    });
+
+    res.json(jobs);
+
+  }
+
+  catch (err) {
+
+    res.status(500).json({
+
+      success: false,
+
+      message: err.message
+
+    });
+
+  }
+
+});
+
+
+// DELETE JOB (RECRUITER ONLY)//
+app.delete("/jobs/:id", verifyToken, async (req, res) => {
+  try {
+    if (req.user.role !== "Recruiter") {
+      return res.status(403).json({
+        success: false,
+        message: "Not allowed"
+      });
+    }
+
+    await Job.findByIdAndDelete(req.params.id);
+
+    res.json({ success: true, message: "Job deleted" });
+
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
+// ➤ UPDATE JOB (RECRUITER ONLY) //
+
+app.put("/jobs/:id", verifyToken, async (req, res) => {
+
+  try {
+
+    if (req.user.role !== "Recruiter") {
+
+      return res.status(403).json({
+
+        success: false,
+
+        message: "Only recruiters can update jobs"
+
+      });
+
+    }
+
+    const updatedJob = await Job.findByIdAndUpdate(
+
+      req.params.id,
+
+      req.body,
+
+      { new: true }
+
+    );
+
+    if (!updatedJob) {
+
+      return res.status(404).json({
+
+        success: false,
+
+        message: "Job not found"
+
+      });
+
+    }
+
+    res.json({
+
+      success: true,
+
+      message: "Job updated successfully",
+
+      job: updatedJob
+
+    });
+
+  }
+
+  catch (err) {
+
+    res.status(500).json({
+
+      success: false,
+
+      message: err.message
+
+    });
+
+  }
+
+});
+
+app.delete("/save/:jobId", verifyToken, async (req, res) => {
+  try {
+
+    await Job.findByIdAndUpdate(req.params.jobId, {
+      $pull: {
+        savedBy: { userId: req.user.id }
+      }
+    });
+
+    res.json({
+      success: true,
+      message: "Removed from saved jobs"
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
+  }
+});
+
+
+app.post("/apply/:id", verifyToken, async (req, res) => {
+
+  try {
+
+    const job = await Job.findById(req.params.id);
+
+    if (!job) {
+      return res.json({
+        success: false,
+        message: "Job not found"
+      });
+    }
+
+    // check already applied
+    const already = job.applicants.find(
+      a => a.userId === req.user.id
+    );
+
+    if (already) {
+      return res.json({
+        success: false,
+        message: "Already applied"
+      });
+    }
+
+    job.applicants.push({
+      userId: req.user.id,
+      status: "Applied"
+    });
+
+    await job.save();
+
+    res.json({
+      success: true,
+      message: "Applied successfully"
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
+  }
+
+});
+
+// ================= MY APPLIED JOBS =================
+
+app.get("/my-applications", verifyToken, async (req, res) => {
+
+  try {
+
+    const jobs = await Job.find();
+
+    const appliedJobs = jobs.filter(job =>
+      job.applicants.some(app => app.userId === req.user.id)
+    );
+
+    res.json({
+      success: true,
+      jobs: appliedJobs
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
+  }
+
+});
+
+// 🔥 DASHBOARD ROUTE (optional backend page serve) //
+app.get("/dashboard", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "dashboard.html"));
+});
+app.get("/analytics", async (req, res) => {
+
+  try {
+
+    const jobs = await Job.find();
+
+    const totalJobs = jobs.length;
+
+    let totalApplicants = 0;
+
+    jobs.forEach(job => {
+      totalApplicants += job.applicants.length;
+    });
+
+    res.json({
+      totalJobs,
+      totalApplicants
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      message: err.message
+    });
+  }
+
+});
+
+
+// 🔥 MONGODB CONNECTION //
+
+async function connectDB() {
+  try {
+
+    await mongoose.connect(process.env.MONGO_URI);
+
+    console.log("MongoDB Connected 🚀");
+
+  } catch (error) {
+
+    console.log("MongoDB Error ❌");
+
+    console.log(error);
+
+    process.exit(1);
+
+  }
+}
+
+connectDB();
+// SERVER START
+
+app.listen(PORT, () => {
+
+  console.log(`Server running on port ${PORT}`);
+
+});

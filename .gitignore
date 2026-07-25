@@ -1,0 +1,4 @@
+node_modules
+.env
+testmongo.js
+mongo-test.js
