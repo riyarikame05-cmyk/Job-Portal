@@ -536,15 +536,15 @@ await mongoose.connect(process.env.MONGO_URI, {
 // ================= START SERVER =================
 
 async function startServer() {
+
   await connectDB();
 
-  if (process.env.NODE_ENV !== "production") {
-    app.listen(PORT, () => {
-      console.log(`🚀 Server running on port ${PORT}`);
-    });
-  }
+  app.listen(PORT, () => {
+
+    console.log(`🚀 Server running on port ${PORT}`);
+
+  });
+
 }
 
 startServer();
-
-export default app;

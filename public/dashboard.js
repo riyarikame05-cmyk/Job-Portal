@@ -134,6 +134,7 @@ async function loadAnalytics(){
         const response=await fetch("/analytics");
 
         const data=await response.json();
+        console.log("ANALYTICS DATA:",data);
 
         document.getElementById("totalJobs").innerText=
 
