@@ -3,12 +3,21 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import dns from "dns";
 
 import path from "path";
 import { fileURLToPath } from "url";
 
 import User from "./models/User.js";
 import Job from "./models/Job.js";
+
+
+// ================= DNS FIX =================
+
+dns.setServers([
+  "8.8.8.8",
+  "8.8.4.4"
+]);
 
 // ================= CONFIG =================
 
@@ -511,10 +520,9 @@ async function connectDB() {
   try {
     console.log("Connecting to MongoDB...");
 
-    await mongoose.connect(process.env.MONGO_URI, {
-      serverSelectionTimeoutMS: 10000,
-      family: 4
-    });
+await mongoose.connect(process.env.MONGO_URI, {
+  serverSelectionTimeoutMS: 30000
+});
 
     console.log("✅ MongoDB Connected");
 
