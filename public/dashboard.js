@@ -168,73 +168,98 @@ async function loadAnalytics() {
 // LOAD JOBS
 // ======================================================
 
-async function loadJobs() {
+async function loadJobs(){
 
-    const container =
-        document.getElementById("jobsContainer");
+    try{
 
-    if (container) {
+        const response = await fetch("/jobs");
 
-        container.innerHTML = `
 
-        <div class="loading">
+        const data = await response.json();
 
-            <i class="fa-solid fa-spinner fa-spin"></i>
 
-            <p>Loading Jobs...</p>
+        console.log("Jobs API:",data);
 
-        </div>
 
-        `;
+        const jobs = data.jobs;
 
-    }
 
-    try {
+        document.getElementById("totalJobs").innerText =
+        jobs.length;
 
-        const response =
-            await fetch("/jobs");
 
-        if (!response.ok) {
 
-            throw new Error("Unable to fetch jobs");
+        const container =
+        document.getElementById("jobContainer");
+
+
+        if(!jobs.length){
+
+            container.innerHTML = `
+                <h3>No Jobs Available</h3>
+            `;
+
+            return;
 
         }
 
-        allJobs =
-            await response.json();
 
-        console.log("Jobs Loaded:", allJobs);
 
-        renderJobs(allJobs);
+        container.innerHTML = jobs.map(job=>{
 
-    }
 
-    catch (error) {
+            return `
 
-        console.error(error);
+            <div class="job-card">
 
-        if (container) {
+                <h3>${job.title}</h3>
 
-            container.innerHTML = `
+                <h4>${job.company}</h4>
 
-            <div class="empty-state">
+                <p>
+                📍 ${job.location}
+                </p>
 
-                <i class="fa-solid fa-triangle-exclamation fa-3x"></i>
+                <p>
+                💰 ${job.salary}
+                </p>
 
-                <h2>Unable to load jobs</h2>
+                <p>
+                ${job.description}
+                </p>
 
-                <p>Please refresh the page.</p>
+
+                <button onclick="applyJob('${job._id}')">
+                    Apply
+                </button>
+
+
+                <button onclick="saveJob('${job._id}')">
+                    Save
+                </button>
+
 
             </div>
 
             `;
 
-        }
+
+        }).join("");
+
+
+
+    }
+
+    catch(error){
+
+        console.log(
+            "Job loading error",
+            error
+        );
 
     }
 
 }
-
 
 
 // ======================================================
