@@ -1,27 +1,98 @@
 import mongoose from "mongoose";
 
+
 const userSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  password: String,
-  role: String,
 
-  // ⭐ ADD THIS
-  appliedJobs: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Job",
-      default: []
-    }
-  ],
 
-  savedJobs: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Job",
-      default: []
-    }
-  ]
+    name: {
+
+        type:String,
+
+        required:true,
+
+        trim:true
+
+    },
+
+
+    email: {
+
+        type:String,
+
+        required:true,
+
+        unique:true,
+
+        lowercase:true,
+
+        trim:true
+
+    },
+
+
+    password: {
+
+        type:String,
+
+        required:true
+
+    },
+
+
+    role: {
+
+        type:String,
+
+        enum:[
+
+            "Recruiter",
+
+            "Job Seeker"
+
+        ],
+
+        required:true
+
+    },
+
+
+    appliedJobs:[
+
+        {
+
+            type:mongoose.Schema.Types.ObjectId,
+
+            ref:"Job"
+
+        }
+
+    ],
+
+
+    savedJobs:[
+
+        {
+
+            type:mongoose.Schema.Types.ObjectId,
+
+            ref:"Job"
+
+        }
+
+    ]
+
+
+},
+
+
+{
+
+    timestamps:true
+
 });
 
-export default mongoose.model("User", userSchema);
+
+export default mongoose.model(
+    "User",
+    userSchema
+);
