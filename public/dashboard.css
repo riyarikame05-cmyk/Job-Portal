@@ -1,148 +1,34 @@
-/* ==========================================================
-   DASHBOARD PREMIUM UI
-   PART 1 : GLOBAL + SIDEBAR + TOPBAR
-========================================================== */
+/* =========================================================
+   JOB PORTAL PREMIUM DASHBOARD CSS
+========================================================= */
 
 
-/* ==========================================================
-   GOOGLE FONT
-========================================================== */
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
-
-
-/* ==========================================================
-   ROOT VARIABLES
-========================================================== */
-
-:root{
-
-    --primary:#2563eb;
-    --primary-dark:#1d4ed8;
-
-    --secondary:#7c3aed;
-
-    --success:#16a34a;
-    --danger:#dc2626;
-    --warning:#f59e0b;
-
-    --dark:#0f172a;
-    --text:#334155;
-    --muted:#64748b;
-
-    --white:#ffffff;
-
-    --bg:
-    radial-gradient(
-        circle at top left,
-        rgba(37,99,235,.18),
-        transparent 35%
-    ),
-    radial-gradient(
-        circle at bottom right,
-        rgba(124,58,237,.15),
-        transparent 35%
-    ),
-    #f8fafc;
-
-
-    --glass:
-    rgba(255,255,255,.75);
-
-
-    --border:
-    rgba(255,255,255,.4);
-
-
-    --shadow:
-    0 20px 40px rgba(15,23,42,.08);
-
-
-    --shadow-hover:
-    0 25px 60px rgba(37,99,235,.18);
-
-
-    --radius:22px;
-
-}
-
-
-
-/* ==========================================================
-   RESET
-========================================================== */
-
+/* ================= RESET ================= */
 
 *{
-
     margin:0;
     padding:0;
     box-sizing:border-box;
-
-}
-
-
-html{
-
-    scroll-behavior:smooth;
-
+    font-family:'Poppins','Segoe UI',sans-serif;
 }
 
 
 body{
 
-    font-family:
-    'Inter',
-    sans-serif;
-
     background:
-    var(--bg);
+    radial-gradient(circle at top left,#dbeafe,transparent 35%),
+    linear-gradient(135deg,#f8fafc,#eef2ff);
 
-    color:
-    var(--text);
+    color:#1e293b;
 
     min-height:100vh;
 
-    overflow-x:hidden;
-
 }
 
 
+/* ================= DASHBOARD WRAPPER ================= */
 
-a{
-
-    text-decoration:none;
-    color:inherit;
-
-}
-
-
-button,
-input,
-textarea,
-select{
-
-    font-family:inherit;
-
-}
-
-
-img{
-
-    max-width:100%;
-    display:block;
-
-}
-
-
-
-/* ==========================================================
-   DASHBOARD MAIN WRAPPER
-========================================================== */
-
-
-.dashboard-wrapper{
+.dashboard{
 
     display:flex;
 
@@ -151,14 +37,12 @@ img{
 }
 
 
-
-/* ==========================================================
+/* =========================================================
    SIDEBAR
-========================================================== */
+========================================================= */
 
 
 .sidebar{
-
 
     width:270px;
 
@@ -170,454 +54,279 @@ img{
 
     top:0;
 
-    padding:28px 20px;
-
-
     background:
+    rgba(255,255,255,.85);
 
-    linear-gradient(
-        180deg,
-        rgba(255,255,255,.9),
-        rgba(248,250,252,.75)
-    );
+    backdrop-filter:blur(15px);
 
+    border-right:1px solid #e2e8f0;
 
-    backdrop-filter:
-    blur(18px);
+    padding:30px 22px;
 
-
-    border-right:
-    1px solid
-    rgba(226,232,240,.8);
-
-
-    z-index:1000;
-
-
-    transition:.35s ease;
-
+    z-index:10;
 
 }
 
 
+/* LOGO */
 
 
-/* Sidebar Logo */
+.logo{
 
-
-.sidebar-logo{
-
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    margin-bottom:40px;
-
-}
-
-
-
-.sidebar-logo .logo-icon{
-
-
-    width:45px;
-
-    height:45px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-
-    border-radius:14px;
-
-
-    background:
-
-    linear-gradient(
-        135deg,
-        var(--primary),
-        var(--secondary)
-    );
-
-
-    color:white;
-
-    font-size:22px;
+    font-size:30px;
 
     font-weight:800;
 
+    color:#2563eb;
 
-    box-shadow:
-    0 10px 25px rgba(37,99,235,.3);
-
-}
-
-
-
-
-.sidebar-logo h2{
-
-
-    font-size:22px;
-
-    font-weight:800;
-
-    color:
-    var(--dark);
+    letter-spacing:-1px;
 
 }
 
 
 
+.logo small{
 
-/* ==========================================================
-   SIDEBAR MENU
-========================================================== */
+    display:block;
 
-
-.sidebar-menu{
-
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:10px;
-
-}
-
-
-
-.sidebar-menu a{
-
-
-    display:flex;
-
-    align-items:center;
-
-    gap:15px;
-
-
-    padding:14px 16px;
-
-
-    border-radius:16px;
-
-
-    color:
-    var(--muted);
-
+    color:#64748b;
 
     font-size:15px;
 
-    font-weight:600;
+    font-weight:500;
 
-
-    transition:.3s ease;
-
-
-    position:relative;
-
+    margin-top:5px;
 
 }
 
 
 
-
-.sidebar-menu a i{
-
-
-    font-size:18px;
-
-    width:22px;
-
-}
+/* MENU */
 
 
+.menu{
 
-.sidebar-menu a:hover{
-
-
-    background:
-    rgba(37,99,235,.08);
-
-
-    color:
-    var(--primary);
-
-
-    transform:
-    translateX(5px);
+    margin-top:40px;
 
 }
 
 
 
-
-.sidebar-menu a.active{
-
-
-    background:
-
-    linear-gradient(
-        135deg,
-        rgba(37,99,235,.15),
-        rgba(124,58,237,.12)
-    );
-
-
-    color:
-    var(--primary);
-
-}
-
-
-
-
-.sidebar-menu a.active::before{
-
-
-    content:"";
-
-
-    position:absolute;
-
-    left:0;
-
-    height:60%;
-
-    width:4px;
-
-
-    background:
-
-    linear-gradient(
-        var(--primary),
-        var(--secondary)
-    );
-
-
-    border-radius:20px;
-
-
-}
-
-
-
-
-
-/* ==========================================================
-   SIDEBAR PROFILE
-========================================================== */
-
-
-.sidebar-profile{
-
-
-    position:absolute;
-
-
-    bottom:25px;
-
-    left:20px;
-
-    right:20px;
-
-
-    padding:18px;
-
-
-    border-radius:20px;
-
-
-    background:
-
-    rgba(255,255,255,.8);
-
-
-    backdrop-filter:
-    blur(15px);
-
-
-    box-shadow:
-    var(--shadow);
-
+.menu a{
 
     display:flex;
 
     align-items:center;
 
-    gap:12px;
+    gap:18px;
 
+    padding:15px 18px;
 
-}
+    margin-bottom:12px;
 
+    border-radius:16px;
 
+    text-decoration:none;
 
-.sidebar-profile img{
+    color:#64748b;
 
+    font-size:17px;
 
-    width:45px;
-
-    height:45px;
-
-    border-radius:50%;
-
-    object-fit:cover;
-
-
-}
-
-
-
-.sidebar-profile h4{
-
-
-    font-size:14px;
-
-    color:var(--dark);
-
-
-}
-
-
-.sidebar-profile span{
-
-
-    font-size:12px;
-
-    color:var(--muted);
-
-
-}
-
-
-
-
-/* ==========================================================
-   MAIN CONTENT AREA
-========================================================== */
-
-
-.main-content{
-
-
-    margin-left:270px;
-
-
-    width:calc(100% - 270px);
-
-
-    padding:30px;
-
+    font-weight:600;
 
     transition:.3s ease;
 
+}
+
+
+
+.menu a:hover{
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+    transform:translateX(5px);
+
+}
+
+
+
+.menu a.active{
+
+    background:#2563eb;
+
+    color:white;
+
+    box-shadow:
+    0 10px 25px rgba(37,99,235,.35);
+
+}
+
+
+
+/* LOGOUT */
+
+
+.logout{
+
+    position:absolute;
+
+    bottom:30px;
+
+    left:22px;
+
+    right:22px;
+
+}
+
+
+
+.logout button{
+
+    width:100%;
+
+    border:none;
+
+    padding:14px;
+
+    border-radius:15px;
+
+    background:#ef4444;
+
+    color:white;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+
+.logout button:hover{
+
+    background:#dc2626;
+
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+
+.main{
+
+    margin-left:270px;
+
+    width:calc(100% - 270px);
+
+    padding:35px;
 
 }
 
 
 
 
-/* ==========================================================
-   TOPBAR
-========================================================== */
+/* =========================================================
+   TOP HEADER
+========================================================= */
 
 
 .topbar{
 
+    background:white;
 
-    width:100%;
+    padding:35px;
 
+    border-radius:30px;
 
     display:flex;
 
-
     justify-content:space-between;
-
 
     align-items:center;
 
-
-    margin-bottom:30px;
-
-
-    padding:20px 25px;
-
-
-    border-radius:var(--radius);
-
-
-    background:
-    var(--glass);
-
-
-    backdrop-filter:
-    blur(20px);
-
-
-    border:
-    1px solid
-    var(--border);
-
+    gap:25px;
 
     box-shadow:
-    var(--shadow);
 
+    0 20px 40px rgba(15,23,42,.08);
 
 }
 
 
 
+.welcome h1{
 
-.topbar-left h1{
-
-
-    font-size:30px;
-
+    font-size:42px;
 
     font-weight:800;
 
-
-    color:
-    var(--dark);
-
+    color:#334155;
 
 }
 
 
 
-.topbar-left p{
+.welcome p{
 
+    margin-top:8px;
 
-    margin-top:5px;
+    color:#64748b;
 
-
-    color:
-    var(--muted);
-
-
-    font-size:14px;
-
+    font-size:18px;
 
 }
 
 
 
-
-/* ==========================================================
-   TOPBAR ACTIONS
-========================================================== */
+/* SEARCH */
 
 
-.topbar-actions{
+.search-box{
 
+    flex:1;
+
+    max-width:350px;
+
+}
+
+
+
+.search-box input{
+
+    width:100%;
+
+    padding:17px 22px;
+
+    border-radius:18px;
+
+    border:1px solid #dbeafe;
+
+    outline:none;
+
+    font-size:16px;
+
+}
+
+
+
+.search-box input:focus{
+
+    border-color:#2563eb;
+
+}
+
+
+
+/* PROFILE */
+
+
+.profile{
 
     display:flex;
 
@@ -625,21 +334,21 @@ img{
 
     gap:15px;
 
-
 }
 
 
 
-.notification-btn{
+.avatar{
 
+    width:70px;
 
-    width:45px;
+    height:70px;
 
-    height:45px;
+    background:#2563eb;
 
+    color:white;
 
     border-radius:50%;
-
 
     display:flex;
 
@@ -647,322 +356,42 @@ img{
 
     align-items:center;
 
+    font-size:28px;
 
-    background:white;
-
-
-    color:
-    var(--primary);
-
-
-    box-shadow:
-    var(--shadow);
-
-
-    cursor:pointer;
-
-
-    transition:.3s;
-
+    font-weight:700;
 
 }
 
 
 
-.notification-btn:hover{
+.profile h3{
 
-
-    transform:
-    translateY(-4px);
-
-
-    box-shadow:
-    var(--shadow-hover);
-
+    font-size:18px;
 
 }
 
 
+.profile span{
 
-.profile-btn{
-
-
-    padding:10px 18px;
-
-
-    border-radius:30px;
-
-
-    background:
-
-    linear-gradient(
-        135deg,
-        var(--primary),
-        var(--secondary)
-    );
-
-
-    color:white;
-
-
-    font-weight:600;
-
-
-    cursor:pointer;
-
+    color:#64748b;
 
 }
 
 
+/* =========================================================
+   STAT CARDS
+========================================================= */
 
-/* ==========================================================
-   GLASS CARD BASE
-========================================================== */
 
+.stats{
 
-.glass-card{
-
-
-    background:
-    var(--glass);
-
-
-    backdrop-filter:
-    blur(20px);
-
-
-    border:
-    1px solid
-    var(--border);
-
-
-    border-radius:
-    var(--radius);
-
-
-    box-shadow:
-    var(--shadow);
-
-
-    transition:.35s ease;
-
-
-}
-
-
-
-.glass-card:hover{
-
-
-    transform:
-    translateY(-6px);
-
-
-    box-shadow:
-    var(--shadow-hover);
-
-
-}
-
-
-
-
-
-/* ==========================================================
-   SCROLLBAR
-========================================================== */
-
-
-::-webkit-scrollbar{
-
-
-    width:8px;
-
-
-}
-
-
-::-webkit-scrollbar-track{
-
-
-    background:#e2e8f0;
-
-
-}
-
-
-::-webkit-scrollbar-thumb{
-
-
-    background:
-
-    linear-gradient(
-        var(--primary),
-        var(--secondary)
-    );
-
-
-    border-radius:20px;
-
-
-}
-
-
-
-
-/* ==========================================================
-   GLOBAL ANIMATIONS
-========================================================== */
-
-
-@keyframes fadeUp{
-
-
-    from{
-
-        opacity:0;
-
-        transform:
-        translateY(25px);
-
-    }
-
-
-    to{
-
-        opacity:1;
-
-        transform:
-        translateY(0);
-
-    }
-
-
-}
-
-
-
-
-@keyframes slideLeft{
-
-
-    from{
-
-        opacity:0;
-
-        transform:
-        translateX(-30px);
-
-    }
-
-
-    to{
-
-        opacity:1;
-
-        transform:
-        translateX(0);
-
-    }
-
-
-}
-
-
-
-
-@keyframes pulse{
-
-
-    0%{
-
-        transform:scale(1);
-
-    }
-
-
-    50%{
-
-        transform:scale(1.05);
-
-    }
-
-
-    100%{
-
-        transform:scale(1);
-
-    }
-
-
-}
-
-
-
-
-.fade-up{
-
-    animation:
-    fadeUp .6s ease forwards;
-
-}
-
-
-.slide-left{
-
-    animation:
-    slideLeft .6s ease forwards;
-
-}
-
-
-
-/* ==========================================================
-   END OF PART 1
-========================================================== */
-/* ==========================================================
-   PART 2 : DASHBOARD CARDS + SEARCH + FILTERS + FORMS
-========================================================== */
-
-
-
-/* ==========================================================
-   DASHBOARD GRID
-========================================================== */
-
-
-.dashboard-container{
-
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:30px;
-
-
-}
-
-
-
-/* ==========================================================
-   STAT CARDS SECTION
-========================================================== */
-
-
-.stats-grid{
-
+    margin-top:35px;
 
     display:grid;
 
+    grid-template-columns:repeat(4,1fr);
 
-    grid-template-columns:
-
-    repeat(4,1fr);
-
-
-    gap:22px;
-
+    gap:25px;
 
 }
 
@@ -970,2852 +399,332 @@ img{
 
 .stat-card{
 
+    background:white;
 
-    padding:25px;
+    padding:28px;
 
-
-    border-radius:24px;
-
-
-    background:
-
-    rgba(255,255,255,.75);
-
-
-    backdrop-filter:
-    blur(20px);
-
-
-    border:
-    1px solid
-    rgba(255,255,255,.5);
-
+    border-radius:25px;
 
     box-shadow:
-    var(--shadow);
 
+    0 15px 35px rgba(15,23,42,.07);
 
-    display:flex;
-
-
-    justify-content:space-between;
-
-
-    align-items:center;
-
-
-    position:relative;
-
-
-    overflow:hidden;
-
-
-    transition:.35s ease;
-
+    transition:.3s;
 
 }
-
-
-
-
-.stat-card::before{
-
-
-    content:"";
-
-
-    position:absolute;
-
-
-    width:120px;
-
-
-    height:120px;
-
-
-    right:-40px;
-
-
-    top:-40px;
-
-
-    border-radius:50%;
-
-
-    background:
-
-    linear-gradient(
-        135deg,
-        rgba(37,99,235,.15),
-        rgba(124,58,237,.1)
-    );
-
-
-}
-
 
 
 
 .stat-card:hover{
 
-
-    transform:
-    translateY(-8px);
-
-
-    box-shadow:
-    var(--shadow-hover);
-
+    transform:translateY(-8px);
 
 }
 
 
 
+.stat-card .icon{
 
-.stat-info h3{
+    width:50px;
 
+    height:50px;
 
-    font-size:32px;
+    border-radius:15px;
 
-
-    font-weight:800;
-
-
-    color:
-    var(--dark);
-
-
-    margin-bottom:5px;
-
-
-}
-
-
-
-.stat-info p{
-
-
-    font-size:14px;
-
-
-    color:
-    var(--muted);
-
-
-    font-weight:600;
-
-
-}
-
-
-
-
-
-.stat-icon{
-
-
-    width:60px;
-
-
-    height:60px;
-
-
-    border-radius:18px;
-
+    background:#eff6ff;
 
     display:flex;
-
-
-    align-items:center;
-
 
     justify-content:center;
 
+    align-items:center;
 
     font-size:25px;
 
-
-    color:white;
-
-
-    background:
-
-
-    linear-gradient(
-        135deg,
-        var(--primary),
-        var(--secondary)
-    );
-
-
-    box-shadow:
-    0 15px 30px rgba(37,99,235,.25);
-
-
 }
 
 
 
+.stat-card h3{
 
-.stat-card:nth-child(2)
-.stat-icon{
+    margin-top:20px;
 
-
-    background:
-    linear-gradient(
-        135deg,
-        #16a34a,
-        #22c55e
-    );
-
-}
-
-
-
-.stat-card:nth-child(3)
-.stat-icon{
-
-
-    background:
-    linear-gradient(
-        135deg,
-        #f59e0b,
-        #f97316
-    );
-
-}
-
-
-
-.stat-card:nth-child(4)
-.stat-icon{
-
-
-    background:
-    linear-gradient(
-        135deg,
-        #ef4444,
-        #ec4899
-    );
-
-}
-
-
-
-
-
-/* ==========================================================
-   SECTION HEADER
-========================================================== */
-
-
-.section-header{
-
-
-    display:flex;
-
-
-    justify-content:space-between;
-
-
-    align-items:center;
-
-
-    margin-bottom:20px;
-
-
-}
-
-
-
-.section-header h2{
-
-
-    font-size:24px;
-
-
-    font-weight:800;
-
-
-    color:
-    var(--dark);
-
-
-}
-
-
-
-
-.section-header p{
-
-
-    color:
-    var(--muted);
-
-
-    font-size:14px;
-
-
-}
-
-
-
-
-
-/* ==========================================================
-   SEARCH BOX
-========================================================== */
-
-
-.search-section{
-
-
-    padding:25px;
-
-
-    border-radius:24px;
-
-
-    background:
-
-    rgba(255,255,255,.8);
-
-
-    backdrop-filter:
-    blur(18px);
-
-
-    box-shadow:
-    var(--shadow);
-
-
-    display:flex;
-
-
-    gap:15px;
-
-
-    align-items:center;
-
-
-}
-
-
-
-
-.search-box{
-
-
-    flex:1;
-
-
-    position:relative;
-
-
-}
-
-
-
-.search-box i{
-
-
-    position:absolute;
-
-
-    left:18px;
-
-
-    top:50%;
-
-
-    transform:
-    translateY(-50%);
-
-
-    color:
-    var(--muted);
-
-
-    font-size:18px;
-
-
-}
-
-
-
-
-.search-box input{
-
-
-    width:100%;
-
-
-    padding:16px 20px 16px 50px;
-
-
-    border-radius:16px;
-
-
-    border:
-    1px solid #e2e8f0;
-
-
-    outline:none;
-
-
-    background:white;
-
+    color:#64748b;
 
     font-size:15px;
 
+}
 
-    transition:.3s;
 
+
+.stat-card h2{
+
+    margin-top:8px;
+
+    font-size:38px;
+
+    color:#2563eb;
 
 }
 
 
 
+.stat-card p{
 
-.search-box input:focus{
+    color:#94a3b8;
 
-
-    border-color:
-    var(--primary);
-
-
-    box-shadow:
-    0 0 0 4px rgba(37,99,235,.12);
-
+    margin-top:5px;
 
 }
 
 
 
+/* =========================================================
+   DASHBOARD GRID
+========================================================= */
 
 
+.dashboard-grid{
 
-/* ==========================================================
-   FILTER DROPDOWNS
-========================================================== */
-
-
-.filter-box{
-
-
-    display:flex;
-
-
-    gap:15px;
-
-
-}
-
-
-
-.filter-box select{
-
-
-    padding:15px 18px;
-
-
-    border-radius:15px;
-
-
-    border:
-    1px solid #e2e8f0;
-
-
-    background:white;
-
-
-    color:
-    var(--text);
-
-
-    font-weight:600;
-
-
-    outline:none;
-
-
-    cursor:pointer;
-
-
-}
-
-
-
-
-
-.filter-box select:focus{
-
-
-    border-color:
-    var(--primary);
-
-
-}
-
-
-
-
-
-/* ==========================================================
-   PRIMARY BUTTONS
-========================================================== */
-
-
-.btn-primary{
-
-
-    padding:14px 25px;
-
-
-    border:none;
-
-
-    border-radius:15px;
-
-
-    background:
-
-
-    linear-gradient(
-        135deg,
-        var(--primary),
-        var(--secondary)
-    );
-
-
-    color:white;
-
-
-    font-weight:700;
-
-
-    font-size:14px;
-
-
-    cursor:pointer;
-
-
-    transition:.35s;
-
-
-    box-shadow:
-    0 12px 25px rgba(37,99,235,.25);
-
-
-}
-
-
-
-
-.btn-primary:hover{
-
-
-    transform:
-    translateY(-4px);
-
-
-    box-shadow:
-    0 18px 35px rgba(37,99,235,.35);
-
-
-}
-
-
-
-
-.btn-secondary{
-
-
-    padding:14px 22px;
-
-
-    border-radius:15px;
-
-
-    background:white;
-
-
-    border:
-    1px solid #e2e8f0;
-
-
-    color:
-    var(--dark);
-
-
-    font-weight:700;
-
-
-    cursor:pointer;
-
-
-    transition:.3s;
-
-
-}
-
-
-
-.btn-secondary:hover{
-
-
-    background:
-    #f1f5f9;
-
-
-}
-
-
-
-
-
-/* ==========================================================
-   JOB CREATE FORM
-========================================================== */
-
-
-.job-form-container{
-
-
-    padding:30px;
-
-
-    border-radius:25px;
-
-
-    background:
-
-    rgba(255,255,255,.8);
-
-
-    backdrop-filter:
-    blur(20px);
-
-
-    box-shadow:
-    var(--shadow);
-
-
-}
-
-
-
-
-.form-grid{
-
+    margin-top:35px;
 
     display:grid;
 
-
-    grid-template-columns:
-
-    repeat(2,1fr);
-
-
-    gap:20px;
-
-
-}
-
-
-
-
-.form-group{
-
-
-    display:flex;
-
-
-    flex-direction:column;
-
-
-    gap:8px;
-
-
-}
-
-
-
-
-.form-group label{
-
-
-    font-size:14px;
-
-
-    font-weight:700;
-
-
-    color:
-    var(--dark);
-
-
-}
-
-
-
-
-.form-group input,
-.form-group textarea,
-.form-group select{
-
-
-    width:100%;
-
-
-    padding:15px;
-
-
-    border-radius:15px;
-
-
-    border:
-
-    1px solid #e2e8f0;
-
-
-    outline:none;
-
-
-    background:white;
-
-
-    font-size:14px;
-
-
-    transition:.3s;
-
-
-}
-
-
-
-
-
-.form-group textarea{
-
-
-    min-height:130px;
-
-
-    resize:none;
-
-
-}
-
-
-
-
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus{
-
-
-    border-color:
-    var(--primary);
-
-
-    box-shadow:
-
-    0 0 0 4px
-    rgba(37,99,235,.12);
-
-
-}
-
-
-
-
-
-.full-width{
-
-
-    grid-column:
-    1/-1;
-
-
-}
-
-
-
-
-.form-actions{
-
-
-    margin-top:25px;
-
-
-    display:flex;
-
-
-    justify-content:flex-end;
-
-
-    gap:15px;
-
-
-}
-
-
-
-
-
-/* ==========================================================
-   PROGRESS / STATUS BAR
-========================================================== */
-
-
-.progress-wrapper{
-
-
-    margin-top:15px;
-
-
-}
-
-
-
-.progress-bar{
-
-
-    height:8px;
-
-
-    width:100%;
-
-
-    background:#e2e8f0;
-
-
-    border-radius:20px;
-
-
-    overflow:hidden;
-
-
-}
-
-
-
-.progress-fill{
-
-
-    height:100%;
-
-
-    border-radius:20px;
-
-
-    background:
-
-
-    linear-gradient(
-        90deg,
-        var(--primary),
-        var(--secondary)
-    );
-
-
-}
-
-
-
-
-
-/* ==========================================================
-   MINI CARDS
-========================================================== */
-
-
-.mini-card-grid{
-
-
-    display:grid;
-
-
-    grid-template-columns:
-
-    repeat(3,1fr);
-
-
-    gap:20px;
-
-
-}
-
-
-
-
-.mini-card{
-
-
-    padding:22px;
-
-
-    border-radius:20px;
-
-
-    background:white;
-
-
-    box-shadow:
-    var(--shadow);
-
-
-    transition:.3s;
-
-
-}
-
-
-
-.mini-card:hover{
-
-
-    transform:
-    translateY(-5px);
-
-
-}
-
-
-
-.mini-card h4{
-
-
-    color:
-    var(--dark);
-
-
-    margin-bottom:8px;
-
-
-}
-
-
-
-.mini-card span{
-
-
-    font-size:14px;
-
-
-    color:
-    var(--muted);
-
-
-}
-
-
-
-/* ==========================================================
-   PART 2 END
-========================================================== */
-/* ==========================================================
-   PART 3 : JOB CARDS + COMPANY + ACTIVITY + NOTIFICATIONS
-========================================================== */
-
-
-
-/* ==========================================================
-   JOB GRID
-========================================================== */
-
-
-.jobs-grid{
-
-
-    display:grid;
-
-
-    grid-template-columns:
-
-
-    repeat(3,1fr);
-
+    grid-template-columns:2fr 1fr;
 
     gap:25px;
 
+}
+
+
+
+.box{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:25px;
+
+    box-shadow:
+
+    0 15px 35px rgba(15,23,42,.07);
 
 }
 
 
 
-/* ==========================================================
-   JOB CARD
-========================================================== */
+.box h2{
+
+    margin-bottom:20px;
+
+    font-size:22px;
+
+}
+
+
+
+/* =========================================================
+   JOB CARDS
+========================================================= */
 
 
 .job-card{
 
+    background:#f8fafc;
 
-    padding:25px;
+    padding:20px;
 
+    border-radius:18px;
 
-    border-radius:24px;
+    margin-bottom:15px;
 
+    border:1px solid #e2e8f0;
 
-    background:
-
-
-    rgba(255,255,255,.85);
-
-
-    backdrop-filter:
-    blur(18px);
-
-
-    border:
-    1px solid rgba(255,255,255,.5);
-
-
-    box-shadow:
-    var(--shadow);
-
-
-    transition:.35s ease;
-
-
-    position:relative;
-
-
-    overflow:hidden;
-
+    transition:.3s;
 
 }
-
-
-
-
-
-.job-card::after{
-
-
-    content:"";
-
-
-    position:absolute;
-
-
-    width:150px;
-
-
-    height:150px;
-
-
-    right:-70px;
-
-
-    bottom:-70px;
-
-
-    border-radius:50%;
-
-
-    background:
-
-
-    rgba(37,99,235,.08);
-
-
-}
-
-
 
 
 
 .job-card:hover{
 
+    border-color:#2563eb;
 
-    transform:
-    translateY(-8px);
-
-
-    box-shadow:
-    var(--shadow-hover);
-
+    transform:translateY(-4px);
 
 }
-
-
-
-
-.job-header{
-
-
-    display:flex;
-
-
-    justify-content:space-between;
-
-
-    align-items:flex-start;
-
-
-    margin-bottom:20px;
-
-
-}
-
-
-
-
-
-.company-logo{
-
-
-    width:55px;
-
-
-    height:55px;
-
-
-    border-radius:16px;
-
-
-    display:flex;
-
-
-    align-items:center;
-
-
-    justify-content:center;
-
-
-    font-size:22px;
-
-
-    font-weight:800;
-
-
-    color:white;
-
-
-    background:
-
-
-    linear-gradient(
-        135deg,
-        var(--primary),
-        var(--secondary)
-    );
-
-
-}
-
-
-
-
-.job-status{
-
-
-    padding:7px 14px;
-
-
-    border-radius:30px;
-
-
-    font-size:12px;
-
-
-    font-weight:700;
-
-
-    background:
-
-
-    rgba(34,197,94,.15);
-
-
-    color:
-    var(--success);
-
-
-}
-
-
 
 
 
 .job-card h3{
 
-
-    font-size:20px;
-
-
-    font-weight:800;
-
-
-    color:
-    var(--dark);
-
-
-    margin-bottom:8px;
-
+    color:#334155;
 
 }
 
 
 
+.job-card p{
 
-.job-company{
+    color:#64748b;
 
-
-    font-size:14px;
-
-
-    color:
-    var(--muted);
-
-
-    margin-bottom:15px;
-
+    margin-top:8px;
 
 }
 
 
 
+.btn{
 
+    display:inline-block;
 
-.job-details{
+    margin-top:15px;
 
-
-    display:flex;
-
-
-    flex-direction:column;
-
-
-    gap:10px;
-
-
-    margin-bottom:20px;
-
-
-}
-
-
-
-
-.job-details span{
-
-
-    display:flex;
-
-
-    align-items:center;
-
-
-    gap:10px;
-
-
-    font-size:14px;
-
-
-    color:
-    var(--text);
-
-
-}
-
-
-
-
-
-.job-details i{
-
-
-    color:
-    var(--primary);
-
-
-}
-
-
-
-
-
-.job-description{
-
-
-    font-size:14px;
-
-
-    line-height:1.6;
-
-
-    color:
-    var(--muted);
-
-
-    margin-bottom:20px;
-
-
-}
-
-
-
-
-.job-actions{
-
-
-    display:flex;
-
-
-    gap:12px;
-
-
-}
-
-
-
-
-
-.job-actions button{
-
-
-    flex:1;
-
-
-}
-
-
-
-
-
-
-/* ==========================================================
-   JOB CARD BUTTONS
-========================================================== */
-
-
-.apply-btn{
-
-
-    padding:12px;
-
-
-    border-radius:14px;
-
-
-    border:none;
-
-
-    background:
-
-
-    linear-gradient(
-        135deg,
-        var(--primary),
-        var(--secondary)
-    );
-
-
-    color:white;
-
-
-    font-weight:700;
-
-
-    cursor:pointer;
-
-
-}
-
-
-
-.view-btn{
-
-
-    padding:12px;
-
-
-    border-radius:14px;
-
-
-    border:
-    1px solid #e2e8f0;
-
-
-    background:white;
-
-
-    color:
-    var(--dark);
-
-
-    font-weight:700;
-
-
-    cursor:pointer;
-
-
-}
-
-
-
-
-.apply-btn:hover,
-.view-btn:hover{
-
-
-    transform:
-    translateY(-3px);
-
-
-}
-
-
-
-
-
-/* ==========================================================
-   COMPANY CARDS
-========================================================== */
-
-
-.company-grid{
-
-
-    display:grid;
-
-
-    grid-template-columns:
-
-
-    repeat(4,1fr);
-
-
-    gap:20px;
-
-
-}
-
-
-
-
-
-.company-card{
-
-
-    padding:22px;
-
-
-    text-align:center;
-
-
-    border-radius:22px;
-
-
-    background:white;
-
-
-    box-shadow:
-    var(--shadow);
-
-
-    transition:.35s;
-
-
-}
-
-
-
-
-.company-card:hover{
-
-
-    transform:
-    translateY(-7px);
-
-
-    box-shadow:
-    var(--shadow-hover);
-
-
-}
-
-
-
-
-.company-card img{
-
-
-    width:70px;
-
-
-    height:70px;
-
-
-    object-fit:contain;
-
-
-    margin:
-    0 auto 15px;
-
-
-}
-
-
-
-.company-card h4{
-
-
-    color:
-    var(--dark);
-
-
-    font-size:17px;
-
-
-    margin-bottom:5px;
-
-
-}
-
-
-
-
-.company-card p{
-
-
-    font-size:13px;
-
-
-    color:
-    var(--muted);
-
-
-}
-
-
-
-
-
-
-/* ==========================================================
-   APPLICATION CARDS
-========================================================== */
-
-
-.application-list{
-
-
-    display:flex;
-
-
-    flex-direction:column;
-
-
-    gap:15px;
-
-
-}
-
-
-
-
-.application-card{
-
-
-    padding:20px;
-
-
-    border-radius:20px;
-
-
-    background:white;
-
-
-    box-shadow:
-    var(--shadow);
-
-
-    display:flex;
-
-
-    justify-content:space-between;
-
-
-    align-items:center;
-
-
-    transition:.3s;
-
-
-}
-
-
-
-
-
-.application-card:hover{
-
-
-    transform:
-    translateX(5px);
-
-
-}
-
-
-
-
-.application-info{
-
-
-    display:flex;
-
-
-    align-items:center;
-
-
-    gap:15px;
-
-
-}
-
-
-
-
-.application-avatar{
-
-
-    width:50px;
-
-
-    height:50px;
-
-
-    border-radius:50%;
-
-
-    background:
-
-
-    linear-gradient(
-        135deg,
-        var(--primary),
-        var(--secondary)
-    );
-
-
-    color:white;
-
-
-    display:flex;
-
-
-    justify-content:center;
-
-
-    align-items:center;
-
-
-    font-weight:800;
-
-
-}
-
-
-
-
-.application-info h4{
-
-
-    color:
-    var(--dark);
-
-
-    margin-bottom:4px;
-
-
-}
-
-
-
-
-.application-info p{
-
-
-    color:
-    var(--muted);
-
-
-    font-size:13px;
-
-
-}
-
-
-
-
-
-/* ==========================================================
-   STATUS BADGES
-========================================================== */
-
-
-.badge{
-
-
-    padding:8px 15px;
-
-
-    border-radius:30px;
-
-
-    font-size:12px;
-
-
-    font-weight:700;
-
-
-}
-
-
-
-
-
-.badge-success{
-
-
-    background:
-    rgba(22,163,74,.15);
-
-
-    color:
-    var(--success);
-
-
-}
-
-
-
-.badge-warning{
-
-
-    background:
-    rgba(245,158,11,.15);
-
-
-    color:
-    var(--warning);
-
-
-}
-
-
-
-.badge-danger{
-
-
-    background:
-    rgba(220,38,38,.15);
-
-
-    color:
-    var(--danger);
-
-
-}
-
-
-
-.badge-info{
-
-
-    background:
-    rgba(37,99,235,.15);
-
-
-    color:
-    var(--primary);
-
-
-}
-
-
-
-
-
-
-/* ==========================================================
-   ACTIVITY TIMELINE
-========================================================== */
-
-
-.activity-container{
-
-
-    position:relative;
-
-
-    padding-left:30px;
-
-
-}
-
-
-
-.activity-container::before{
-
-
-    content:"";
-
-
-    position:absolute;
-
-
-    left:8px;
-
-
-    top:0;
-
-
-    width:2px;
-
-
-    height:100%;
-
-
-    background:
-    #e2e8f0;
-
-
-}
-
-
-
-
-
-.activity-item{
-
-
-    position:relative;
-
-
-    margin-bottom:25px;
-
-
-}
-
-
-
-
-
-.activity-item::before{
-
-
-    content:"";
-
-
-    position:absolute;
-
-
-    left:-28px;
-
-
-    top:5px;
-
-
-    width:16px;
-
-
-    height:16px;
-
-
-    border-radius:50%;
-
-
-    background:
-
-
-    linear-gradient(
-        135deg,
-        var(--primary),
-        var(--secondary)
-    );
-
-
-    box-shadow:
-    0 0 0 5px rgba(37,99,235,.12);
-
-
-}
-
-
-
-
-
-.activity-item h4{
-
-
-    font-size:15px;
-
-
-    color:
-    var(--dark);
-
-
-}
-
-
-
-
-.activity-item p{
-
-
-    margin-top:5px;
-
-
-    font-size:13px;
-
-
-    color:
-    var(--muted);
-
-
-}
-
-
-
-
-
-/* ==========================================================
-   NOTIFICATION BOX
-========================================================== */
-
-
-.notification-list{
-
-
-    display:flex;
-
-
-    flex-direction:column;
-
-
-    gap:15px;
-
-
-}
-
-
-
-
-.notification-card{
-
-
-    padding:18px;
-
-
-    border-radius:18px;
-
-
-    background:white;
-
-
-    box-shadow:
-    var(--shadow);
-
-
-    display:flex;
-
-
-    gap:15px;
-
-
-    align-items:center;
-
-
-}
-
-
-
-
-
-.notification-icon{
-
-
-    width:42px;
-
-
-    height:42px;
-
-
-    border-radius:14px;
-
-
-    display:flex;
-
-
-    align-items:center;
-
-
-    justify-content:center;
-
-
-    background:
-
-
-    rgba(37,99,235,.12);
-
-
-    color:
-    var(--primary);
-
-
-}
-
-
-
-
-
-.notification-card h4{
-
-
-    font-size:14px;
-
-
-    color:
-    var(--dark);
-
-
-}
-
-
-
-
-.notification-card p{
-
-
-    font-size:13px;
-
-
-    color:
-    var(--muted);
-
-
-    margin-top:3px;
-
-
-}
-
-
-
-
-
-
-/* ==========================================================
-   INTERVIEW CARD
-========================================================== */
-
-
-.interview-card{
-
-
-    padding:25px;
-
-
-    border-radius:24px;
-
-
-    background:
-
-
-    linear-gradient(
-        135deg,
-        #ffffff,
-        #f8fafc
-    );
-
-
-    box-shadow:
-    var(--shadow);
-
-
-}
-
-
-
-
-.interview-card h3{
-
-
-    color:
-    var(--dark);
-
-
-    margin-bottom:15px;
-
-
-}
-
-
-
-
-
-.interview-time{
-
-
-    display:flex;
-
-
-    align-items:center;
-
-
-    gap:10px;
-
-
-    color:
-    var(--primary);
-
-
-    font-weight:700;
-
-
-}
-
-
-
-
-
-/* ==========================================================
-   EMPTY STATE
-========================================================== */
-
-
-.empty-state{
-
-
-    padding:50px 20px;
-
-
-    text-align:center;
-
-
-    border-radius:25px;
-
-
-    background:white;
-
-
-    box-shadow:
-    var(--shadow);
-
-
-}
-
-
-
-
-
-.empty-state i{
-
-
-    font-size:50px;
-
-
-    color:
-    #cbd5e1;
-
-
-    margin-bottom:15px;
-
-
-}
-
-
-
-
-
-.empty-state h3{
-
-
-    color:
-    var(--dark);
-
-
-    margin-bottom:8px;
-
-
-}
-
-
-
-
-.empty-state p{
-
-
-    color:
-    var(--muted);
-
-
-    font-size:14px;
-
-
-}
-
-
-
-
-/* ==========================================================
-   PART 3 END
-========================================================== */
-/* ==========================================================
-   PART 4 : FOOTER + RESPONSIVE + FINAL POLISH
-========================================================== */
-
-
-/* ==========================================================
-   FOOTER
-========================================================== */
-
-
-.dashboard-footer{
-
-
-    margin-top:40px;
-
-
-    padding:25px;
-
-
-    border-radius:22px;
-
-
-    background:
-
-
-    rgba(255,255,255,.75);
-
-
-    backdrop-filter:
-    blur(18px);
-
-
-    box-shadow:
-    var(--shadow);
-
-
-    display:flex;
-
-
-    justify-content:space-between;
-
-
-    align-items:center;
-
-
-    color:
-    var(--muted);
-
-
-    font-size:14px;
-
-
-}
-
-
-
-
-.footer-links{
-
-
-    display:flex;
-
-
-    gap:20px;
-
-
-}
-
-
-
-
-.footer-links a{
-
-
-    color:
-    var(--muted);
-
-
-    font-weight:600;
-
-
-    transition:.3s;
-
-
-}
-
-
-
-.footer-links a:hover{
-
-
-    color:
-    var(--primary);
-
-
-}
-
-
-
-/* ==========================================================
-   TABLE DESIGN
-========================================================== */
-
-
-.table-container{
-
-
-    width:100%;
-
-
-    overflow-x:auto;
-
-
-    background:white;
-
-
-    border-radius:22px;
-
-
-    box-shadow:
-    var(--shadow);
-
-
-}
-
-
-
-.dashboard-table{
-
-
-    width:100%;
-
-
-    border-collapse:collapse;
-
-
-}
-
-
-
-.dashboard-table th{
-
-
-    padding:18px;
-
-
-    text-align:left;
-
-
-    font-size:14px;
-
-
-    color:
-    var(--dark);
-
-
-    background:#f8fafc;
-
-
-}
-
-
-
-.dashboard-table td{
-
-
-    padding:18px;
-
-
-    border-bottom:
-    1px solid #e2e8f0;
-
-
-    font-size:14px;
-
-
-    color:
-    var(--text);
-
-
-}
-
-
-
-.dashboard-table tr{
-
-
-    transition:.3s;
-
-
-}
-
-
-
-.dashboard-table tr:hover{
-
-
-    background:
-    rgba(37,99,235,.05);
-
-
-}
-
-
-
-
-
-/* ==========================================================
-   DROPDOWN MENU
-========================================================== */
-
-
-.dropdown{
-
-
-    position:relative;
-
-
-}
-
-
-
-.dropdown-menu{
-
-
-    position:absolute;
-
-
-    right:0;
-
-
-    top:55px;
-
-
-    width:200px;
-
-
-    padding:12px;
-
-
-    border-radius:18px;
-
-
-    background:white;
-
-
-    box-shadow:
-    var(--shadow-hover);
-
-
-    opacity:0;
-
-
-    pointer-events:none;
-
-
-    transform:
-    translateY(10px);
-
-
-    transition:.3s;
-
-
-    z-index:100;
-
-
-}
-
-
-
-.dropdown:hover .dropdown-menu{
-
-
-    opacity:1;
-
-
-    pointer-events:auto;
-
-
-    transform:
-    translateY(0);
-
-
-}
-
-
-
-
-.dropdown-menu a{
-
-
-    display:block;
-
-
-    padding:12px;
-
+    padding:10px 18px;
 
     border-radius:12px;
 
+    background:#2563eb;
 
-    font-size:14px;
+    color:white;
 
-
-}
-
-
-
-.dropdown-menu a:hover{
-
-
-    background:#f1f5f9;
-
-
-    color:
-    var(--primary);
-
+    text-decoration:none;
 
 }
 
 
 
+/* =========================================================
+   TABLE
+========================================================= */
 
 
+table{
 
-/* ==========================================================
-   LOADING ANIMATION
-========================================================== */
+    width:100%;
 
-
-.loader{
-
-
-    width:45px;
-
-
-    height:45px;
-
-
-    border-radius:50%;
-
-
-    border:
-
-
-    4px solid #e2e8f0;
-
-
-    border-top-color:
-    var(--primary);
-
-
-    animation:
-    rotate 1s linear infinite;
-
+    border-collapse:collapse;
 
 }
 
 
 
-@keyframes rotate{
+th{
 
+    background:#eff6ff;
+
+    padding:15px;
+
+    text-align:left;
+
+}
+
+
+
+td{
+
+    padding:15px;
+
+    border-bottom:1px solid #e2e8f0;
+
+}
+
+
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+
+.stat-card,
+.box,
+.job-card,
+.topbar{
+
+    animation:fadeUp .6s ease;
+
+}
+
+
+
+@keyframes fadeUp{
 
     from{
 
-        transform:rotate(0deg);
+        opacity:0;
+
+        transform:translateY(20px);
 
     }
 
 
     to{
 
-        transform:rotate(360deg);
+        opacity:1;
+
+        transform:translateY(0);
 
     }
 
-
 }
 
 
 
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
 
-/* ==========================================================
-   FLOATING BUTTON
-========================================================== */
+@media(max-width:1100px){
 
 
-.floating-btn{
+.stats{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
 
 
-    position:fixed;
+.dashboard-grid{
 
+    grid-template-columns:1fr;
 
-    right:30px;
-
-
-    bottom:30px;
-
-
-    width:60px;
-
-
-    height:60px;
-
-
-    border-radius:50%;
-
-
-    display:flex;
-
-
-    justify-content:center;
-
-
-    align-items:center;
-
-
-    background:
-
-
-    linear-gradient(
-        135deg,
-        var(--primary),
-        var(--secondary)
-    );
-
-
-    color:white;
-
-
-    font-size:24px;
-
-
-    box-shadow:
-    0 15px 35px rgba(37,99,235,.35);
-
-
-    cursor:pointer;
-
-
-    transition:.3s;
-
-
-    z-index:999;
+}
 
 
 }
 
 
 
-.floating-btn:hover{
-
-
-    transform:
-    translateY(-8px)
-    scale(1.05);
-
-
-}
-
-
-
-
-
-
-/* ==========================================================
-   CARD REVEAL ANIMATION
-========================================================== */
-
-
-.dashboard-card,
-.job-card,
-.company-card,
-.stat-card,
-.interview-card,
-.notification-card,
-.application-card{
-
-
-    animation:
-    fadeUp .6s ease both;
-
-
-}
-
-
-
-
-/* Stagger Animation */
-
-
-.dashboard-card:nth-child(1),
-.job-card:nth-child(1){
-
-
-    animation-delay:.1s;
-
-
-}
-
-
-.dashboard-card:nth-child(2),
-.job-card:nth-child(2){
-
-
-    animation-delay:.2s;
-
-
-}
-
-
-.dashboard-card:nth-child(3),
-.job-card:nth-child(3){
-
-
-    animation-delay:.3s;
-
-
-}
-
-
-.dashboard-card:nth-child(4){
-
-
-    animation-delay:.4s;
-
-
-}
-
-
-
-
-
-
-/* ==========================================================
-   RESPONSIVE DESIGN
-========================================================== */
-
-
-/* Large Tablet */
-
-
-@media(max-width:1200px){
-
-
-
-.stats-grid{
-
-
-    grid-template-columns:
-    repeat(2,1fr);
-
-
-}
-
-
-
-.jobs-grid{
-
-
-    grid-template-columns:
-    repeat(2,1fr);
-
-
-}
-
-
-
-.company-grid{
-
-
-    grid-template-columns:
-    repeat(2,1fr);
-
-
-}
-
-
-
-}
-
-
-
-
-/* Tablet */
-
-
-@media(max-width:900px){
-
+@media(max-width:800px){
 
 
 .sidebar{
 
+    position:relative;
 
-    width:80px;
+    width:100%;
 
-
-    padding:25px 12px;
-
-
-}
-
-
-
-.sidebar-logo h2,
-.sidebar-menu span,
-.sidebar-profile div{
-
-
-    display:none;
-
+    height:auto;
 
 }
 
 
 
-.sidebar-logo{
+.main{
 
+    margin-left:0;
 
-    justify-content:center;
-
-
-}
-
-
-
-.sidebar-menu a{
-
-
-    justify-content:center;
-
+    width:100%;
 
 }
 
 
 
-.main-content{
+.dashboard{
 
-
-    margin-left:80px;
-
-
-    width:
-    calc(100% - 80px);
-
-
-    padding:20px;
-
+    flex-direction:column;
 
 }
 
@@ -3823,56 +732,25 @@ img{
 
 .topbar{
 
-
     flex-direction:column;
-
 
     align-items:flex-start;
 
+}
 
-    gap:20px;
 
+
+.welcome h1{
+
+    font-size:30px;
 
 }
 
 
 
-.form-grid{
+.stats{
 
-
-    grid-template-columns:
-    1fr;
-
-
-}
-
-
-
-.search-section{
-
-
-    flex-direction:column;
-
-
-}
-
-
-
-.filter-box{
-
-
-    width:100%;
-
-
-}
-
-
-
-.filter-box select{
-
-
-    width:100%;
-
+    grid-template-columns:1fr;
 
 }
 
@@ -3882,391 +760,29 @@ img{
 
 
 
+@media(max-width:500px){
 
 
-/* Mobile */
-
-
-@media(max-width:600px){
-
-
-
-.dashboard-wrapper{
-
-
-    display:block;
-
-
-}
-
-
-
-
-.sidebar{
-
-
-    position:fixed;
-
-
-    width:100%;
-
-
-    height:75px;
-
-
-    bottom:0;
-
-
-    top:auto;
-
-
-    left:0;
-
-
-    display:flex;
-
-
-    justify-content:center;
-
-
-    padding:10px;
-
-
-    border-top:
-    1px solid #e2e8f0;
-
-
-}
-
-
-
-.sidebar-logo,
-.sidebar-profile{
-
-
-    display:none;
-
-
-}
-
-
-
-
-.sidebar-menu{
-
-
-    flex-direction:row;
-
-
-    width:100%;
-
-
-    justify-content:space-around;
-
-
-}
-
-
-
-.sidebar-menu a{
-
-
-    padding:12px;
-
-
-}
-
-
-
-.main-content{
-
-
-    margin-left:0;
-
-
-    width:100%;
-
+.main{
 
     padding:15px;
 
+}
 
-    padding-bottom:100px;
 
+.topbar{
+
+    padding:20px;
 
 }
 
 
 
-.stats-grid{
+.search-box{
 
-
-    grid-template-columns:
-    1fr;
-
+    max-width:100%;
 
 }
 
 
-
-.jobs-grid{
-
-
-    grid-template-columns:
-    1fr;
-
-
 }
-
-
-
-.company-grid{
-
-
-    grid-template-columns:
-    1fr;
-
-
-}
-
-
-
-.topbar-left h1{
-
-
-    font-size:24px;
-
-
-}
-
-
-
-
-.topbar-actions{
-
-
-    width:100%;
-
-
-    justify-content:space-between;
-
-
-}
-
-
-
-
-.section-header{
-
-
-    flex-direction:column;
-
-
-    align-items:flex-start;
-
-
-    gap:10px;
-
-
-}
-
-
-
-
-.job-actions{
-
-
-    flex-direction:column;
-
-
-}
-
-
-
-.application-card{
-
-
-    flex-direction:column;
-
-
-    align-items:flex-start;
-
-
-    gap:15px;
-
-
-}
-
-
-
-.dashboard-footer{
-
-
-    flex-direction:column;
-
-
-    gap:15px;
-
-
-    text-align:center;
-
-
-}
-
-
-
-.footer-links{
-
-
-    flex-wrap:wrap;
-
-
-    justify-content:center;
-
-
-}
-
-
-
-.floating-btn{
-
-
-    width:50px;
-
-
-    height:50px;
-
-
-    right:20px;
-
-
-    bottom:90px;
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-/* ==========================================================
-   DARK MODE SUPPORT
-========================================================== */
-
-
-.dark-mode{
-
-
-    --dark:#f8fafc;
-
-
-    --text:#cbd5e1;
-
-
-    --muted:#94a3b8;
-
-
-    background:#020617;
-
-
-}
-
-
-
-
-
-.dark-mode .glass-card,
-.dark-mode .stat-card,
-.dark-mode .job-card,
-.dark-mode .company-card,
-.dark-mode .notification-card,
-.dark-mode .application-card,
-.dark-mode .interview-card{
-
-
-    background:
-    rgba(15,23,42,.85);
-
-
-    border-color:
-    rgba(255,255,255,.08);
-
-
-}
-
-
-
-.dark-mode input,
-.dark-mode textarea,
-.dark-mode select{
-
-
-    background:#0f172a;
-
-
-    color:white;
-
-
-    border-color:#334155;
-
-
-}
-
-
-
-.dark-mode .topbar,
-.dark-mode .sidebar{
-
-
-    background:
-    rgba(15,23,42,.9);
-
-
-}
-
-
-
-.dark-mode h1,
-.dark-mode h2,
-.dark-mode h3,
-.dark-mode h4{
-
-
-    color:white;
-
-
-}
-
-
-
-
-
-
-/* ==========================================================
-   ACCESSIBILITY
-========================================================== */
-
-
-button:focus,
-input:focus,
-select:focus{
-
-
-    outline:
-    3px solid
-    rgba(37,99,235,.25);
-
-
-}
-
-
-
-
-/* ==========================================================
-   FINAL DASHBOARD CSS COMPLETE
-========================================================== */
