@@ -1,6 +1,6 @@
 // ======================================================
 // JOB PORTAL DASHBOARD
-// Part 1 - Initialization
+// PART 1
 // ======================================================
 
 console.log("Dashboard Loaded ✅");
@@ -54,9 +54,11 @@ function showGreeting() {
 
     if (!welcome) return;
 
-    const hour = new Date().getHours();
+    const hour =
+        new Date().getHours();
 
-    let greeting = "Good Evening";
+    let greeting =
+        "Good Evening";
 
     if (hour < 12) {
 
@@ -85,16 +87,11 @@ function showUserInfo() {
     if (role) {
 
         role.innerHTML = `
-
-        <i class="fa-solid fa-user"></i>
-
-        ${user.role}
-
+            <i class="fa-solid fa-user"></i>
+            ${user.role}
         `;
 
     }
-
-    // Only Recruiter can post jobs
 
     const form =
         document.getElementById("jobFormBox");
@@ -124,22 +121,45 @@ async function loadAnalytics() {
     try {
 
         const response =
-            await fetch("/analytics");
+            await fetch("/analytics", {
+
+                headers: {
+
+                    Authorization:
+                        `Bearer ${token}`
+
+                }
+
+            });
 
         if (!response.ok) {
 
-            throw new Error("Analytics API Error");
+            return;
 
         }
 
         const data =
             await response.json();
 
-        document.getElementById("totalJobs").innerText =
-            data.totalJobs || 0;
+        const totalJobs =
+            document.getElementById("totalJobs");
 
-        document.getElementById("totalApplications").innerText =
-            data.totalApplicants || 0;
+        if (totalJobs) {
+
+            totalJobs.innerText =
+                data.totalJobs || 0;
+
+        }
+
+        const totalApplications =
+            document.getElementById("totalApplications");
+
+        if (totalApplications) {
+
+            totalApplications.innerText =
+                data.totalApplicants || 0;
+
+        }
 
         const saved =
             document.getElementById("savedCount");
@@ -150,118 +170,92 @@ async function loadAnalytics() {
 
         }
 
-        console.log("Analytics Loaded ✅");
+    }
+
+    catch (error) {
+
+        console.log(
+            "Analytics Error",
+            error
+        );
+
+    }
+
+}
+
+// ================= LOAD JOBS =================
+
+async function loadJobs() {
+
+    try {
+
+        const response =
+            await fetch("/jobs");
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to fetch jobs"
+            );
+
+        }
+
+        const data =
+            await response.json();
+
+        console.log(
+            "Jobs API:",
+            data
+        );
+
+        allJobs =
+            data.jobs || [];
+
+        const totalJobs =
+            document.getElementById("totalJobs");
+
+        if (totalJobs) {
+
+            totalJobs.innerText =
+                allJobs.length;
+
+        }
+
+        renderJobs(allJobs);
 
     }
 
     catch (error) {
 
         console.error(
-            "Analytics Error:",
+            "Load Jobs Error:",
             error
         );
 
-    }
-
-}
-// ======================================================
-// LOAD JOBS
-// ======================================================
-
-async function loadJobs(){
-
-    try{
-
-        const response = await fetch("/jobs");
-
-
-        const data = await response.json();
-
-
-        console.log("Jobs API:",data);
-
-
-        const jobs = data.jobs;
-
-
-        document.getElementById("totalJobs").innerText =
-        jobs.length;
-
-
-
         const container =
-        document.getElementById("jobContainer");
+            document.getElementById("jobsContainer");
 
-
-        if(!jobs.length){
+        if (container) {
 
             container.innerHTML = `
-                <h3>No Jobs Available</h3>
-            `;
 
-            return;
+            <div class="empty-state">
 
-        }
+                <i class="fa-solid fa-circle-exclamation"></i>
 
+                <h2>Unable to Load Jobs</h2>
 
-
-        container.innerHTML = jobs.map(job=>{
-
-
-            return `
-
-            <div class="job-card">
-
-                <h3>${job.title}</h3>
-
-                <h4>${job.company}</h4>
-
-                <p>
-                📍 ${job.location}
-                </p>
-
-                <p>
-                💰 ${job.salary}
-                </p>
-
-                <p>
-                ${job.description}
-                </p>
-
-
-                <button onclick="applyJob('${job._id}')">
-                    Apply
-                </button>
-
-
-                <button onclick="saveJob('${job._id}')">
-                    Save
-                </button>
-
+                <p>Please refresh the page.</p>
 
             </div>
 
             `;
 
-
-        }).join("");
-
-
-
-    }
-
-    catch(error){
-
-        console.log(
-            "Job loading error",
-            error
-        );
+        }
 
     }
 
 }
-
-
 // ======================================================
 // RENDER JOBS
 // ======================================================
@@ -297,25 +291,24 @@ function renderJobs(jobs) {
 
     jobs.forEach(job => {
 
+        const applicants =
+            Array.isArray(job.applicants)
+                ? job.applicants
+                : [];
+
         const applied =
+            applicants.some(app => {
 
-            job.applicants?.some(
+                if (!app.userId) return false;
 
-                app => app.userId === user.id
+                return app.userId.toString() === user.id;
 
-            );
+            });
 
         const date =
-
             job.createdAt
-
-            ?
-
-            new Date(job.createdAt).toLocaleDateString()
-
-            :
-
-            "Today";
+                ? new Date(job.createdAt).toLocaleDateString()
+                : "Today";
 
         container.innerHTML += `
 
@@ -332,9 +325,7 @@ function renderJobs(jobs) {
                 </div>
 
                 <span class="job-icon">
-
                     💼
-
                 </span>
 
             </div>
@@ -342,33 +333,18 @@ function renderJobs(jobs) {
             <div class="job-info">
 
                 <p>
-
-                    📍
-
-                    <strong>Location :</strong>
-
+                    📍 <strong>Location :</strong>
                     ${job.location}
-
                 </p>
 
                 <p>
-
-                    💰
-
-                    <strong>Salary :</strong>
-
+                    💰 <strong>Salary :</strong>
                     ${job.salary}
-
                 </p>
 
                 <p>
-
-                    📅
-
-                    <strong>Posted :</strong>
-
+                    📅 <strong>Posted :</strong>
                     ${date}
-
                 </p>
 
             </div>
@@ -382,7 +358,6 @@ function renderJobs(jobs) {
             <div class="job-actions">
 
                 ${
-
                     user.role === "Recruiter"
 
                     ?
@@ -390,9 +365,7 @@ function renderJobs(jobs) {
                     `
 
                     <button
-
                         class="edit-btn"
-
                         onclick="editJob('${job._id}')">
 
                         ✏ Edit
@@ -400,9 +373,7 @@ function renderJobs(jobs) {
                     </button>
 
                     <button
-
                         class="delete-btn"
-
                         onclick="deleteJob('${job._id}')">
 
                         🗑 Delete
@@ -432,12 +403,18 @@ function renderJobs(jobs) {
                     `
 
                     <button
-
                         class="apply-btn"
-
                         onclick="applyJob('${job._id}')">
 
-                        📝 Apply Now
+                        📝 Apply
+
+                    </button>
+
+                    <button
+                        class="save-btn"
+                        onclick="saveJob('${job._id}')">
+
+                        ❤️ Save
 
                     </button>
 
@@ -454,6 +431,7 @@ function renderJobs(jobs) {
     });
 
 }
+
 // ======================================================
 // SEARCH JOBS
 // ======================================================
@@ -466,7 +444,7 @@ function searchJobs() {
         .toLowerCase()
         .trim();
 
-    if (keyword === "") {
+    if (!keyword) {
 
         renderJobs(allJobs);
 
@@ -474,34 +452,44 @@ function searchJobs() {
 
     }
 
-    const filteredJobs = allJobs.filter(job =>
+    const filtered = allJobs.filter(job =>
 
-        job.title.toLowerCase().includes(keyword)
-
-        ||
-
-        job.company.toLowerCase().includes(keyword)
+        (job.title || "")
+            .toLowerCase()
+            .includes(keyword)
 
         ||
 
-        job.location.toLowerCase().includes(keyword)
+        (job.company || "")
+            .toLowerCase()
+            .includes(keyword)
 
         ||
 
-        job.salary.toLowerCase().includes(keyword)
+        (job.location || "")
+            .toLowerCase()
+            .includes(keyword)
 
         ||
 
-        job.description.toLowerCase().includes(keyword)
+        (job.salary || "")
+            .toLowerCase()
+            .includes(keyword)
+
+        ||
+
+        (job.description || "")
+            .toLowerCase()
+            .includes(keyword)
 
     );
 
-    renderJobs(filteredJobs);
+    renderJobs(filtered);
 
 }
 
 // ======================================================
-// REFRESH DASHBOARD
+// REFRESH
 // ======================================================
 
 async function refreshDashboard() {
@@ -520,75 +508,75 @@ async function applyJob(id) {
 
     try {
 
-        const response = await fetch(`/apply/${id}`, {
+        const response =
+            await fetch(`/apply/${id}`, {
 
-            method: "POST",
+                method: "POST",
 
-            headers: {
+                headers: {
 
-                Authorization: `Bearer ${token}`
+                    Authorization:
+                    `Bearer ${token}`
 
-            }
+                }
 
-        });
+            });
 
-        const data = await response.json();
+        const data =
+            await response.json();
+
+        alert(data.message);
 
         if (data.success) {
 
-            alert("✅ Job Applied Successfully");
+            await refreshDashboard();
 
         }
-
-        else {
-
-            alert(data.message);
-
-        }
-
-        await refreshDashboard();
 
     }
 
-    catch (error) {
+    catch(error){
 
-        console.error(error);
+        console.log(error);
 
-        alert("Unable to apply for this job.");
+        alert("Unable to apply.");
 
     }
 
 }
 
 // ======================================================
-// SAVE JOB (Future Feature)
+// SAVE JOB
 // ======================================================
 
-async function saveJob(id) {
+async function saveJob(id){
 
-    try {
+    try{
 
-        const response = await fetch(`/save/${id}`, {
+        const response =
+        await fetch(`/save/${id}`,{
 
-            method: "POST",
+            method:"POST",
 
-            headers: {
+            headers:{
 
-                Authorization: `Bearer ${token}`
+                Authorization:
+                `Bearer ${token}`
 
             }
 
         });
 
-        const data = await response.json();
+        const data =
+        await response.json();
 
         alert(data.message);
 
     }
 
-    catch (error) {
+    catch(error){
 
-        console.error(error);
+        console.log(error);
 
     }
 
@@ -638,61 +626,55 @@ async function postJob() {
 
     try {
 
-        const response = await fetch("/jobs", {
+        const response =
+        await fetch("/jobs",{
 
-            method: "POST",
+            method:"POST",
 
-            headers: {
+            headers:{
 
-                "Content-Type": "application/json",
+                "Content-Type":"application/json",
 
-                Authorization: `Bearer ${token}`
+                Authorization:`Bearer ${token}`
 
             },
 
-            body: JSON.stringify({
+            body:JSON.stringify({
 
                 title,
-
                 company,
-
                 location,
-
                 salary,
-
                 description
 
             })
 
         });
 
-        const data = await response.json();
+        const data =
+        await response.json();
 
-        if (!response.ok || !data.success) {
+        alert(data.message);
 
-            alert(data.message || "Unable to publish job.");
+        if(data.success){
 
-            return;
+            document.getElementById("title").value="";
+            document.getElementById("company").value="";
+            document.getElementById("location").value="";
+            document.getElementById("salary").value="";
+            document.getElementById("description").value="";
+
+            await refreshDashboard();
 
         }
 
-        alert("🎉 Job Published Successfully!");
-
-        document.getElementById("title").value = "";
-        document.getElementById("company").value = "";
-        document.getElementById("location").value = "";
-        document.getElementById("salary").value = "";
-        document.getElementById("description").value = "";
-
-        await refreshDashboard();
-
     }
 
-    catch (error) {
+    catch(error){
 
-        console.error(error);
+        console.log(error);
 
-        alert("Server Error.");
+        alert("Unable to post job.");
 
     }
 
@@ -702,61 +684,59 @@ async function postJob() {
 // EDIT JOB
 // ======================================================
 
-async function editJob(id) {
+async function editJob(id){
 
-    if (user.role !== "Recruiter") {
+    const job =
+    allJobs.find(j=>j._id===id);
 
-        return;
+    if(!job) return;
 
-    }
+    const title =
+    prompt("Title",job.title);
 
-    const job = allJobs.find(j => j._id === id);
+    if(title===null) return;
 
-    if (!job) return;
+    const company =
+    prompt("Company",job.company);
 
-    const title = prompt("Job Title", job.title);
+    const location =
+    prompt("Location",job.location);
 
-    if (title === null) return;
+    const salary =
+    prompt("Salary",job.salary);
 
-    const company = prompt("Company", job.company);
+    const description =
+    prompt("Description",job.description);
 
-    const location = prompt("Location", job.location);
+    try{
 
-    const salary = prompt("Salary", job.salary);
+        const response =
+        await fetch(`/jobs/${id}`,{
 
-    const description = prompt("Description", job.description);
+            method:"PUT",
 
-    try {
+            headers:{
 
-        const response = await fetch(`/jobs/${id}`, {
+                "Content-Type":"application/json",
 
-            method: "PUT",
-
-            headers: {
-
-                "Content-Type": "application/json",
-
-                Authorization: `Bearer ${token}`
+                Authorization:`Bearer ${token}`
 
             },
 
-            body: JSON.stringify({
+            body:JSON.stringify({
 
                 title,
-
                 company,
-
                 location,
-
                 salary,
-
                 description
 
             })
 
         });
 
-        const data = await response.json();
+        const data =
+        await response.json();
 
         alert(data.message);
 
@@ -764,9 +744,9 @@ async function editJob(id) {
 
     }
 
-    catch (error) {
+    catch(error){
 
-        console.error(error);
+        console.log(error);
 
         alert("Unable to update job.");
 
@@ -778,37 +758,30 @@ async function editJob(id) {
 // DELETE JOB
 // ======================================================
 
-async function deleteJob(id) {
+async function deleteJob(id){
 
-    if (user.role !== "Recruiter") {
+    const confirmDelete =
+    confirm("Delete this job?");
 
-        return;
+    if(!confirmDelete) return;
 
-    }
+    try{
 
-    const confirmDelete = confirm(
+        const response =
+        await fetch(`/jobs/${id}`,{
 
-        "Delete this job permanently?"
+            method:"DELETE",
 
-    );
+            headers:{
 
-    if (!confirmDelete) return;
-
-    try {
-
-        const response = await fetch(`/jobs/${id}`, {
-
-            method: "DELETE",
-
-            headers: {
-
-                Authorization: `Bearer ${token}`
+                Authorization:`Bearer ${token}`
 
             }
 
         });
 
-        const data = await response.json();
+        const data =
+        await response.json();
 
         alert(data.message);
 
@@ -816,11 +789,11 @@ async function deleteJob(id) {
 
     }
 
-    catch (error) {
+    catch(error){
 
-        console.error(error);
+        console.log(error);
 
-        alert("Unable to delete job.");
+        alert("Unable to delete.");
 
     }
 
@@ -830,31 +803,25 @@ async function deleteJob(id) {
 // LOGOUT
 // ======================================================
 
-function logout() {
-
-    const answer = confirm(
-        "Do you really want to logout?"
-    );
-
-    if (!answer) return;
+function logout(){
 
     localStorage.removeItem("token");
+
     localStorage.removeItem("user");
 
-    window.location.href = "/login.html";
+    window.location.href="/login.html";
 
 }
-
 // ======================================================
 // FILTER BUTTONS
 // ======================================================
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const filterButtons =
+    const buttons =
         document.querySelectorAll(".filter-buttons button");
 
-    filterButtons.forEach(button => {
+    buttons.forEach(button => {
 
         button.addEventListener("click", () => {
 
@@ -870,13 +837,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     ||
 
-                    (job.description || "")
+                    (job.company || "")
                     .toLowerCase()
                     .includes(keyword)
 
                     ||
 
                     (job.location || "")
+                    .toLowerCase()
+                    .includes(keyword)
+
+                    ||
+
+                    (job.description || "")
                     .toLowerCase()
                     .includes(keyword)
 
@@ -920,7 +893,7 @@ window.searchJobs = searchJobs;
 window.logout = logout;
 
 // ======================================================
+// FINAL
+// ======================================================
 
 console.log("Dashboard Ready ✅");
-
-// ======================================================
