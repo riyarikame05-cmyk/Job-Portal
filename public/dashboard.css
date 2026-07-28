@@ -1,1355 +1,4272 @@
 /* ==========================================================
-   JOB PORTAL PREMIUM DASHBOARD
-   PART 1
-   RESET + GLASS BACKGROUND + SIDEBAR + TOPBAR
+   DASHBOARD PREMIUM UI
+   PART 1 : GLOBAL + SIDEBAR + TOPBAR
 ========================================================== */
 
+
+/* ==========================================================
+   GOOGLE FONT
+========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+
+
+/* ==========================================================
+   ROOT VARIABLES
+========================================================== */
+
+:root{
+
+    --primary:#2563eb;
+    --primary-dark:#1d4ed8;
+
+    --secondary:#7c3aed;
+
+    --success:#16a34a;
+    --danger:#dc2626;
+    --warning:#f59e0b;
+
+    --dark:#0f172a;
+    --text:#334155;
+    --muted:#64748b;
+
+    --white:#ffffff;
+
+    --bg:
+    radial-gradient(
+        circle at top left,
+        rgba(37,99,235,.18),
+        transparent 35%
+    ),
+    radial-gradient(
+        circle at bottom right,
+        rgba(124,58,237,.15),
+        transparent 35%
+    ),
+    #f8fafc;
+
+
+    --glass:
+    rgba(255,255,255,.75);
+
+
+    --border:
+    rgba(255,255,255,.4);
+
+
+    --shadow:
+    0 20px 40px rgba(15,23,42,.08);
+
+
+    --shadow-hover:
+    0 25px 60px rgba(37,99,235,.18);
+
+
+    --radius:22px;
+
+}
+
+
+
+/* ==========================================================
+   RESET
+========================================================== */
+
+
 *{
+
     margin:0;
     padding:0;
     box-sizing:border-box;
+
 }
 
+
 html{
+
     scroll-behavior:smooth;
+
 }
+
 
 body{
 
-    font-family:'Poppins',sans-serif;
+    font-family:
+    'Inter',
+    sans-serif;
 
     background:
-    linear-gradient(135deg,#eef5ff,#dbeafe,#f8fbff);
+    var(--bg);
+
+    color:
+    var(--text);
 
     min-height:100vh;
 
-    color:#1e293b;
-
     overflow-x:hidden;
 
-    position:relative;
+}
+
+
+
+a{
+
+    text-decoration:none;
+    color:inherit;
 
 }
+
+
+button,
+input,
+textarea,
+select{
+
+    font-family:inherit;
+
+}
+
+
+img{
+
+    max-width:100%;
+    display:block;
+
+}
+
+
 
 /* ==========================================================
-   FLOATING BACKGROUND
+   DASHBOARD MAIN WRAPPER
 ========================================================== */
 
-.bg-blur{
 
-    position:fixed;
-
-    border-radius:50%;
-
-    filter:blur(90px);
-
-    opacity:.45;
-
-    z-index:-1;
-
-    animation:float 12s ease-in-out infinite;
-
-}
-
-.bg1{
-
-    width:280px;
-
-    height:280px;
-
-    background:#3b82f6;
-
-    top:-80px;
-
-    left:-70px;
-
-}
-
-.bg2{
-
-    width:340px;
-
-    height:340px;
-
-    background:#8b5cf6;
-
-    right:-120px;
-
-    top:120px;
-
-}
-
-.bg3{
-
-    width:260px;
-
-    height:260px;
-
-    background:#06b6d4;
-
-    bottom:-90px;
-
-    left:40%;
-
-}
-
-@keyframes float{
-
-    0%{
-        transform:translateY(0px);
-    }
-
-    50%{
-        transform:translateY(-35px);
-    }
-
-    100%{
-        transform:translateY(0px);
-    }
-
-}
-
-/* ==========================================================
-   GLASS EFFECT
-========================================================== */
-
-.glass{
-
-    background:rgba(255,255,255,.60);
-
-    backdrop-filter:blur(18px);
-
-    -webkit-backdrop-filter:blur(18px);
-
-    border:1px solid rgba(255,255,255,.35);
-
-    box-shadow:
-    0 15px 35px rgba(15,23,42,.08);
-
-}
-
-/* ==========================================================
-   DASHBOARD
-========================================================== */
-
-.dashboard{
+.dashboard-wrapper{
 
     display:flex;
 
     min-height:100vh;
 
 }
+
+
 
 /* ==========================================================
    SIDEBAR
 ========================================================== */
 
+
 .sidebar{
 
-    width:280px;
+
+    width:270px;
+
+    height:100vh;
 
     position:fixed;
 
-    top:20px;
+    left:0;
 
-    left:20px;
+    top:0;
 
-    bottom:20px;
+    padding:28px 20px;
 
-    border-radius:30px;
 
-    padding:28px;
+    background:
+
+    linear-gradient(
+        180deg,
+        rgba(255,255,255,.9),
+        rgba(248,250,252,.75)
+    );
+
+
+    backdrop-filter:
+    blur(18px);
+
+
+    border-right:
+    1px solid
+    rgba(226,232,240,.8);
+
+
+    z-index:1000;
+
+
+    transition:.35s ease;
+
+
+}
+
+
+
+
+/* Sidebar Logo */
+
+
+.sidebar-logo{
+
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:40px;
+
+}
+
+
+
+.sidebar-logo .logo-icon{
+
+
+    width:45px;
+
+    height:45px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+
+    border-radius:14px;
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+
+    color:white;
+
+    font-size:22px;
+
+    font-weight:800;
+
+
+    box-shadow:
+    0 10px 25px rgba(37,99,235,.3);
+
+}
+
+
+
+
+.sidebar-logo h2{
+
+
+    font-size:22px;
+
+    font-weight:800;
+
+    color:
+    var(--dark);
+
+}
+
+
+
+
+/* ==========================================================
+   SIDEBAR MENU
+========================================================== */
+
+
+.sidebar-menu{
+
 
     display:flex;
 
     flex-direction:column;
 
-    justify-content:space-between;
+    gap:10px;
 
 }
 
-/* ==========================================================
-   LOGO
-========================================================== */
 
-.logo{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:15px;
-
-    margin-bottom:45px;
-
-}
-
-.logo-icon{
-
-    width:65px;
-
-    height:65px;
-
-    border-radius:20px;
-
-    background:
-    linear-gradient(135deg,#2563eb,#60a5fa);
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    color:#fff;
-
-    font-size:26px;
-
-    box-shadow:
-    0 10px 25px rgba(37,99,235,.30);
-
-}
-
-.logo h2{
-
-    font-size:24px;
-
-    color:#0f172a;
-
-}
-
-.logo span{
-
-    color:#64748b;
-
-    font-size:13px;
-
-}
-
-/* ==========================================================
-   MENU
-========================================================== */
-
-.sidebar-menu{
-
-    list-style:none;
-
-}
-
-.sidebar-menu li{
-
-    margin-bottom:12px;
-
-}
 
 .sidebar-menu a{
 
+
     display:flex;
 
     align-items:center;
 
     gap:15px;
 
-    padding:16px 18px;
+
+    padding:14px 16px;
+
 
     border-radius:16px;
 
-    color:#334155;
 
-    text-decoration:none;
+    color:
+    var(--muted);
 
-    transition:.30s;
-
-    font-weight:500;
-
-}
-
-.sidebar-menu a i{
-
-    width:24px;
-
-    text-align:center;
-
-    font-size:18px;
-
-}
-
-.sidebar-menu li.active a{
-
-    background:
-    linear-gradient(135deg,#2563eb,#3b82f6);
-
-    color:#fff;
-
-    box-shadow:
-    0 12px 25px rgba(37,99,235,.30);
-
-}
-
-.sidebar-menu a:hover{
-
-    background:#eff6ff;
-
-    color:#2563eb;
-
-    transform:translateX(6px);
-
-}
-
-/* ==========================================================
-   LOGOUT
-========================================================== */
-
-.logout-btn{
-
-    width:100%;
-
-    padding:16px;
-
-    border:none;
-
-    border-radius:16px;
-
-    background:
-    linear-gradient(135deg,#ef4444,#dc2626);
-
-    color:#fff;
 
     font-size:15px;
 
     font-weight:600;
 
-    cursor:pointer;
 
-    transition:.30s;
+    transition:.3s ease;
+
+
+    position:relative;
+
+
+}
+
+
+
+
+.sidebar-menu a i{
+
+
+    font-size:18px;
+
+    width:22px;
 
 }
 
-.logout-btn:hover{
 
-    transform:translateY(-4px);
 
-    box-shadow:
-    0 15px 30px rgba(239,68,68,.30);
+.sidebar-menu a:hover{
+
+
+    background:
+    rgba(37,99,235,.08);
+
+
+    color:
+    var(--primary);
+
+
+    transform:
+    translateX(5px);
 
 }
+
+
+
+
+.sidebar-menu a.active{
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        rgba(37,99,235,.15),
+        rgba(124,58,237,.12)
+    );
+
+
+    color:
+    var(--primary);
+
+}
+
+
+
+
+.sidebar-menu a.active::before{
+
+
+    content:"";
+
+
+    position:absolute;
+
+    left:0;
+
+    height:60%;
+
+    width:4px;
+
+
+    background:
+
+    linear-gradient(
+        var(--primary),
+        var(--secondary)
+    );
+
+
+    border-radius:20px;
+
+
+}
+
+
+
+
 
 /* ==========================================================
-   MAIN CONTENT
+   SIDEBAR PROFILE
 ========================================================== */
+
+
+.sidebar-profile{
+
+
+    position:absolute;
+
+
+    bottom:25px;
+
+    left:20px;
+
+    right:20px;
+
+
+    padding:18px;
+
+
+    border-radius:20px;
+
+
+    background:
+
+    rgba(255,255,255,.8);
+
+
+    backdrop-filter:
+    blur(15px);
+
+
+    box-shadow:
+    var(--shadow);
+
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+
+}
+
+
+
+.sidebar-profile img{
+
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+
+}
+
+
+
+.sidebar-profile h4{
+
+
+    font-size:14px;
+
+    color:var(--dark);
+
+
+}
+
+
+.sidebar-profile span{
+
+
+    font-size:12px;
+
+    color:var(--muted);
+
+
+}
+
+
+
+
+/* ==========================================================
+   MAIN CONTENT AREA
+========================================================== */
+
 
 .main-content{
 
-    margin-left:330px;
 
-    width:calc(100% - 330px);
+    margin-left:270px;
+
+
+    width:calc(100% - 270px);
+
 
     padding:30px;
 
+
+    transition:.3s ease;
+
+
 }
+
+
+
 
 /* ==========================================================
    TOPBAR
 ========================================================== */
 
+
 .topbar{
+
+
+    width:100%;
+
 
     display:flex;
 
+
     justify-content:space-between;
+
 
     align-items:center;
 
-    gap:25px;
 
-    border-radius:24px;
+    margin-bottom:30px;
 
-    padding:20px 30px;
 
-    margin-bottom:35px;
+    padding:20px 25px;
+
+
+    border-radius:var(--radius);
+
+
+    background:
+    var(--glass);
+
+
+    backdrop-filter:
+    blur(20px);
+
+
+    border:
+    1px solid
+    var(--border);
+
+
+    box-shadow:
+    var(--shadow);
+
 
 }
 
-.top-left h1{
 
-    font-size:34px;
 
-    color:#0f172a;
 
-    margin-bottom:8px;
+.topbar-left h1{
+
+
+    font-size:30px;
+
+
+    font-weight:800;
+
+
+    color:
+    var(--dark);
+
 
 }
 
-.top-left p{
 
-    color:#64748b;
+
+.topbar-left p{
+
+
+    margin-top:5px;
+
+
+    color:
+    var(--muted);
+
+
+    font-size:14px;
+
 
 }
 
-.top-center{
 
-    flex:1;
+
+
+/* ==========================================================
+   TOPBAR ACTIONS
+========================================================== */
+
+
+.topbar-actions{
+
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+
+}
+
+
+
+.notification-btn{
+
+
+    width:45px;
+
+    height:45px;
+
+
+    border-radius:50%;
+
 
     display:flex;
 
     justify-content:center;
 
-}
-
-/* ==========================================================
-   SEARCH
-========================================================== */
-
-.search-box{
-
-    width:100%;
-
-    max-width:520px;
-
-    background:#fff;
-
-    display:flex;
-
     align-items:center;
 
-    gap:15px;
 
-    padding:15px 20px;
+    background:white;
 
-    border-radius:50px;
+
+    color:
+    var(--primary);
+
 
     box-shadow:
-    0 10px 25px rgba(15,23,42,.08);
+    var(--shadow);
 
-}
-
-.search-box i{
-
-    color:#2563eb;
-
-}
-
-.search-box input{
-
-    border:none;
-
-    width:100%;
-
-    outline:none;
-
-    background:none;
-
-    font-size:15px;
-
-}
-
-/* ==========================================================
-   TOP RIGHT
-========================================================== */
-
-.top-right{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:18px;
-
-}
-
-.icon-btn{
-
-    width:50px;
-
-    height:50px;
-
-    border:none;
-
-    border-radius:50%;
-
-    background:#fff;
 
     cursor:pointer;
 
-    font-size:18px;
 
-    color:#2563eb;
+    transition:.3s;
 
-    transition:.30s;
+
+}
+
+
+
+.notification-btn:hover{
+
+
+    transform:
+    translateY(-4px);
+
 
     box-shadow:
-    0 8px 18px rgba(15,23,42,.08);
+    var(--shadow-hover);
+
 
 }
 
-.icon-btn:hover{
 
-    transform:translateY(-4px);
 
-    background:#2563eb;
+.profile-btn{
 
-    color:#fff;
-
-}
-
-.profile-box{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:14px;
-
-    background:#fff;
 
     padding:10px 18px;
 
-    border-radius:50px;
 
-    box-shadow:
-    0 10px 25px rgba(15,23,42,.08);
+    border-radius:30px;
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+
+    color:white;
+
+
+    font-weight:600;
+
+
+    cursor:pointer;
+
 
 }
 
-.profile-box img{
 
-    width:52px;
 
-    height:52px;
+/* ==========================================================
+   GLASS CARD BASE
+========================================================== */
+
+
+.glass-card{
+
+
+    background:
+    var(--glass);
+
+
+    backdrop-filter:
+    blur(20px);
+
+
+    border:
+    1px solid
+    var(--border);
+
+
+    border-radius:
+    var(--radius);
+
+
+    box-shadow:
+    var(--shadow);
+
+
+    transition:.35s ease;
+
+
+}
+
+
+
+.glass-card:hover{
+
+
+    transform:
+    translateY(-6px);
+
+
+    box-shadow:
+    var(--shadow-hover);
+
+
+}
+
+
+
+
+
+/* ==========================================================
+   SCROLLBAR
+========================================================== */
+
+
+::-webkit-scrollbar{
+
+
+    width:8px;
+
+
+}
+
+
+::-webkit-scrollbar-track{
+
+
+    background:#e2e8f0;
+
+
+}
+
+
+::-webkit-scrollbar-thumb{
+
+
+    background:
+
+    linear-gradient(
+        var(--primary),
+        var(--secondary)
+    );
+
+
+    border-radius:20px;
+
+
+}
+
+
+
+
+/* ==========================================================
+   GLOBAL ANIMATIONS
+========================================================== */
+
+
+@keyframes fadeUp{
+
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateY(25px);
+
+    }
+
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateY(0);
+
+    }
+
+
+}
+
+
+
+
+@keyframes slideLeft{
+
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateX(-30px);
+
+    }
+
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateX(0);
+
+    }
+
+
+}
+
+
+
+
+@keyframes pulse{
+
+
+    0%{
+
+        transform:scale(1);
+
+    }
+
+
+    50%{
+
+        transform:scale(1.05);
+
+    }
+
+
+    100%{
+
+        transform:scale(1);
+
+    }
+
+
+}
+
+
+
+
+.fade-up{
+
+    animation:
+    fadeUp .6s ease forwards;
+
+}
+
+
+.slide-left{
+
+    animation:
+    slideLeft .6s ease forwards;
+
+}
+
+
+
+/* ==========================================================
+   END OF PART 1
+========================================================== */
+/* ==========================================================
+   PART 2 : DASHBOARD CARDS + SEARCH + FILTERS + FORMS
+========================================================== */
+
+
+
+/* ==========================================================
+   DASHBOARD GRID
+========================================================== */
+
+
+.dashboard-container{
+
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:30px;
+
+
+}
+
+
+
+/* ==========================================================
+   STAT CARDS SECTION
+========================================================== */
+
+
+.stats-grid{
+
+
+    display:grid;
+
+
+    grid-template-columns:
+
+    repeat(4,1fr);
+
+
+    gap:22px;
+
+
+}
+
+
+
+.stat-card{
+
+
+    padding:25px;
+
+
+    border-radius:24px;
+
+
+    background:
+
+    rgba(255,255,255,.75);
+
+
+    backdrop-filter:
+    blur(20px);
+
+
+    border:
+    1px solid
+    rgba(255,255,255,.5);
+
+
+    box-shadow:
+    var(--shadow);
+
+
+    display:flex;
+
+
+    justify-content:space-between;
+
+
+    align-items:center;
+
+
+    position:relative;
+
+
+    overflow:hidden;
+
+
+    transition:.35s ease;
+
+
+}
+
+
+
+
+.stat-card::before{
+
+
+    content:"";
+
+
+    position:absolute;
+
+
+    width:120px;
+
+
+    height:120px;
+
+
+    right:-40px;
+
+
+    top:-40px;
+
 
     border-radius:50%;
 
-}
 
-.profile-box h4{
+    background:
 
-    color:#0f172a;
+    linear-gradient(
+        135deg,
+        rgba(37,99,235,.15),
+        rgba(124,58,237,.1)
+    );
 
-    font-size:16px;
-
-}
-
-.profile-box small{
-
-    color:#64748b;
 
 }
+
+
+
+
+.stat-card:hover{
+
+
+    transform:
+    translateY(-8px);
+
+
+    box-shadow:
+    var(--shadow-hover);
+
+
+}
+
+
+
+
+.stat-info h3{
+
+
+    font-size:32px;
+
+
+    font-weight:800;
+
+
+    color:
+    var(--dark);
+
+
+    margin-bottom:5px;
+
+
+}
+
+
+
+.stat-info p{
+
+
+    font-size:14px;
+
+
+    color:
+    var(--muted);
+
+
+    font-weight:600;
+
+
+}
+
+
+
+
+
+.stat-icon{
+
+
+    width:60px;
+
+
+    height:60px;
+
+
+    border-radius:18px;
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    justify-content:center;
+
+
+    font-size:25px;
+
+
+    color:white;
+
+
+    background:
+
+
+    linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+
+    box-shadow:
+    0 15px 30px rgba(37,99,235,.25);
+
+
+}
+
+
+
+
+.stat-card:nth-child(2)
+.stat-icon{
+
+
+    background:
+    linear-gradient(
+        135deg,
+        #16a34a,
+        #22c55e
+    );
+
+}
+
+
+
+.stat-card:nth-child(3)
+.stat-icon{
+
+
+    background:
+    linear-gradient(
+        135deg,
+        #f59e0b,
+        #f97316
+    );
+
+}
+
+
+
+.stat-card:nth-child(4)
+.stat-icon{
+
+
+    background:
+    linear-gradient(
+        135deg,
+        #ef4444,
+        #ec4899
+    );
+
+}
+
+
+
+
+
 /* ==========================================================
-   JOB FORM
+   SECTION HEADER
 ========================================================== */
 
-.job-form{
-    margin-top:40px;
-    background:rgba(255,255,255,.75);
-    backdrop-filter:blur(18px);
-    border:1px solid rgba(255,255,255,.4);
-    border-radius:24px;
-    padding:30px;
-    box-shadow:0 15px 40px rgba(15,23,42,.08);
-}
 
 .section-header{
+
+
     display:flex;
+
+
     justify-content:space-between;
+
+
     align-items:center;
-    margin-bottom:25px;
-    flex-wrap:wrap;
-    gap:15px;
+
+
+    margin-bottom:20px;
+
+
 }
+
+
 
 .section-header h2{
-    font-size:26px;
-    color:#0f172a;
+
+
+    font-size:24px;
+
+
+    font-weight:800;
+
+
+    color:
+    var(--dark);
+
+
 }
+
+
+
 
 .section-header p{
-    color:#64748b;
-    margin-top:8px;
-}
 
-.form-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:18px;
-    margin-bottom:20px;
-}
 
-.form-grid input,
-.job-form textarea{
+    color:
+    var(--muted);
 
-    width:100%;
-    padding:16px 18px;
-    border-radius:16px;
-    border:1px solid #dbeafe;
-    background:rgba(255,255,255,.7);
-    transition:.3s;
-    font-size:15px;
+
+    font-size:14px;
+
 
 }
 
-.form-grid input:focus,
-.job-form textarea:focus{
 
-    border-color:#2563eb;
-    box-shadow:0 0 0 4px rgba(37,99,235,.12);
 
-}
 
-.publish-btn{
-
-    margin-top:20px;
-    padding:16px 30px;
-    border-radius:16px;
-    background:linear-gradient(135deg,#2563eb,#60a5fa);
-    color:#fff;
-    font-size:16px;
-    font-weight:600;
-    transition:.3s;
-
-}
-
-.publish-btn:hover{
-
-    transform:translateY(-4px);
-    box-shadow:0 15px 30px rgba(37,99,235,.30);
-
-}
 
 /* ==========================================================
-   JOB SECTION
+   SEARCH BOX
 ========================================================== */
 
-.jobs-section{
 
-    margin-top:45px;
+.search-section{
+
+
+    padding:25px;
+
+
+    border-radius:24px;
+
+
+    background:
+
+    rgba(255,255,255,.8);
+
+
+    backdrop-filter:
+    blur(18px);
+
+
+    box-shadow:
+    var(--shadow);
+
+
+    display:flex;
+
+
+    gap:15px;
+
+
+    align-items:center;
+
 
 }
+
+
+
+
+.search-box{
+
+
+    flex:1;
+
+
+    position:relative;
+
+
+}
+
+
+
+.search-box i{
+
+
+    position:absolute;
+
+
+    left:18px;
+
+
+    top:50%;
+
+
+    transform:
+    translateY(-50%);
+
+
+    color:
+    var(--muted);
+
+
+    font-size:18px;
+
+
+}
+
+
+
+
+.search-box input{
+
+
+    width:100%;
+
+
+    padding:16px 20px 16px 50px;
+
+
+    border-radius:16px;
+
+
+    border:
+    1px solid #e2e8f0;
+
+
+    outline:none;
+
+
+    background:white;
+
+
+    font-size:15px;
+
+
+    transition:.3s;
+
+
+}
+
+
+
+
+.search-box input:focus{
+
+
+    border-color:
+    var(--primary);
+
+
+    box-shadow:
+    0 0 0 4px rgba(37,99,235,.12);
+
+
+}
+
+
+
+
+
+
+/* ==========================================================
+   FILTER DROPDOWNS
+========================================================== */
+
+
+.filter-box{
+
+
+    display:flex;
+
+
+    gap:15px;
+
+
+}
+
+
+
+.filter-box select{
+
+
+    padding:15px 18px;
+
+
+    border-radius:15px;
+
+
+    border:
+    1px solid #e2e8f0;
+
+
+    background:white;
+
+
+    color:
+    var(--text);
+
+
+    font-weight:600;
+
+
+    outline:none;
+
+
+    cursor:pointer;
+
+
+}
+
+
+
+
+
+.filter-box select:focus{
+
+
+    border-color:
+    var(--primary);
+
+
+}
+
+
+
+
+
+/* ==========================================================
+   PRIMARY BUTTONS
+========================================================== */
+
+
+.btn-primary{
+
+
+    padding:14px 25px;
+
+
+    border:none;
+
+
+    border-radius:15px;
+
+
+    background:
+
+
+    linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+
+    color:white;
+
+
+    font-weight:700;
+
+
+    font-size:14px;
+
+
+    cursor:pointer;
+
+
+    transition:.35s;
+
+
+    box-shadow:
+    0 12px 25px rgba(37,99,235,.25);
+
+
+}
+
+
+
+
+.btn-primary:hover{
+
+
+    transform:
+    translateY(-4px);
+
+
+    box-shadow:
+    0 18px 35px rgba(37,99,235,.35);
+
+
+}
+
+
+
+
+.btn-secondary{
+
+
+    padding:14px 22px;
+
+
+    border-radius:15px;
+
+
+    background:white;
+
+
+    border:
+    1px solid #e2e8f0;
+
+
+    color:
+    var(--dark);
+
+
+    font-weight:700;
+
+
+    cursor:pointer;
+
+
+    transition:.3s;
+
+
+}
+
+
+
+.btn-secondary:hover{
+
+
+    background:
+    #f1f5f9;
+
+
+}
+
+
+
+
+
+/* ==========================================================
+   JOB CREATE FORM
+========================================================== */
+
+
+.job-form-container{
+
+
+    padding:30px;
+
+
+    border-radius:25px;
+
+
+    background:
+
+    rgba(255,255,255,.8);
+
+
+    backdrop-filter:
+    blur(20px);
+
+
+    box-shadow:
+    var(--shadow);
+
+
+}
+
+
+
+
+.form-grid{
+
+
+    display:grid;
+
+
+    grid-template-columns:
+
+    repeat(2,1fr);
+
+
+    gap:20px;
+
+
+}
+
+
+
+
+.form-group{
+
+
+    display:flex;
+
+
+    flex-direction:column;
+
+
+    gap:8px;
+
+
+}
+
+
+
+
+.form-group label{
+
+
+    font-size:14px;
+
+
+    font-weight:700;
+
+
+    color:
+    var(--dark);
+
+
+}
+
+
+
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+
+
+    width:100%;
+
+
+    padding:15px;
+
+
+    border-radius:15px;
+
+
+    border:
+
+    1px solid #e2e8f0;
+
+
+    outline:none;
+
+
+    background:white;
+
+
+    font-size:14px;
+
+
+    transition:.3s;
+
+
+}
+
+
+
+
+
+.form-group textarea{
+
+
+    min-height:130px;
+
+
+    resize:none;
+
+
+}
+
+
+
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+
+
+    border-color:
+    var(--primary);
+
+
+    box-shadow:
+
+    0 0 0 4px
+    rgba(37,99,235,.12);
+
+
+}
+
+
+
+
+
+.full-width{
+
+
+    grid-column:
+    1/-1;
+
+
+}
+
+
+
+
+.form-actions{
+
+
+    margin-top:25px;
+
+
+    display:flex;
+
+
+    justify-content:flex-end;
+
+
+    gap:15px;
+
+
+}
+
+
+
+
+
+/* ==========================================================
+   PROGRESS / STATUS BAR
+========================================================== */
+
+
+.progress-wrapper{
+
+
+    margin-top:15px;
+
+
+}
+
+
+
+.progress-bar{
+
+
+    height:8px;
+
+
+    width:100%;
+
+
+    background:#e2e8f0;
+
+
+    border-radius:20px;
+
+
+    overflow:hidden;
+
+
+}
+
+
+
+.progress-fill{
+
+
+    height:100%;
+
+
+    border-radius:20px;
+
+
+    background:
+
+
+    linear-gradient(
+        90deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+
+}
+
+
+
+
+
+/* ==========================================================
+   MINI CARDS
+========================================================== */
+
+
+.mini-card-grid{
+
+
+    display:grid;
+
+
+    grid-template-columns:
+
+    repeat(3,1fr);
+
+
+    gap:20px;
+
+
+}
+
+
+
+
+.mini-card{
+
+
+    padding:22px;
+
+
+    border-radius:20px;
+
+
+    background:white;
+
+
+    box-shadow:
+    var(--shadow);
+
+
+    transition:.3s;
+
+
+}
+
+
+
+.mini-card:hover{
+
+
+    transform:
+    translateY(-5px);
+
+
+}
+
+
+
+.mini-card h4{
+
+
+    color:
+    var(--dark);
+
+
+    margin-bottom:8px;
+
+
+}
+
+
+
+.mini-card span{
+
+
+    font-size:14px;
+
+
+    color:
+    var(--muted);
+
+
+}
+
+
+
+/* ==========================================================
+   PART 2 END
+========================================================== */
+/* ==========================================================
+   PART 3 : JOB CARDS + COMPANY + ACTIVITY + NOTIFICATIONS
+========================================================== */
+
+
+
+/* ==========================================================
+   JOB GRID
+========================================================== */
+
 
 .jobs-grid{
 
+
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+
+
+    grid-template-columns:
+
+
+    repeat(3,1fr);
+
+
     gap:25px;
 
+
 }
+
+
 
 /* ==========================================================
    JOB CARD
 ========================================================== */
 
+
 .job-card{
 
-    background:rgba(255,255,255,.78);
-    backdrop-filter:blur(18px);
-    border:1px solid rgba(255,255,255,.45);
-    border-radius:22px;
-    padding:24px;
-    transition:.35s;
-    box-shadow:0 12px 30px rgba(15,23,42,.08);
+
+    padding:25px;
+
+
+    border-radius:24px;
+
+
+    background:
+
+
+    rgba(255,255,255,.85);
+
+
+    backdrop-filter:
+    blur(18px);
+
+
+    border:
+    1px solid rgba(255,255,255,.5);
+
+
+    box-shadow:
+    var(--shadow);
+
+
+    transition:.35s ease;
+
+
+    position:relative;
+
+
+    overflow:hidden;
+
 
 }
+
+
+
+
+
+.job-card::after{
+
+
+    content:"";
+
+
+    position:absolute;
+
+
+    width:150px;
+
+
+    height:150px;
+
+
+    right:-70px;
+
+
+    bottom:-70px;
+
+
+    border-radius:50%;
+
+
+    background:
+
+
+    rgba(37,99,235,.08);
+
+
+}
+
+
+
+
 
 .job-card:hover{
 
-    transform:translateY(-8px);
-    box-shadow:0 25px 45px rgba(15,23,42,.15);
+
+    transform:
+    translateY(-8px);
+
+
+    box-shadow:
+    var(--shadow-hover);
+
 
 }
+
+
+
 
 .job-header{
 
+
     display:flex;
+
+
     justify-content:space-between;
-    align-items:center;
-    margin-bottom:18px;
+
+
+    align-items:flex-start;
+
+
+    margin-bottom:20px;
+
 
 }
 
-.job-header h3{
 
-    color:#0f172a;
+
+
+
+.company-logo{
+
+
+    width:55px;
+
+
+    height:55px;
+
+
+    border-radius:16px;
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    justify-content:center;
+
+
     font-size:22px;
 
-}
 
-.job-header h4{
+    font-weight:800;
 
-    color:#2563eb;
-    font-size:15px;
-    margin-top:5px;
 
-}
+    color:white;
 
-.job-icon{
 
-    width:58px;
-    height:58px;
-    border-radius:18px;
-    background:linear-gradient(135deg,#2563eb,#60a5fa);
-    color:#fff;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:24px;
+    background:
+
+
+    linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
 
 }
 
-.job-info{
 
-    display:grid;
-    gap:10px;
-    margin-bottom:18px;
+
+
+.job-status{
+
+
+    padding:7px 14px;
+
+
+    border-radius:30px;
+
+
+    font-size:12px;
+
+
+    font-weight:700;
+
+
+    background:
+
+
+    rgba(34,197,94,.15);
+
+
+    color:
+    var(--success);
+
 
 }
 
-.job-info p{
 
-    color:#475569;
+
+
+
+.job-card h3{
+
+
+    font-size:20px;
+
+
+    font-weight:800;
+
+
+    color:
+    var(--dark);
+
+
+    margin-bottom:8px;
+
+
+}
+
+
+
+
+.job-company{
+
+
     font-size:14px;
 
+
+    color:
+    var(--muted);
+
+
+    margin-bottom:15px;
+
+
 }
+
+
+
+
+
+.job-details{
+
+
+    display:flex;
+
+
+    flex-direction:column;
+
+
+    gap:10px;
+
+
+    margin-bottom:20px;
+
+
+}
+
+
+
+
+.job-details span{
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    gap:10px;
+
+
+    font-size:14px;
+
+
+    color:
+    var(--text);
+
+
+}
+
+
+
+
+
+.job-details i{
+
+
+    color:
+    var(--primary);
+
+
+}
+
+
+
+
 
 .job-description{
 
-    color:#64748b;
-    line-height:1.7;
-    margin-bottom:22px;
+
+    font-size:14px;
+
+
+    line-height:1.6;
+
+
+    color:
+    var(--muted);
+
+
+    margin-bottom:20px;
+
 
 }
+
+
+
 
 .job-actions{
 
+
     display:flex;
+
+
     gap:12px;
-    flex-wrap:wrap;
+
 
 }
+
+
+
+
 
 .job-actions button{
 
+
     flex:1;
-    padding:13px;
-    border-radius:14px;
-    font-weight:600;
-    transition:.3s;
+
 
 }
+
+
+
+
+
+
+/* ==========================================================
+   JOB CARD BUTTONS
+========================================================== */
+
 
 .apply-btn{
 
-    background:#2563eb;
-    color:#fff;
 
-}
+    padding:12px;
 
-.apply-btn:hover{
 
-    background:#1d4ed8;
+    border-radius:14px;
 
-}
 
-.edit-btn{
+    border:none;
 
-    background:#22c55e;
+
+    background:
+
+
+    linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+
     color:white;
 
-}
 
-.delete-btn{
+    font-weight:700;
 
-    background:#ef4444;
-    color:white;
 
-}
+    cursor:pointer;
 
-.edit-btn:hover,
-.delete-btn:hover{
-
-    transform:translateY(-3px);
-
-}
-/* ==========================================================
-   BOTTOM SECTION
-========================================================== */
-
-.bottom-section{
-    display:grid;
-    grid-template-columns:2fr 1fr;
-    gap:30px;
-    margin-top:45px;
-}
-
-/* ==========================================================
-   ACTIVITY CARD
-========================================================== */
-
-.activity-card,
-.interview-card{
-
-    background:rgba(255,255,255,.75);
-    backdrop-filter:blur(18px);
-    border:1px solid rgba(255,255,255,.4);
-    border-radius:24px;
-    padding:30px;
-    box-shadow:0 15px 35px rgba(15,23,42,.08);
 
 }
 
-.activity-item,
-.interview-item{
 
-    display:flex;
-    align-items:center;
-    gap:18px;
-    padding:18px 0;
-    border-bottom:1px solid rgba(226,232,240,.8);
 
-}
+.view-btn{
 
-.activity-item:last-child,
-.interview-item:last-child{
 
-    border-bottom:none;
+    padding:12px;
 
-}
 
-.activity-icon{
+    border-radius:14px;
 
-    width:55px;
-    height:55px;
-    border-radius:16px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#fff;
-    font-size:20px;
-    flex-shrink:0;
+
+    border:
+    1px solid #e2e8f0;
+
+
+    background:white;
+
+
+    color:
+    var(--dark);
+
+
+    font-weight:700;
+
+
+    cursor:pointer;
+
 
 }
 
-.activity-icon.blue{
-    background:linear-gradient(135deg,#2563eb,#60a5fa);
-}
 
-.activity-icon.green{
-    background:linear-gradient(135deg,#16a34a,#4ade80);
-}
 
-.activity-icon.orange{
-    background:linear-gradient(135deg,#f97316,#fb923c);
-}
 
-.activity-item h4,
-.interview-item h4{
+.apply-btn:hover,
+.view-btn:hover{
 
-    color:#0f172a;
-    margin-bottom:5px;
+
+    transform:
+    translateY(-3px);
+
 
 }
 
-.activity-item span,
-.interview-item p{
 
-    color:#64748b;
-    font-size:14px;
 
-}
+
 
 /* ==========================================================
-   COMPANIES
+   COMPANY CARDS
 ========================================================== */
 
-.companies-section{
 
-    margin-top:45px;
+.company-grid{
 
-}
-
-.companies-grid{
 
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-    gap:22px;
+
+
+    grid-template-columns:
+
+
+    repeat(4,1fr);
+
+
+    gap:20px;
+
 
 }
+
+
+
+
 
 .company-card{
 
-    background:rgba(255,255,255,.75);
-    backdrop-filter:blur(18px);
-    border-radius:20px;
-    padding:28px;
+
+    padding:22px;
+
+
     text-align:center;
+
+
+    border-radius:22px;
+
+
+    background:white;
+
+
+    box-shadow:
+    var(--shadow);
+
+
     transition:.35s;
-    border:1px solid rgba(255,255,255,.45);
-    box-shadow:0 12px 30px rgba(15,23,42,.08);
+
 
 }
+
+
+
 
 .company-card:hover{
 
-    transform:translateY(-8px);
+
+    transform:
+    translateY(-7px);
+
+
+    box-shadow:
+    var(--shadow-hover);
+
 
 }
 
-.company-card i{
 
-    font-size:42px;
-    color:#2563eb;
-    margin-bottom:15px;
+
+
+.company-card img{
+
+
+    width:70px;
+
+
+    height:70px;
+
+
+    object-fit:contain;
+
+
+    margin:
+    0 auto 15px;
+
 
 }
+
+
 
 .company-card h4{
 
-    color:#0f172a;
+
+    color:
+    var(--dark);
+
+
+    font-size:17px;
+
+
+    margin-bottom:5px;
+
 
 }
+
+
+
+
+.company-card p{
+
+
+    font-size:13px;
+
+
+    color:
+    var(--muted);
+
+
+}
+
+
+
+
+
 
 /* ==========================================================
-   CAREER TIPS
+   APPLICATION CARDS
 ========================================================== */
 
-.tips-section{
 
-    margin-top:45px;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:25px;
+.application-list{
 
-}
 
-.tip-card{
-
-    background:rgba(255,255,255,.75);
-    backdrop-filter:blur(18px);
-    border-radius:22px;
-    padding:25px;
     display:flex;
-    align-items:flex-start;
-    gap:18px;
-    transition:.35s;
-    border:1px solid rgba(255,255,255,.4);
-    box-shadow:0 15px 35px rgba(15,23,42,.08);
+
+
+    flex-direction:column;
+
+
+    gap:15px;
+
 
 }
 
-.tip-card:hover{
 
-    transform:translateY(-6px);
 
-}
 
-.tip-card i{
+.application-card{
 
-    width:60px;
-    height:60px;
-    border-radius:18px;
+
+    padding:20px;
+
+
+    border-radius:20px;
+
+
+    background:white;
+
+
+    box-shadow:
+    var(--shadow);
+
+
     display:flex;
+
+
+    justify-content:space-between;
+
+
     align-items:center;
-    justify-content:center;
-    background:linear-gradient(135deg,#2563eb,#60a5fa);
-    color:#fff;
-    font-size:24px;
+
+
+    transition:.3s;
+
 
 }
 
-.tip-card h3{
 
-    color:#0f172a;
+
+
+
+.application-card:hover{
+
+
+    transform:
+    translateX(5px);
+
+
+}
+
+
+
+
+.application-info{
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    gap:15px;
+
+
+}
+
+
+
+
+.application-avatar{
+
+
+    width:50px;
+
+
+    height:50px;
+
+
+    border-radius:50%;
+
+
+    background:
+
+
+    linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+
+    color:white;
+
+
+    display:flex;
+
+
+    justify-content:center;
+
+
+    align-items:center;
+
+
+    font-weight:800;
+
+
+}
+
+
+
+
+.application-info h4{
+
+
+    color:
+    var(--dark);
+
+
+    margin-bottom:4px;
+
+
+}
+
+
+
+
+.application-info p{
+
+
+    color:
+    var(--muted);
+
+
+    font-size:13px;
+
+
+}
+
+
+
+
+
+/* ==========================================================
+   STATUS BADGES
+========================================================== */
+
+
+.badge{
+
+
+    padding:8px 15px;
+
+
+    border-radius:30px;
+
+
+    font-size:12px;
+
+
+    font-weight:700;
+
+
+}
+
+
+
+
+
+.badge-success{
+
+
+    background:
+    rgba(22,163,74,.15);
+
+
+    color:
+    var(--success);
+
+
+}
+
+
+
+.badge-warning{
+
+
+    background:
+    rgba(245,158,11,.15);
+
+
+    color:
+    var(--warning);
+
+
+}
+
+
+
+.badge-danger{
+
+
+    background:
+    rgba(220,38,38,.15);
+
+
+    color:
+    var(--danger);
+
+
+}
+
+
+
+.badge-info{
+
+
+    background:
+    rgba(37,99,235,.15);
+
+
+    color:
+    var(--primary);
+
+
+}
+
+
+
+
+
+
+/* ==========================================================
+   ACTIVITY TIMELINE
+========================================================== */
+
+
+.activity-container{
+
+
+    position:relative;
+
+
+    padding-left:30px;
+
+
+}
+
+
+
+.activity-container::before{
+
+
+    content:"";
+
+
+    position:absolute;
+
+
+    left:8px;
+
+
+    top:0;
+
+
+    width:2px;
+
+
+    height:100%;
+
+
+    background:
+    #e2e8f0;
+
+
+}
+
+
+
+
+
+.activity-item{
+
+
+    position:relative;
+
+
+    margin-bottom:25px;
+
+
+}
+
+
+
+
+
+.activity-item::before{
+
+
+    content:"";
+
+
+    position:absolute;
+
+
+    left:-28px;
+
+
+    top:5px;
+
+
+    width:16px;
+
+
+    height:16px;
+
+
+    border-radius:50%;
+
+
+    background:
+
+
+    linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+
+    box-shadow:
+    0 0 0 5px rgba(37,99,235,.12);
+
+
+}
+
+
+
+
+
+.activity-item h4{
+
+
+    font-size:15px;
+
+
+    color:
+    var(--dark);
+
+
+}
+
+
+
+
+.activity-item p{
+
+
+    margin-top:5px;
+
+
+    font-size:13px;
+
+
+    color:
+    var(--muted);
+
+
+}
+
+
+
+
+
+/* ==========================================================
+   NOTIFICATION BOX
+========================================================== */
+
+
+.notification-list{
+
+
+    display:flex;
+
+
+    flex-direction:column;
+
+
+    gap:15px;
+
+
+}
+
+
+
+
+.notification-card{
+
+
+    padding:18px;
+
+
+    border-radius:18px;
+
+
+    background:white;
+
+
+    box-shadow:
+    var(--shadow);
+
+
+    display:flex;
+
+
+    gap:15px;
+
+
+    align-items:center;
+
+
+}
+
+
+
+
+
+.notification-icon{
+
+
+    width:42px;
+
+
+    height:42px;
+
+
+    border-radius:14px;
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    justify-content:center;
+
+
+    background:
+
+
+    rgba(37,99,235,.12);
+
+
+    color:
+    var(--primary);
+
+
+}
+
+
+
+
+
+.notification-card h4{
+
+
+    font-size:14px;
+
+
+    color:
+    var(--dark);
+
+
+}
+
+
+
+
+.notification-card p{
+
+
+    font-size:13px;
+
+
+    color:
+    var(--muted);
+
+
+    margin-top:3px;
+
+
+}
+
+
+
+
+
+
+/* ==========================================================
+   INTERVIEW CARD
+========================================================== */
+
+
+.interview-card{
+
+
+    padding:25px;
+
+
+    border-radius:24px;
+
+
+    background:
+
+
+    linear-gradient(
+        135deg,
+        #ffffff,
+        #f8fafc
+    );
+
+
+    box-shadow:
+    var(--shadow);
+
+
+}
+
+
+
+
+.interview-card h3{
+
+
+    color:
+    var(--dark);
+
+
+    margin-bottom:15px;
+
+
+}
+
+
+
+
+
+.interview-time{
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    gap:10px;
+
+
+    color:
+    var(--primary);
+
+
+    font-weight:700;
+
+
+}
+
+
+
+
+
+/* ==========================================================
+   EMPTY STATE
+========================================================== */
+
+
+.empty-state{
+
+
+    padding:50px 20px;
+
+
+    text-align:center;
+
+
+    border-radius:25px;
+
+
+    background:white;
+
+
+    box-shadow:
+    var(--shadow);
+
+
+}
+
+
+
+
+
+.empty-state i{
+
+
+    font-size:50px;
+
+
+    color:
+    #cbd5e1;
+
+
+    margin-bottom:15px;
+
+
+}
+
+
+
+
+
+.empty-state h3{
+
+
+    color:
+    var(--dark);
+
+
     margin-bottom:8px;
 
-}
-
-.tip-card p{
-
-    color:#64748b;
-    line-height:1.7;
 
 }
+
+
+
+
+.empty-state p{
+
+
+    color:
+    var(--muted);
+
+
+    font-size:14px;
+
+
+}
+
+
+
+
+/* ==========================================================
+   PART 3 END
+========================================================== */
+/* ==========================================================
+   PART 4 : FOOTER + RESPONSIVE + FINAL POLISH
+========================================================== */
+
 
 /* ==========================================================
    FOOTER
 ========================================================== */
 
-.footer{
 
-    margin-top:60px;
-    padding:30px 0;
+.dashboard-footer{
+
+
+    margin-top:40px;
+
+
+    padding:25px;
+
+
+    border-radius:22px;
+
+
+    background:
+
+
+    rgba(255,255,255,.75);
+
+
+    backdrop-filter:
+    blur(18px);
+
+
+    box-shadow:
+    var(--shadow);
+
+
     display:flex;
+
+
     justify-content:space-between;
+
+
     align-items:center;
-    flex-wrap:wrap;
-    gap:20px;
-    border-top:1px solid rgba(203,213,225,.7);
 
-}
 
-.footer-left h3{
+    color:
+    var(--muted);
 
-    color:#0f172a;
-    margin-bottom:8px;
 
-}
-
-.footer-left p{
-
-    color:#64748b;
-
-}
-
-.footer-center{
-
-    display:flex;
-    gap:25px;
-    flex-wrap:wrap;
-
-}
-
-.footer-center a{
-
-    color:#475569;
-    transition:.3s;
-
-}
-
-.footer-center a:hover{
-
-    color:#2563eb;
-
-}
-
-.footer-right{
-
-    display:flex;
-    gap:14px;
-
-}
-
-.footer-right a{
-
-    width:46px;
-    height:46px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#2563eb;
-    color:#fff;
-    transition:.3s;
-
-}
-
-.footer-right a:hover{
-
-    transform:translateY(-5px) rotate(8deg);
-
-}
-
-.copyright{
-
-    text-align:center;
-    margin:30px 0;
-    color:#64748b;
     font-size:14px;
 
-}
-
-/* ==========================================================
-   RESPONSIVE
-========================================================== */
-
-@media(max-width:1000px){
-
-    .sidebar{
-        width:90px;
-    }
-
-    .sidebar .logo span,
-    .sidebar-menu a{
-        font-size:0;
-    }
-
-    .main-content{
-        margin-left:90px;
-    }
-
-    .bottom-section{
-        grid-template-columns:1fr;
-    }
 
 }
 
-@media(max-width:768px){
 
-    .sidebar{
-        display:none;
-    }
 
-    .main-content{
-        margin-left:0;
-        padding:20px;
-    }
 
-    .dashboard-cards,
-    .quick-stats,
-    .jobs-grid,
-    .tips-section,
-    .companies-grid{
-        grid-template-columns:1fr;
-    }
+.footer-links{
 
-    .form-grid{
-        grid-template-columns:1fr;
-    }
 
-    .topbar{
-        flex-direction:column;
-        align-items:flex-start;
-    }
+    display:flex;
 
-    .footer{
-        flex-direction:column;
-        text-align:center;
-    }
+
+    gap:20px;
+
 
 }
 
-/* ==========================================================
-   ANIMATIONS
-========================================================== */
 
-@keyframes fadeUp{
 
-    from{
-        opacity:0;
-        transform:translateY(30px);
-    }
 
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
+.footer-links a{
 
-}
 
-.dashboard-card,
-.job-card,
-.company-card,
-.tip-card,
-.activity-card,
-.interview-card{
+    color:
+    var(--muted);
 
-    animation:fadeUp .6s ease both;
 
-}
-/* ==========================================================
-   PART 4 - PREMIUM EFFECTS
-========================================================== */
+    font-weight:600;
 
-/* Floating Background */
-
-body::before{
-    content:"";
-    position:fixed;
-    width:500px;
-    height:500px;
-    background:radial-gradient(circle,#60a5fa55,transparent 70%);
-    top:-180px;
-    right:-180px;
-    z-index:-2;
-}
-
-body::after{
-    content:"";
-    position:fixed;
-    width:450px;
-    height:450px;
-    background:radial-gradient(circle,#2563eb33,transparent 70%);
-    bottom:-180px;
-    left:-180px;
-    z-index:-2;
-}
-
-/* Glass Shine */
-
-.dashboard-card::after,
-.job-card::after,
-.company-card::after,
-.tip-card::after{
-
-    content:"";
-    position:absolute;
-    inset:0;
-    border-radius:inherit;
-    background:linear-gradient(
-        120deg,
-        transparent,
-        rgba(255,255,255,.35),
-        transparent
-    );
-    transform:translateX(-120%);
-    transition:.8s;
-    pointer-events:none;
-
-}
-
-.dashboard-card:hover::after,
-.job-card:hover::after,
-.company-card:hover::after,
-.tip-card:hover::after{
-
-    transform:translateX(120%);
-
-}
-
-/* Scroll Animation */
-
-.dashboard-card,
-.job-card,
-.tip-card,
-.company-card,
-.stat-card,
-.activity-card,
-.interview-card{
-
-    transition:
-        transform .35s ease,
-        box-shadow .35s ease,
-        border-color .35s ease;
-
-}
-
-.dashboard-card:hover,
-.job-card:hover,
-.tip-card:hover,
-.company-card:hover,
-.stat-card:hover{
-
-    border-color:#60a5fa;
-
-}
-
-/* Better Buttons */
-
-.publish-btn,
-.refresh-btn,
-.apply-btn,
-.edit-btn,
-.delete-btn,
-.logout-btn{
-
-    position:relative;
-    overflow:hidden;
-
-}
-
-.publish-btn::before,
-.refresh-btn::before,
-.apply-btn::before,
-.edit-btn::before,
-.delete-btn::before,
-.logout-btn::before{
-
-    content:"";
-    position:absolute;
-    top:0;
-    left:-120%;
-    width:60%;
-    height:100%;
-    background:rgba(255,255,255,.25);
-    transform:skewX(-20deg);
-    transition:.6s;
-
-}
-
-.publish-btn:hover::before,
-.refresh-btn:hover::before,
-.apply-btn:hover::before,
-.edit-btn:hover::before,
-.delete-btn:hover::before,
-.logout-btn:hover::before{
-
-    left:160%;
-
-}
-
-/* Selection */
-
-::selection{
-    background:#2563eb;
-    color:#fff;
-}
-
-/* Smooth Image */
-
-.profile-box img{
-
-    transition:.35s;
-
-}
-
-.profile-box:hover img{
-
-    transform:scale(1.08) rotate(4deg);
-
-}
-
-/* Logo Animation */
-
-.logo i{
-
-    transition:.35s;
-
-}
-
-.logo:hover i{
-
-    transform:rotate(-12deg) scale(1.1);
-
-}
-
-/* Active Sidebar */
-
-.sidebar-menu li.active{
-
-    position:relative;
-
-}
-
-.sidebar-menu li.active::before{
-
-    content:"";
-    position:absolute;
-    left:-22px;
-    top:50%;
-    transform:translateY(-50%);
-    width:5px;
-    height:60%;
-    border-radius:10px;
-    background:#60a5fa;
-
-}
-
-/* Hover Icons */
-
-.icon-btn:hover i{
-
-    transform:rotate(20deg);
-
-}
-
-.icon-btn i{
 
     transition:.3s;
 
-}
-
-/* Card Numbers */
-
-.dashboard-card h2,
-.stat-card h3{
-
-    letter-spacing:.5px;
 
 }
+
+
+
+.footer-links a:hover{
+
+
+    color:
+    var(--primary);
+
+
+}
+
+
+
+/* ==========================================================
+   TABLE DESIGN
+========================================================== */
+
+
+.table-container{
+
+
+    width:100%;
+
+
+    overflow-x:auto;
+
+
+    background:white;
+
+
+    border-radius:22px;
+
+
+    box-shadow:
+    var(--shadow);
+
+
+}
+
+
+
+.dashboard-table{
+
+
+    width:100%;
+
+
+    border-collapse:collapse;
+
+
+}
+
+
+
+.dashboard-table th{
+
+
+    padding:18px;
+
+
+    text-align:left;
+
+
+    font-size:14px;
+
+
+    color:
+    var(--dark);
+
+
+    background:#f8fafc;
+
+
+}
+
+
+
+.dashboard-table td{
+
+
+    padding:18px;
+
+
+    border-bottom:
+    1px solid #e2e8f0;
+
+
+    font-size:14px;
+
+
+    color:
+    var(--text);
+
+
+}
+
+
+
+.dashboard-table tr{
+
+
+    transition:.3s;
+
+
+}
+
+
+
+.dashboard-table tr:hover{
+
+
+    background:
+    rgba(37,99,235,.05);
+
+
+}
+
+
+
+
+
+/* ==========================================================
+   DROPDOWN MENU
+========================================================== */
+
+
+.dropdown{
+
+
+    position:relative;
+
+
+}
+
+
+
+.dropdown-menu{
+
+
+    position:absolute;
+
+
+    right:0;
+
+
+    top:55px;
+
+
+    width:200px;
+
+
+    padding:12px;
+
+
+    border-radius:18px;
+
+
+    background:white;
+
+
+    box-shadow:
+    var(--shadow-hover);
+
+
+    opacity:0;
+
+
+    pointer-events:none;
+
+
+    transform:
+    translateY(10px);
+
+
+    transition:.3s;
+
+
+    z-index:100;
+
+
+}
+
+
+
+.dropdown:hover .dropdown-menu{
+
+
+    opacity:1;
+
+
+    pointer-events:auto;
+
+
+    transform:
+    translateY(0);
+
+
+}
+
+
+
+
+.dropdown-menu a{
+
+
+    display:block;
+
+
+    padding:12px;
+
+
+    border-radius:12px;
+
+
+    font-size:14px;
+
+
+}
+
+
+
+.dropdown-menu a:hover{
+
+
+    background:#f1f5f9;
+
+
+    color:
+    var(--primary);
+
+
+}
+
+
+
+
+
+
+/* ==========================================================
+   LOADING ANIMATION
+========================================================== */
+
+
+.loader{
+
+
+    width:45px;
+
+
+    height:45px;
+
+
+    border-radius:50%;
+
+
+    border:
+
+
+    4px solid #e2e8f0;
+
+
+    border-top-color:
+    var(--primary);
+
+
+    animation:
+    rotate 1s linear infinite;
+
+
+}
+
+
+
+@keyframes rotate{
+
+
+    from{
+
+        transform:rotate(0deg);
+
+    }
+
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+
+}
+
+
+
+
+
+/* ==========================================================
+   FLOATING BUTTON
+========================================================== */
+
+
+.floating-btn{
+
+
+    position:fixed;
+
+
+    right:30px;
+
+
+    bottom:30px;
+
+
+    width:60px;
+
+
+    height:60px;
+
+
+    border-radius:50%;
+
+
+    display:flex;
+
+
+    justify-content:center;
+
+
+    align-items:center;
+
+
+    background:
+
+
+    linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+
+    color:white;
+
+
+    font-size:24px;
+
+
+    box-shadow:
+    0 15px 35px rgba(37,99,235,.35);
+
+
+    cursor:pointer;
+
+
+    transition:.3s;
+
+
+    z-index:999;
+
+
+}
+
+
+
+.floating-btn:hover{
+
+
+    transform:
+    translateY(-8px)
+    scale(1.05);
+
+
+}
+
+
+
+
+
+
+/* ==========================================================
+   CARD REVEAL ANIMATION
+========================================================== */
+
+
+.dashboard-card,
+.job-card,
+.company-card,
+.stat-card,
+.interview-card,
+.notification-card,
+.application-card{
+
+
+    animation:
+    fadeUp .6s ease both;
+
+
+}
+
+
+
+
+/* Stagger Animation */
+
+
+.dashboard-card:nth-child(1),
+.job-card:nth-child(1){
+
+
+    animation-delay:.1s;
+
+
+}
+
+
+.dashboard-card:nth-child(2),
+.job-card:nth-child(2){
+
+
+    animation-delay:.2s;
+
+
+}
+
+
+.dashboard-card:nth-child(3),
+.job-card:nth-child(3){
+
+
+    animation-delay:.3s;
+
+
+}
+
+
+.dashboard-card:nth-child(4){
+
+
+    animation-delay:.4s;
+
+
+}
+
+
+
+
+
+
+/* ==========================================================
+   RESPONSIVE DESIGN
+========================================================== */
+
+
+/* Large Tablet */
+
+
+@media(max-width:1200px){
+
+
+
+.stats-grid{
+
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+
+}
+
+
+
+.jobs-grid{
+
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+
+}
+
+
+
+.company-grid{
+
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+
+}
+
+
+
+}
+
+
+
+
+/* Tablet */
+
+
+@media(max-width:900px){
+
+
+
+.sidebar{
+
+
+    width:80px;
+
+
+    padding:25px 12px;
+
+
+}
+
+
+
+.sidebar-logo h2,
+.sidebar-menu span,
+.sidebar-profile div{
+
+
+    display:none;
+
+
+}
+
+
+
+.sidebar-logo{
+
+
+    justify-content:center;
+
+
+}
+
+
+
+.sidebar-menu a{
+
+
+    justify-content:center;
+
+
+}
+
+
+
+.main-content{
+
+
+    margin-left:80px;
+
+
+    width:
+    calc(100% - 80px);
+
+
+    padding:20px;
+
+
+}
+
+
+
+.topbar{
+
+
+    flex-direction:column;
+
+
+    align-items:flex-start;
+
+
+    gap:20px;
+
+
+}
+
+
+
+.form-grid{
+
+
+    grid-template-columns:
+    1fr;
+
+
+}
+
+
+
+.search-section{
+
+
+    flex-direction:column;
+
+
+}
+
+
+
+.filter-box{
+
+
+    width:100%;
+
+
+}
+
+
+
+.filter-box select{
+
+
+    width:100%;
+
+
+}
+
+
+
+}
+
+
+
+
+
+/* Mobile */
+
+
+@media(max-width:600px){
+
+
+
+.dashboard-wrapper{
+
+
+    display:block;
+
+
+}
+
+
+
+
+.sidebar{
+
+
+    position:fixed;
+
+
+    width:100%;
+
+
+    height:75px;
+
+
+    bottom:0;
+
+
+    top:auto;
+
+
+    left:0;
+
+
+    display:flex;
+
+
+    justify-content:center;
+
+
+    padding:10px;
+
+
+    border-top:
+    1px solid #e2e8f0;
+
+
+}
+
+
+
+.sidebar-logo,
+.sidebar-profile{
+
+
+    display:none;
+
+
+}
+
+
+
+
+.sidebar-menu{
+
+
+    flex-direction:row;
+
+
+    width:100%;
+
+
+    justify-content:space-around;
+
+
+}
+
+
+
+.sidebar-menu a{
+
+
+    padding:12px;
+
+
+}
+
+
+
+.main-content{
+
+
+    margin-left:0;
+
+
+    width:100%;
+
+
+    padding:15px;
+
+
+    padding-bottom:100px;
+
+
+}
+
+
+
+.stats-grid{
+
+
+    grid-template-columns:
+    1fr;
+
+
+}
+
+
+
+.jobs-grid{
+
+
+    grid-template-columns:
+    1fr;
+
+
+}
+
+
+
+.company-grid{
+
+
+    grid-template-columns:
+    1fr;
+
+
+}
+
+
+
+.topbar-left h1{
+
+
+    font-size:24px;
+
+
+}
+
+
+
+
+.topbar-actions{
+
+
+    width:100%;
+
+
+    justify-content:space-between;
+
+
+}
+
+
+
+
+.section-header{
+
+
+    flex-direction:column;
+
+
+    align-items:flex-start;
+
+
+    gap:10px;
+
+
+}
+
+
+
+
+.job-actions{
+
+
+    flex-direction:column;
+
+
+}
+
+
+
+.application-card{
+
+
+    flex-direction:column;
+
+
+    align-items:flex-start;
+
+
+    gap:15px;
+
+
+}
+
+
+
+.dashboard-footer{
+
+
+    flex-direction:column;
+
+
+    gap:15px;
+
+
+    text-align:center;
+
+
+}
+
+
+
+.footer-links{
+
+
+    flex-wrap:wrap;
+
+
+    justify-content:center;
+
+
+}
+
+
+
+.floating-btn{
+
+
+    width:50px;
+
+
+    height:50px;
+
+
+    right:20px;
+
+
+    bottom:90px;
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================================
+   DARK MODE SUPPORT
+========================================================== */
+
+
+.dark-mode{
+
+
+    --dark:#f8fafc;
+
+
+    --text:#cbd5e1;
+
+
+    --muted:#94a3b8;
+
+
+    background:#020617;
+
+
+}
+
+
+
+
+
+.dark-mode .glass-card,
+.dark-mode .stat-card,
+.dark-mode .job-card,
+.dark-mode .company-card,
+.dark-mode .notification-card,
+.dark-mode .application-card,
+.dark-mode .interview-card{
+
+
+    background:
+    rgba(15,23,42,.85);
+
+
+    border-color:
+    rgba(255,255,255,.08);
+
+
+}
+
+
+
+.dark-mode input,
+.dark-mode textarea,
+.dark-mode select{
+
+
+    background:#0f172a;
+
+
+    color:white;
+
+
+    border-color:#334155;
+
+
+}
+
+
+
+.dark-mode .topbar,
+.dark-mode .sidebar{
+
+
+    background:
+    rgba(15,23,42,.9);
+
+
+}
+
+
+
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4{
+
+
+    color:white;
+
+
+}
+
+
+
+
+
+
+/* ==========================================================
+   ACCESSIBILITY
+========================================================== */
+
+
+button:focus,
+input:focus,
+select:focus{
+
+
+    outline:
+    3px solid
+    rgba(37,99,235,.25);
+
+
+}
+
+
+
+
+/* ==========================================================
+   FINAL DASHBOARD CSS COMPLETE
+========================================================== */
