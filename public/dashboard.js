@@ -183,43 +183,83 @@ async function loadAnalytics() {
 
 }
 
-// ================= LOAD JOBS =================
+// ======================================================
+// LOAD JOBS (PREMIUM VERSION)
+// ======================================================
 
 async function loadJobs() {
 
+    const container = document.getElementById("jobsContainer");
+
     try {
 
-        const response =
-            await fetch("/jobs");
+        // ================= LOADING =================
+
+        if (container) {
+
+            container.innerHTML = `
+
+                <div class="loading-card"></div>
+                <div class="loading-card"></div>
+                <div class="loading-card"></div>
+
+            `;
+
+        }
+
+        // ================= FETCH =================
+
+        const response = await fetch("/jobs");
 
         if (!response.ok) {
 
-            throw new Error(
-                "Unable to fetch jobs"
-            );
+            throw new Error("Unable to fetch jobs");
 
         }
 
-        const data =
-            await response.json();
+        const data = await response.json();
 
-        console.log(
-            "Jobs API:",
-            data
-        );
+        console.log("Jobs API:", data);
 
-        allJobs =
-            data.jobs || [];
+        allJobs = data.jobs || [];
 
-        const totalJobs =
-            document.getElementById("totalJobs");
+        // ================= TOTAL JOBS =================
+
+        const totalJobs = document.getElementById("totalJobs");
 
         if (totalJobs) {
 
-            totalJobs.innerText =
-                allJobs.length;
+            totalJobs.innerText = allJobs.length;
 
         }
+
+        // ================= EMPTY =================
+
+        if (allJobs.length === 0) {
+
+            if (container) {
+
+                container.innerHTML = `
+
+                    <div class="empty-state">
+
+                        <i class="fa-solid fa-briefcase"></i>
+
+                        <h2>No Jobs Available</h2>
+
+                        <p>Recruiters haven't posted any jobs yet.</p>
+
+                    </div>
+
+                `;
+
+            }
+
+            return;
+
+        }
+
+        // ================= RENDER =================
 
         renderJobs(allJobs);
 
@@ -227,29 +267,30 @@ async function loadJobs() {
 
     catch (error) {
 
-        console.error(
-            "Load Jobs Error:",
-            error
-        );
-
-        const container =
-            document.getElementById("jobsContainer");
+        console.error("Load Jobs Error:", error);
 
         if (container) {
 
             container.innerHTML = `
 
-            <div class="empty-state">
+                <div class="empty-state">
 
-                <i class="fa-solid fa-circle-exclamation"></i>
+                    <i class="fa-solid fa-circle-exclamation"></i>
 
-                <h2>Unable to Load Jobs</h2>
+                    <h2>Unable to Load Jobs</h2>
 
-                <p>Please refresh the page.</p>
+                    <p>Please refresh the page and try again.</p>
 
-            </div>
+                </div>
 
             `;
+
+        }
+
+        // Premium Toast (optional)
+        if (typeof showToast === "function") {
+
+            showToast("Unable to load jobs.", "error");
 
         }
 
@@ -257,13 +298,12 @@ async function loadJobs() {
 
 }
 // ======================================================
-// RENDER JOBS
+// PREMIUM RENDER JOBS
 // ======================================================
 
 function renderJobs(jobs) {
 
-    const container =
-        document.getElementById("jobsContainer");
+    const container = document.getElementById("jobsContainer");
 
     if (!container) return;
 
@@ -275,11 +315,11 @@ function renderJobs(jobs) {
 
         <div class="empty-state">
 
-            <i class="fa-solid fa-briefcase fa-3x"></i>
+            <i class="fa-solid fa-briefcase"></i>
 
-            <h2>No Jobs Found</h2>
+            <h2>No Jobs Available</h2>
 
-            <p>No jobs are available right now.</p>
+            <p>There are no jobs matching your search.</p>
 
         </div>
 
@@ -293,140 +333,229 @@ function renderJobs(jobs) {
 
         const applicants =
             Array.isArray(job.applicants)
-                ? job.applicants
-                : [];
+            ? job.applicants
+            : [];
 
         const applied =
             applicants.some(app => {
 
                 if (!app.userId) return false;
 
-                return app.userId.toString() === user.id;
+                return app.userId.toString() === user._id;
 
             });
 
-        const date =
+const companyLetter =
+(job.company || "J")
+.charAt(0)
+.toUpperCase();
+
+let companyColor="#2563eb";
+
+switch((job.company || "").toLowerCase()){
+
+case "google":
+companyColor="#EA4335";
+break;
+
+case "microsoft":
+companyColor="#00A4EF";
+break;
+
+case "amazon":
+companyColor="#FF9900";
+break;
+
+case "apple":
+companyColor="#111111";
+break;
+
+case "meta":
+companyColor="#0866FF";
+break;
+
+case "infosys":
+companyColor="#007CC3";
+break;
+
+case "accenture":
+companyColor="#A100FF";
+break;
+
+case "tcs":
+companyColor="#1976d2";
+break;
+
+default:
+companyColor="#2563eb";
+
+}
+
+        const postedDate =
             job.createdAt
-                ? new Date(job.createdAt).toLocaleDateString()
-                : "Today";
+            ? new Date(job.createdAt).toLocaleDateString()
+            : "Today";
 
         container.innerHTML += `
 
-        <div class="job-card">
+<div class="job-card">
 
-            <div class="job-header">
+<div class="job-header">
 
-                <div>
+<div class="company-logo">
 
-                    <h3>${job.title}</h3>
+${companyLetter}
 
-                    <h4>${job.company}</h4>
+</div>
 
-                </div>
+<div class="job-title">
 
-                <span class="job-icon">
-                    💼
-                </span>
+<h3>${job.title}</h3>
 
-            </div>
+<p>${job.company}</p>
 
-            <div class="job-info">
+</div>
 
-                <p>
-                    📍 <strong>Location :</strong>
-                    ${job.location}
-                </p>
+<div class="salary-badge">
 
-                <p>
-                    💰 <strong>Salary :</strong>
-                    ${job.salary}
-                </p>
+${job.salary}
 
-                <p>
-                    📅 <strong>Posted :</strong>
-                    ${date}
-                </p>
+</div>
 
-            </div>
+</div>
 
-            <p class="job-description">
 
-                ${job.description}
+<div class="job-meta">
 
-            </p>
+<span>
 
-            <div class="job-actions">
+<i class="fa-solid fa-location-dot"></i>
 
-                ${
-                    user.role === "Recruiter"
+${job.location}
 
-                    ?
+</span>
 
-                    `
+<span>
 
-                    <button
-                        class="edit-btn"
-                        onclick="editJob('${job._id}')">
+<i class="fa-solid fa-calendar"></i>
 
-                        ✏ Edit
+${postedDate}
 
-                    </button>
+</span>
 
-                    <button
-                        class="delete-btn"
-                        onclick="deleteJob('${job._id}')">
+<span>
 
-                        🗑 Delete
+<i class="fa-solid fa-user-group"></i>
 
-                    </button>
+${applicants.length} Applicants
 
-                    `
+</span>
 
-                    :
+</div>
 
-                    applied
 
-                    ?
+<p class="job-description">
 
-                    `
+${job.description}
 
-                    <button disabled>
+</p>
 
-                        ✅ Applied
 
-                    </button>
+<div class="job-tags">
 
-                    `
+<span>HTML</span>
 
-                    :
+<span>CSS</span>
 
-                    `
+<span>JavaScript</span>
 
-                    <button
-                        class="apply-btn"
-                        onclick="applyJob('${job._id}')">
+<span>Remote</span>
 
-                        📝 Apply
+</div>
 
-                    </button>
 
-                    <button
-                        class="save-btn"
-                        onclick="saveJob('${job._id}')">
+<div class="job-footer">
 
-                        ❤️ Save
+${
+user.role === "Recruiter"
 
-                    </button>
+?
 
-                    `
+`
 
-                }
+<button
+class="edit-btn"
+onclick="editJob('${job._id}')">
 
-            </div>
+<i class="fa-solid fa-pen"></i>
 
-        </div>
+Edit
 
-        `;
+</button>
+
+<button
+class="delete-btn"
+onclick="deleteJob('${job._id}')">
+
+<i class="fa-solid fa-trash"></i>
+
+Delete
+
+</button>
+
+`
+
+:
+
+applied
+
+?
+
+`
+
+<button
+class="applied-btn"
+disabled>
+
+<i class="fa-solid fa-circle-check"></i>
+
+Applied
+
+</button>
+
+`
+
+:
+
+`
+
+<button
+class="apply-btn"
+onclick="applyJob('${job._id}')">
+
+<i class="fa-solid fa-paper-plane"></i>
+
+Apply Now
+
+</button>
+
+<button
+class="save-btn"
+onclick="saveJob('${job._id}')">
+
+<i class="fa-regular fa-bookmark"></i>
+
+</button>
+
+`
+
+}
+
+</div>
+
+</div>
+
+`;
 
     });
 
@@ -436,15 +565,16 @@ function renderJobs(jobs) {
 // SEARCH JOBS
 // ======================================================
 
-function searchJobs() {
+function searchJobs(){
 
-    const keyword = document
+    const keyword =
+        document
         .getElementById("searchInput")
         .value
-        .toLowerCase()
-        .trim();
+        .trim()
+        .toLowerCase();
 
-    if (!keyword) {
+    if(!keyword){
 
         renderJobs(allJobs);
 
@@ -452,37 +582,32 @@ function searchJobs() {
 
     }
 
-    const filtered = allJobs.filter(job =>
+    const filtered =
+    allJobs.filter(job=>{
 
-        (job.title || "")
-            .toLowerCase()
-            .includes(keyword)
+        return (
 
-        ||
+            job.title?.toLowerCase().includes(keyword)
 
-        (job.company || "")
-            .toLowerCase()
-            .includes(keyword)
+            ||
 
-        ||
+            job.company?.toLowerCase().includes(keyword)
 
-        (job.location || "")
-            .toLowerCase()
-            .includes(keyword)
+            ||
 
-        ||
+            job.location?.toLowerCase().includes(keyword)
 
-        (job.salary || "")
-            .toLowerCase()
-            .includes(keyword)
+            ||
 
-        ||
+            job.salary?.toLowerCase().includes(keyword)
 
-        (job.description || "")
-            .toLowerCase()
-            .includes(keyword)
+            ||
 
-    );
+            job.description?.toLowerCase().includes(keyword)
+
+        );
+
+    });
 
     renderJobs(filtered);
 
@@ -525,7 +650,7 @@ async function applyJob(id) {
         const data =
             await response.json();
 
-        alert(data.message);
+        showToast(data.message);
 
         if (data.success) {
 
@@ -539,7 +664,7 @@ async function applyJob(id) {
 
         console.log(error);
 
-        alert("Unable to apply.");
+        showToast("Unable to apply.","error");
 
     }
 
@@ -549,36 +674,37 @@ async function applyJob(id) {
 // SAVE JOB
 // ======================================================
 
-async function saveJob(id){
+let savedJobs =
+JSON.parse(localStorage.getItem("savedJobs")) || [];
 
-    try{
+function saveJob(jobId){
 
-        const response =
-        await fetch(`/save/${id}`,{
+    if(savedJobs.includes(jobId)){
 
-            method:"POST",
+        savedJobs =
+        savedJobs.filter(id => id !== jobId);
 
-            headers:{
-
-                Authorization:
-                `Bearer ${token}`
-
-            }
-
-        });
-
-        const data =
-        await response.json();
-
-        alert(data.message);
+        showToast("Job removed from Saved");
 
     }
 
-    catch(error){
+    else{
 
-        console.log(error);
+        savedJobs.push(jobId);
+
+        showToast("Job Saved Successfully");
 
     }
+
+    localStorage.setItem(
+        "savedJobs",
+        JSON.stringify(savedJobs)
+    );
+
+    document.getElementById("savedCount").innerText =
+    savedJobs.length;
+
+    renderJobs(allJobs);
 
 }
 // ======================================================
@@ -587,13 +713,13 @@ async function saveJob(id){
 
 async function postJob() {
 
-    if (user.role !== "Recruiter") {
+if (user.role !== "Recruiter") {
 
-        alert("Only Recruiters can post jobs.");
+    showToast("Only Recruiters can post jobs.", "error");
 
-        return;
+    return;
 
-    }
+}
 
     const title =
         document.getElementById("title").value.trim();
@@ -618,7 +744,7 @@ async function postJob() {
         !description
     ) {
 
-        alert("Please fill all fields.");
+        showToast("Please fill all fields.", "error");
 
         return;
 
@@ -654,7 +780,7 @@ async function postJob() {
         const data =
         await response.json();
 
-        alert(data.message);
+        showToast(data.message);
 
         if(data.success){
 
@@ -674,7 +800,7 @@ async function postJob() {
 
         console.log(error);
 
-        alert("Unable to post job.");
+        showToast("Unable to post job.", "error");
 
     }
 
@@ -738,7 +864,7 @@ async function editJob(id){
         const data =
         await response.json();
 
-        alert(data.message);
+        showToast(data.message);
 
         await refreshDashboard();
 
@@ -748,7 +874,7 @@ async function editJob(id){
 
         console.log(error);
 
-        alert("Unable to update job.");
+        showToast("Unable to update job.", "error");
 
     }
 
@@ -783,7 +909,7 @@ async function deleteJob(id){
         const data =
         await response.json();
 
-        alert(data.message);
+        showToast(data.message);
 
         await refreshDashboard();
 
@@ -793,7 +919,7 @@ async function deleteJob(id){
 
         console.log(error);
 
-        alert("Unable to delete.");
+        showToast("Unable to delete job.", "error");
 
     }
 
@@ -813,51 +939,44 @@ function logout(){
 
 }
 // ======================================================
-// FILTER BUTTONS
+// PREMIUM FILTERS
 // ======================================================
 
-document.addEventListener("DOMContentLoaded", () => {
+document.querySelectorAll(".chip").forEach(chip => {
 
-    const buttons =
-        document.querySelectorAll(".filter-buttons button");
+    chip.addEventListener("click", () => {
 
-    buttons.forEach(button => {
+        document
+            .querySelectorAll(".chip")
+            .forEach(c => c.classList.remove("active"));
 
-        button.addEventListener("click", () => {
+        chip.classList.add("active");
 
-            const keyword =
-                button.innerText.toLowerCase();
+        const keyword =
+            chip.innerText.trim().toLowerCase();
 
-            const filtered =
-                allJobs.filter(job =>
+        if (keyword === "all") {
 
-                    (job.title || "")
-                    .toLowerCase()
-                    .includes(keyword)
+            renderJobs(allJobs);
 
-                    ||
+            return;
 
-                    (job.company || "")
-                    .toLowerCase()
-                    .includes(keyword)
+        }
 
-                    ||
+        const filtered = allJobs.filter(job => {
 
-                    (job.location || "")
-                    .toLowerCase()
-                    .includes(keyword)
+            const text = `
+                ${job.title}
+                ${job.company}
+                ${job.location}
+                ${job.description}
+            `.toLowerCase();
 
-                    ||
-
-                    (job.description || "")
-                    .toLowerCase()
-                    .includes(keyword)
-
-                );
-
-            renderJobs(filtered);
+            return text.includes(keyword);
 
         });
+
+        renderJobs(filtered);
 
     });
 
@@ -897,3 +1016,162 @@ window.logout = logout;
 // ======================================================
 
 console.log("Dashboard Ready ✅");
+// ======================================================
+// PREMIUM TOAST
+// ======================================================
+
+function showToast(message, type = "success") {
+
+    let toast = document.getElementById("toast");
+
+    if (!toast) {
+
+        toast = document.createElement("div");
+
+        toast.id = "toast";
+
+        document.body.appendChild(toast);
+
+    }
+
+    toast.className = `toast ${type}`;
+
+    toast.innerHTML = `
+        <i class="fa-solid ${
+            type === "success"
+            ? "fa-circle-check"
+            : "fa-circle-exclamation"
+        }"></i>
+        ${message}
+    `;
+
+    toast.classList.add("show");
+
+    setTimeout(() => {
+
+        toast.classList.remove("show");
+
+    }, 3000);
+
+}
+// ======================================================
+// DARK MODE
+// ======================================================
+
+const darkButton =
+document.querySelector(".fa-moon");
+
+if(darkButton){
+
+darkButton.parentElement.onclick=()=>{
+
+document.body.classList.toggle("dark");
+
+localStorage.setItem(
+
+"darkMode",
+
+document.body.classList.contains("dark")
+
+);
+
+};
+
+}
+
+if(localStorage.getItem("darkMode")==="true"){
+
+document.body.classList.add("dark");
+
+}
+// ======================================================
+// NOTIFICATION BADGE
+// ======================================================
+
+function updateNotificationBadge(){
+
+const bell=document.querySelector(".icon-btn");
+
+if(!bell) return;
+
+let badge=
+document.querySelector(".notification-badge");
+
+if(!badge){
+
+badge=document.createElement("span");
+
+badge.className="notification-badge";
+
+bell.style.position="relative";
+
+bell.appendChild(badge);
+
+}
+
+badge.innerText=allJobs.length;
+
+}
+
+updateNotificationBadge();
+// ======================================================
+// PROFILE CLICK
+// ======================================================
+
+const profile =
+document.querySelector(".profile-box");
+
+if(profile){
+
+profile.style.cursor="pointer";
+
+profile.onclick=()=>{
+
+showToast(
+
+`${user.name}
+(${user.role})`
+
+);
+
+};
+
+}
+// ======================================================
+// WELCOME
+// ======================================================
+
+window.addEventListener("load",()=>{
+
+document.querySelectorAll(
+
+".dashboard-card,.job-card,.company-card"
+
+).forEach((card,index)=>{
+
+card.style.opacity="0";
+
+card.style.transform="translateY(25px)";
+
+setTimeout(()=>{
+
+card.style.transition=".5s";
+
+card.style.opacity="1";
+
+card.style.transform="translateY(0)";
+
+},index*80);
+
+});
+
+});
+// ======================================================
+// AUTO REFRESH
+// ======================================================
+
+setInterval(()=>{
+
+loadJobs();
+
+},60000);
